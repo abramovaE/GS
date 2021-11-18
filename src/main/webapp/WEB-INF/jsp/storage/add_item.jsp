@@ -8,30 +8,32 @@
     <meta charset="utf-8">
     <title>Add new item</title>
     <style>
-        <%@include file="../../../resources/style.css" %>
+        <%@include file="/resources/style.css" %>
     </style>
 </head>
 
-<body class="bodyClass">
+<body class="bodyClassGreen">
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<div class="addItem">
+<div class="outerDivLogin">
     <form:form method="POST" modelAttribute="itemForm">
-        <h2>Добавить товар</h2>
-        <div>
-            <form:input type="text" path="article" placeholder="article" autofocus="true"></form:input>
+        <h2 class="h2Light">Добавить товар</h2>
+        <div class="innerDivLogin">
+            <form:input type="text" path="article" placeholder="Артикул" autofocus="true" class="inputClassLight"/>
         </div>
-        <div>
-            <form:input type="text" path="name" placeholder="name"></form:input>
+        <div class="innerDivLogin">
+            <form:input type="text" path="name" placeholder="Наименование" class="inputClassLight"/>
         </div>
-        <div>
-            <form:input type="text" path="type" placeholder="type"></form:input>
+        <div class="innerDivLogin">
+            <form:input type="text" path="type" placeholder="Тип" class="inputClassLight"/>
         </div>
-        <div>
-            <form:input type="text" path="ean" placeholder="ean"></form:input>
+        <div class="innerDivLogin">
+            <form:input type="text" path="ean" placeholder="Штрих-код" class="inputClassLight"/>
         </div>
-        <button type="submit">Добавить</button>
+        <div class="innerDivLogin">
+            <button type="submit" class="inputClassLight">Добавить</button>
+        </div>
     </form:form>
 </div>
 

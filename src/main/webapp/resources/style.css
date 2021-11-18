@@ -16,24 +16,18 @@
     /*border: 2px solid yellow;*/
     display: inline-block;
     font-size: 12pt;
-
-
 }
-
-
 
 a{
     text-decoration: none;
     color: black;
     font-family: Arial;
     text-align: center;
-
 }
 
 button{
     text-align: center;
     cursor: pointer;
-
 }
 
 .h2Light{
@@ -46,7 +40,6 @@ button{
     color: white;
     text-align: center;
     font-size: 20pt;
-
     /*border: 2px solid violet;*/
 }
 .outerDivLogin{

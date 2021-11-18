@@ -7,30 +7,34 @@
 <head>
     <meta charset="utf-8">
     <title>Регистрация</title>
+    <style>
+        <%@include file="/resources/style.css" %>
+    </style>
 </head>
 
-<body>
-<div>
+<body class="bodyClassGreen">
+<div class="outerDivLogin">
     <form:form method="POST" modelAttribute="userForm">
-        <h2>Регистрация</h2>
-        <div>
+        <h2  class="h2Light">Регистрация</h2>
+        <div class="innerDivLogin">
             <form:input type="text" path="username" placeholder="Username"
-                        autofocus="true"></form:input>
-            <form:errors path="username"></form:errors>
+                        autofocus="true" class="inputClassLight"/>
+            <form:errors path="username"/>
                 ${usernameError}
         </div>
-        <div>
-            <form:input type="password" path="password" placeholder="Password"></form:input>
+        <div class="innerDivLogin">
+            <form:input type="password" path="password" placeholder="Password" class="inputClassLight"/>
         </div>
-        <div>
+        <div class="innerDivLogin">
             <form:input type="password" path="passwordConfirm"
-                        placeholder="Confirm your password"></form:input>
-            <form:errors path="password"></form:errors>
+                        placeholder="Confirm your password" class="inputClassLight"/>
+            <form:errors path="password"/>
                 ${passwordError}
         </div>
-        <button type="submit">Зарегистрироваться</button>
+        <div class="innerDivLogin">
+            <button type="submit" class="inputClassLight">Зарегистрироваться</button>
+        </div>
     </form:form>
-<%--    <a href="/">Главная</a>--%>
 </div>
 </body>
 </html>
