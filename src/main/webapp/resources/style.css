@@ -1,0 +1,70 @@
+.main{
+    /*background-color: aquamarine;*/
+}
+.bodyClassGreen{
+    background-color: mediumseagreen;
+}
+
+.inputClassLight{
+    background-color: white;
+    padding:7pt;
+    border-radius: 7pt;
+    border: none;
+    font-family: Arial;
+    width: 100%;
+    margin: auto;
+    /*border: 2px solid yellow;*/
+    display: inline-block;
+    font-size: 12pt;
+
+
+}
+
+
+
+a{
+    text-decoration: none;
+    color: black;
+    font-family: Arial;
+    text-align: center;
+
+}
+
+button{
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.h2Light{
+    color: black;
+    align-self: center;
+    font-family: Arial;
+    width: 100%;
+    margin: 20px auto 10px;
+    font-style: normal;
+    color: white;
+    text-align: center;
+    font-size: 20pt;
+
+    /*border: 2px solid violet;*/
+}
+.outerDivLogin{
+    width: 25%;
+    margin: auto;
+    /*border: 2px solid red;*/
+    padding: 5px;
+}
+
+.innerDivLogin{
+    display: inline-flex;
+    width: 100%;
+    color: black;
+    font-family: Arial;
+    /*border: 2px solid black;*/
+    margin: 5px auto;
+}
+
+
+
+

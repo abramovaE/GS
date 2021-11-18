@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.kotofeya.service.UserService;
+import ru.kotofeya.auth.service.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/news").hasRole("USER")
+
+//                .antMatchers("/storage/**").hasAnyRole("USER", "ADMIN")
+
+//                .antMatchers("/storage/**").hasAnyAuthority()
                 //Доступ разрешен всем пользователей
                 .antMatchers("/", "/resources/**").permitAll()
                 //Все остальные страницы требуют аутентификации
