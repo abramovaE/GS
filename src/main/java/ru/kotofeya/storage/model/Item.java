@@ -1,12 +1,6 @@
 package ru.kotofeya.storage.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import ru.kotofeya.auth.model.Role;
-import ru.kotofeya.auth.model.User;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -24,9 +18,17 @@ public class Item {
     private String type;
     @Column(name = "ean")
     private String ean;
-    @Transient
-    @ManyToMany(mappedBy = "items")
-    private Set<Storage> storages;
+    @Column(name = "user_id")
+    private int userId;
+    //dd.MM.yyyy
+    @Column(name = "date")
+    private String date;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Income> incomes;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Expand> expands;
 
     public Item() {}
     public Long getId() {return id;}
@@ -39,6 +41,9 @@ public class Item {
     public void setType(String type) {this.type = type;}
     public String getEan() {return ean;}
     public void setEan(String ean) {this.ean = ean;}
-    public Set<Storage> getStorages() {return storages;}
-    public void setStorages(Set<Storage> storages) {this.storages = storages;}
+    public int getUserId() {return userId;}
+    public void setUserId(int userId) {this.userId = userId;}
+    public String getDate() {return date;}
+    public void setDate(String date) {this.date = date;}
+
 }
