@@ -6,17 +6,36 @@
 <head>
     <meta charset="utf-8">
     <title>Storage</title>
+    <style>
+        <%@include file="/resources/style.css" %>
+    </style>
 </head>
 
-<body>
+<body class="bodyClassGreen">
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
 <div>
 <%--    <form method="POST" action="/addItem">--%>
-        <h2>Склад</h2>
-        <h4><a href="/add_item">Добавить товар</a></h4>
-        <h4><a href="/all_items">Посмотреть все товары</a></h4>
+        <h2 class="h2Light">Склад</h2>
+    <div class="storageMainPanel">
+        <div class="squareImgDiv"><a href="/add_income">
+            <div>+</div>
+            <div>Создать приход</div>
+            </a></div>
+        <div class="squareImgDiv"><a href="/add_expand">
+            <div>-</div>
+            <div>Создать расход</div>
+            </a></div>
+        <div class="squareImgDiv"><a href="/show_storage">
+            <div>$</div>
+            <div>Посмотреть остатки</div>
+            </a></div>
+    </div>
+
+
+
+
 <%--        <div>--%>
 <%--            &lt;%&ndash;            <input name="username" type="text" placeholder="Username"&ndash;%&gt;--%>
 <%--            &lt;%&ndash;                   autofocus="true"/>&ndash;%&gt;--%>

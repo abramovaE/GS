@@ -10,6 +10,9 @@
 </head>
 
 <body>
+<sec:authorize access="!isAuthenticated()">
+    <% response.sendRedirect("/"); %>
+</sec:authorize>
 <div>
     <table>
         <thead>

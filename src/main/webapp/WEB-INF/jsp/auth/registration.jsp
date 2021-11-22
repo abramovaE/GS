@@ -13,6 +13,7 @@
 </head>
 
 <body class="bodyClassGreen">
+
 <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="userForm">
         <h2  class="h2Light">Регистрация</h2>

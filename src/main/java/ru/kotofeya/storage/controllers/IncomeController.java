@@ -4,19 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.model.Income;
+import ru.kotofeya.storage.service.IncomeService;
 
 @Controller
-public class StorageController {
-
+public class IncomeController {
     @Autowired
-    private ItemService itemService;
+    private IncomeService incomeService;
 
-    // TODO: 22.11.2021 сделать актуальные остатки
-    @GetMapping("/show_storage")
+    @GetMapping("/add_income")
     public String  addIncome(Model model) {
-        model.addAttribute("items", itemService.getAllItems());
-        return "storage/all_items";
+        model.addAttribute("incomeForm", new Income());
+        return "storage/add_income";
     }
-    
 }

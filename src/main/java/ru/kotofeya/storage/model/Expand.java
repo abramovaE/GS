@@ -10,7 +10,7 @@ public class Expand {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
     @Column(name = "date")
     private String date;
     @ManyToOne
@@ -24,8 +24,8 @@ public class Expand {
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
-    public int getUserId() {return userId;}
-    public void setUserId(int userId) {this.userId = userId;}
+    public Integer getUserId() {return userId;}
+    public void setUserId(Integer userId) {this.userId = userId;}
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
     public Item getItem() {return item;}
