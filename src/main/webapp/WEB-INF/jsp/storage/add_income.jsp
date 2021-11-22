@@ -9,6 +9,7 @@
     <title>Add new income</title>
     <style>
         <%@include file="/resources/style.css" %>
+        <%@include file="/resources/add_income_style.css" %>
     </style>
 </head>
 
@@ -17,61 +18,38 @@
     <% response.sendRedirect("/"); %>
 </sec:authorize>
 <div class="outerDivTr">
-    <form:form method="POST" modelAttribute="incomeForm">
+
         <h2 class="h2Light">Создать приход</h2>
+        <div class="innerDivTr">
 
-        <table class="addIncome">
-            <th>Товар</th>
-            <th>Количество</th>
-            <th class="width100">Цена покупки</th>
-            <th class="width100">Цена покупки окончательная</th>
-            <th>Артикул в магазине</th>
-            <th>Магазин покупки</th>
-            <th>Номер партии</th>
-
-            <tr>
-                <td class="innerDivTr"><form:input type="text" path="item" placeholder="Товар" autofocus="true"/></td>
-                <td class="innerDivTr"><form:input type="text" path="count" placeholder="Количество" autofocus="true"/></td>
-                <td class="innerDivTr"><form:input type="text" path="purchasePrice" placeholder="Цена покупки"/></td>
-                <td class="innerDivTr"><form:input type="text" path="purchasePriceAct" placeholder="Цена покупки окончательная"/></td>
-                <td class="innerDivTr"><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
-                <td class="innerDivTr"><form:input type="text" path="store" placeholder="Магазин покупки"/></td>
-                <td class="innerDivTr"><form:input type="text" path="batchNumber" placeholder="Номер партии"/></td>
-            </tr>
-            <tr class="innerDivTr">
-                <td colspan="7">
-                    <button type="submit">Добавить</button>
-                </td>
-            </tr>
-        </table>
-
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="item" placeholder="Товар" autofocus="true" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="count" placeholder="Количество" autofocus="true" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="purchasePrice" placeholder="Цена покупки" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="purchasePriceAct" placeholder="Цена покупки окончательная"--%>
-<%--                        class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="storeArticle" placeholder="Артикул в магазине" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="store" placeholder="Магазин покупки" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivTr">--%>
-<%--            <form:input type="text" path="batchNumber" placeholder="Номер партии" class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="buttonDivTr">--%>
-<%--            <button type="submit" class="inputClassLight">Добавить</button>--%>
-<%--        </div>--%>
-    </form:form>
+            <form:form method="POST" modelAttribute="incomeForm">
+            <table class="addIncome">
+                <tr>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена покупки</th>
+                    <th>Цена покупки окончательная</th>
+                    <th>Артикул в магазине</th>
+                    <th>Магазин покупки</th>
+                    <th>Номер партии</th>
+                </tr>
+                <tr>
+                    <td><form:input type="text" path="item" placeholder="Товар" autofocus="true"/></td>
+                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"/></td>
+                    <td><form:input type="text" path="purchasePrice"/></td>
+                    <td><form:input type="text" path="purchasePriceAct"/></td>
+                    <td><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
+                    <td><form:input type="text" path="store" placeholder="Магазин покупки"/></td>
+                    <td><form:input type="text" path="batchNumber"/></td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <button type="submit">Добавить</button>
+                    </td>
+                </tr>
+            </table>
+            </form:form>
+        </div>
 </div>
-
 </body>
 </html>

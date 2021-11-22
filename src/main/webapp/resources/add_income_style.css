@@ -1,0 +1,56 @@
+.outerDivTr{
+    padding: 5px;
+}
+.innerDivTr{
+    display: flex;
+}
+.addIncome{
+    width: 100%;
+    margin: 0 auto;
+    /*border: 2px solid crimson;*/
+}
+
+.addIncome th{
+    color: white;
+    font-family: Arial;
+    font-size: 16px;
+    /*margin: 5px auto;*/
+    padding: 5px;
+}
+
+.addIncome tr td{
+    /*padding: 0;*/
+    /*margin: 0;*/
+    border: none;
+    border-radius: 7px;
+    background-color: mediumseagreen;
+    font-size: 12pt;
+    font-family: Arial;
+    padding: 2px;
+    /*width: 100%;*/
+    /*margin: 5px auto;*/
+    /*border: 2px solid violet;*/
+}
+
+.addIncome tr td input{
+    /*padding: 0;*/
+    /*margin: 0;*/
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Arial;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.addIncome tr td button{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Arial;
+    width: 100%;
+}

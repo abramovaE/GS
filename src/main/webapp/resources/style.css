@@ -48,12 +48,6 @@ button{
     /*border: 2px solid red;*/
     padding: 5px;
 }
-.outerDivTr{
-    width: 100%;
-    margin: auto;
-    /*border: 2px solid red;*/
-    padding: 5px;
-}
 
 .innerDivLogin{
     display: inline-flex;
@@ -62,49 +56,6 @@ button{
     font-family: Arial;
     /*border: 2px solid black;*/
     margin: 5px auto;
-}
-
-.innerDivTr{
-    /*background-color: white;*/
-    /*padding:7px;*/
-    /*border-radius: 7px;*/
-    /*border: none;*/
-    /*font-family: Arial;*/
-    /*width: 100%;*/
-    /*margin: auto;*/
-    /*border: 2px solid yellow;*/
-    /*display: inline-block;*/
-    /*font-size: 12pt;*/
-}
-
-.addIncome th{
-    color: white;
-    font-family: Arial;
-    font-size: 16px;
-    width: 100%;
-}
-.width100{
-    width: 100px;
-}
-.innerDivTr input{
-    border: none;
-    padding:7px;
-    border-radius: 7px;
-    background-color: white;
-    font-size: 12pt;
-    font-family: Arial;
-    margin: 5px;
-}
-
-.innerDivTr button{
-    border: none;
-    padding:7px;
-    border-radius: 7px;
-    background-color: white;
-    font-size: 12pt;
-    font-family: Arial;
-    margin: 5px;
-    width: 100%;
 }
 
 .buttonDivTr{
@@ -147,7 +98,6 @@ button{
     width: 100%;
     margin: 0 auto;
     display: inline-flex;
-
 }
 
 
