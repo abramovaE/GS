@@ -9,8 +9,8 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name = "user_name")
+    private String userName;
     @Column(name = "date")
     private String date;
     @ManyToOne
@@ -30,8 +30,8 @@ public class Income {
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
-    public int getUserId() {return userId;}
-    public void setUserId(int userId) {this.userId = userId;}
+    public String getUserName() {return userName;}
+    public void setUserName(String userName) {this.userName = userName;}
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
     public Item getItem() {return item;}
@@ -55,5 +55,21 @@ public class Income {
     public int getBatchNumber() {return batchNumber;}
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Income{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", item=" + item +
+                ", count=" + count +
+                ", purchasePrice=" + purchasePrice +
+                ", purchasePriceAct=" + purchasePriceAct +
+                ", storeArticle='" + storeArticle + '\'' +
+                ", store='" + store + '\'' +
+                ", batchNumber=" + batchNumber +
+                '}';
     }
 }

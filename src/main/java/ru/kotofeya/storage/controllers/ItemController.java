@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.Item;
 import ru.kotofeya.storage.service.ItemService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Controller
 public class ItemController {
@@ -31,6 +34,8 @@ public class ItemController {
 
     @PostMapping("/add_item")
     public String addItem(@ModelAttribute("itemForm") Item item, Model model) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+        item.setDate(LocalDateTime.now().format(dateTimeFormatter));
         itemService.saveItem(item);
         return "redirect:/all_items";
     }

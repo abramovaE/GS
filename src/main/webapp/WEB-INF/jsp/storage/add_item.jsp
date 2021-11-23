@@ -19,6 +19,7 @@
 <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="itemForm">
         <h2 class="h2Light">Добавить товар</h2>
+        <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
         <div class="innerDivLogin">
             <form:input type="text" path="article" placeholder="Артикул" autofocus="true" class="inputClassLight"/>
         </div>

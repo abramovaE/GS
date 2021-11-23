@@ -18,8 +18,8 @@ public class Item {
     private String type;
     @Column(name = "ean")
     private String ean;
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "user_name")
+    private String userName;
     //dd.MM.yyyy
     @Column(name = "date")
     private String date;
@@ -41,9 +41,8 @@ public class Item {
     public void setType(String type) {this.type = type;}
     public String getEan() {return ean;}
     public void setEan(String ean) {this.ean = ean;}
-    public Integer getUserId() {return userId;}
-    public void setUserId(Integer userId) {this.userId = userId;}
+    public String getUserName() {return userName;}
+    public void setUserName(String userName) {this.userName = userName;}
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
-
 }

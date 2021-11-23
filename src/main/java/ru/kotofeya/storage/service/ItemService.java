@@ -29,7 +29,9 @@ public class ItemService {
         itemFromDb.setName(item.getName());
         itemFromDb.setType(item.getType());
         itemFromDb.setEan(item.getEan());
-        itemRepository.save(item);
+        itemFromDb.setUserName(item.getUserName());
+        itemFromDb.setDate(item.getDate());
+        itemRepository.save(itemFromDb);
     }
 
     @Transactional

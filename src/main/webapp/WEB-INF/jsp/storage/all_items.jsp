@@ -23,6 +23,8 @@
         <th>Наименование</th>
         <th>Тип</th>
         <th>EAN-номер</th>
+        <th>Кто добавил</th>
+        <th>Когда добавил</th>
         <c:forEach items="${allItems}" var="item">
             <tr>
                 <td>${item.id}</td>
@@ -30,6 +32,8 @@
                 <td>${item.name}</td>
                 <td>${item.type}</td>
                 <td>${item.ean}</td>
+                <td>${item.userName}</td>
+                <td>${item.date}</td>
             </tr>
         </c:forEach>
     </table>
