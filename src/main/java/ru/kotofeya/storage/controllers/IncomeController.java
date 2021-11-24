@@ -20,22 +20,18 @@ import java.util.List;
 public class IncomeController {
     @Autowired
     private IncomeService incomeService;
-
     @Autowired
     private ItemService itemService;
-
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
-
 
     @GetMapping("/add_income")
     public String  addIncome(Model model) {
-
         List<Item> allItems = itemService.getAllItems();
         List<Income> todayIncomes = incomeService.getTodayIncomes(LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("items", allItems);
         model.addAttribute("incomeForm", new Income());
         model.addAttribute("todayIncomes", todayIncomes);
-
+        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         return "storage/add_income";
     }
 

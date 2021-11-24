@@ -63,7 +63,7 @@ public class Income {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", date='" + date + '\'' +
-                ", item=" + item +
+//                ", item=" + item +
                 ", count=" + count +
                 ", purchasePrice=" + purchasePrice +
                 ", purchasePriceAct=" + purchasePriceAct +

@@ -19,6 +19,7 @@ public class IncomeService {
     @Autowired
     IncomeRepository incomeRepository;
 
+    @Transactional
     public List<Income> getTodayIncomes(String date) {
         return incomeRepository.findIncomeByDate(date);
     }

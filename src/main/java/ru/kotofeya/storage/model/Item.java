@@ -24,10 +24,10 @@ public class Item {
     @Column(name = "date")
     private String date;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<Income> incomes;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<Expand> expands;
 
     public Item() {}
@@ -45,4 +45,19 @@ public class Item {
     public void setUserName(String userName) {this.userName = userName;}
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", article='" + article + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", ean='" + ean + '\'' +
+                ", userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", incomes=" + incomes +
+                ", expands=" + expands +
+                '}';
+    }
 }
