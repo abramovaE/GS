@@ -23,4 +23,19 @@ public class ExpandService {
         return expandRepository.findExpandsByDate(date);
     }
 
+    public void saveExpand(Expand expand){
+        Expand expandFromDb;
+        if(expand.getId() == null){
+            expandFromDb = new Expand();
+        } else {
+            expandFromDb = expandRepository.findById(expand.getId()).orElse(new Expand());
+        }
+        expandFromDb.setDate(expand.getDate());
+        expandFromDb.setItem(expand.getItem());
+        expandFromDb.setBatchNumber(expand.getBatchNumber());
+        expandFromDb.setCount(expand.getCount());
+        expandFromDb.setUserName(expand.getUserName());
+        expandFromDb.setSalePrice(expand.getSalePrice());
+        expandRepository.save(expandFromDb);
+    }
 }

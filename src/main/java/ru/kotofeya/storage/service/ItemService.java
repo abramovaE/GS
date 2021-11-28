@@ -31,6 +31,7 @@ public class ItemService {
         itemFromDb.setEan(item.getEan());
         itemFromDb.setUserName(item.getUserName());
         itemFromDb.setDate(item.getDate());
+        itemFromDb.setCount(item.getCount());
         itemRepository.save(itemFromDb);
     }
 
@@ -40,7 +41,17 @@ public class ItemService {
     }
 
     @Transactional
+    public Item getById(long id){
+        return itemRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
     public List<Item> getAllItems(){
         return itemRepository.findAll();
+    }
+
+    @Transactional
+    public List<Item> getAllItemsWithCount(){
+        return itemRepository.findByCountIsNotNull();
     }
 }

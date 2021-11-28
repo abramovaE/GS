@@ -28,18 +28,16 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
+
 <div class="outerDivTr">
-        <h2 class="h2Light">Создать приход</h2>
+        <h2 class="h2Light">Создать расход</h2>
         <div class="innerDivTr">
-            <form:form method="POST" modelAttribute="incomeForm">
+            <form:form method="POST" modelAttribute="expandForm">
             <table class="addIncome">
                 <tr>
                     <th>Товар</th>
                     <th>Количество</th>
-                    <th>Цена покупки</th>
-                    <th>Цена покупки окончательная</th>
-                    <th>Артикул в магазине</th>
-                    <th>Магазин покупки</th>
+                    <th>Цена продажи</th>
                     <th>Номер партии</th>
                 </tr>
                 <tr>
@@ -47,20 +45,16 @@
                         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                         <form:select path="item" onchange="javascript:handleSelect(this)">
                             <form:option value="-" label=""/>
-                            <form:option value="0" label="Добавить товар"/>
                                 <c:forEach items="${items}" var="item">
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
                     <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"/></td>
-                    <td><form:input type="text" path="purchasePrice"/></td>
-                    <td><form:input type="text" path="purchasePriceAct"/></td>
-                    <td><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
-                    <td><form:input type="text" path="store" placeholder="Магазин покупки"/></td>
+                    <td><form:input type="text" path="salePrice"/></td>
                     <td><form:input type="text" path="batchNumber"/></td>
                 </tr>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="4">
                         <button type="submit">Добавить</button>
                     </td>
                 </tr>
@@ -68,7 +62,7 @@
             </form:form>
         </div>
 
-    <h2 class="h2TodayIncomes">Приходы ${date}</h2>
+    <h2 class="h2TodayIncomes">Расходы ${date}</h2>
     <div class="innerDivTr">
         <table class="todayIncomes">
             <tr>
@@ -76,23 +70,19 @@
                 <th>Дата</th>
                 <th>Товар</th>
                 <th>Количество</th>
-                <th>Цена покупки</th>
-                <th>Цена покупки окончательная</th>
-                <th>Артикул в магазине</th>
-                <th>Магазин покупки</th>
+                <th>Цена продажи, руб.</th>
                 <th>Номер партии</th>
+                <th>Сумма продажи, руб.</th>
+                <th></th>
             </tr>
-                <c:forEach items="${todayIncomes}" var="income">
+                <c:forEach items="${todayExpands}" var="expand">
                     <tr>
-                        <td>${income.userName}</td>
-                        <td>${income.date}</td>
-                        <td>${income.item.name}</td>
-                        <td>${income.count}</td>
-                        <td>${income.purchasePrice}</td>
-                        <td>${income.purchasePriceAct}</td>
-                        <td>${income.storeArticle}</td>
-                        <td>${income.store}</td>
-                        <td>${income.batchNumber}</td>
+                        <td>${expand.userName}</td>
+                        <td>${expand.date}</td>
+                        <td>${expand.item.name}</td>
+                        <td>${expand.count}</td>
+                        <td>${expand.salePrice}</td>
+                        <td>${expand.batchNumber}</td>
                     </tr>
                 </c:forEach>
         </table>

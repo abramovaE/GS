@@ -28,6 +28,11 @@ public class Income {
     @Column(name = "batch_number")
     private int batchNumber;
 
+    @Transient
+    private double purchasePriceDouble;
+    @Transient
+    private double purchasePriceActDouble;
+
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getUserName() {return userName;}
@@ -55,6 +60,16 @@ public class Income {
     public int getBatchNumber() {return batchNumber;}
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
+    }
+    public double getPurchasePriceDouble() {return purchasePriceDouble;}
+    public void setPurchasePriceDouble(double purchasePriceDouble) {
+        this.purchasePriceDouble = purchasePriceDouble;
+    }
+    public double getPurchasePriceActDouble() {
+        return purchasePriceActDouble;
+    }
+    public void setPurchasePriceActDouble(double purchasePriceActDouble) {
+        this.purchasePriceActDouble = purchasePriceActDouble;
     }
 
     @Override

@@ -25,6 +25,7 @@
         <th>EAN-номер</th>
         <th>Кто добавил</th>
         <th>Когда добавил</th>
+        <th>Актуальное количество</th>
         <c:forEach items="${allItems}" var="item">
             <tr>
                 <td>${item.id}</td>
@@ -34,6 +35,7 @@
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>
+                <td>${item.count}</td>
             </tr>
         </c:forEach>
     </table>

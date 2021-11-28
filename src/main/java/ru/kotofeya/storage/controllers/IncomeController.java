@@ -40,6 +40,12 @@ public class IncomeController {
         System.out.println("post add income: " + income);
         income.setDate(LocalDateTime.now().format(dateTimeFormatter));
         incomeService.saveIncome(income);
+        Item item = itemService.getById(income.getItem().getId());
+        if(item != null) {
+            int count = item.getCount() == null? 0 : item.getCount();
+            item.setCount(count + income.getCount());
+            itemService.saveItem(item);
+        }
         return "redirect:/add_income";
     }
 }

@@ -18,11 +18,20 @@
 
 <body class="bodyClassGreen">
 <script type="text/javascript">
-    function handleSelect(elm)
-    {
+    // let ppDouble = 0;
+
+    function handleSelect(elm) {
         if(elm.value == 0) {
             window.location = "/add_item";
         }
+    }
+
+    function handlePrice(){
+        var count = document.getElementById('incomeForm').count.value
+        var ppDouble = document.getElementById('incomeForm').purchasePriceDouble.value
+        var ppActDouble = document.getElementById('incomeForm').purchasePriceActDouble.value
+        document.getElementById('ppSum').innerHTML = count * ppDouble
+        document.getElementById('ppActSum').innerHTML = count * ppActDouble
     }
 </script>
 <sec:authorize access="!isAuthenticated()">
@@ -31,16 +40,18 @@
 <div class="outerDivTr">
         <h2 class="h2Light">Создать приход</h2>
         <div class="innerDivTr">
-            <form:form method="POST" modelAttribute="incomeForm">
+            <form:form method="POST" modelAttribute="incomeForm" id="incomeForm">
             <table class="addIncome">
                 <tr>
                     <th>Товар</th>
                     <th>Количество</th>
-                    <th>Цена покупки</th>
-                    <th>Цена покупки окончательная</th>
+                    <th>Цена покупки, руб.</th>
+                    <th>Цена покупки окончательная, руб.</th>
                     <th>Артикул в магазине</th>
                     <th>Магазин покупки</th>
                     <th>Номер партии</th>
+                    <th>Сумма покупки, руб.</th>
+                    <th>Сумма покупки окончательная, руб.</th>
                 </tr>
                 <tr>
                     <td>
@@ -52,15 +63,20 @@
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
-                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"/></td>
-                    <td><form:input type="text" path="purchasePrice"/></td>
-                    <td><form:input type="text" path="purchasePriceAct"/></td>
+                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"
+                                    onchange="javascript:handlePrice()"/></td>
+                    <td><form:input type="number" step="0.01" path="purchasePriceDouble"
+                                    onchange="javascript:handlePrice()"/></td>
+                    <td><form:input type="number" step="0.01" path="purchasePriceActDouble"
+                                    onchange="javascript:handlePrice()"/></td>
                     <td><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
                     <td><form:input type="text" path="store" placeholder="Магазин покупки"/></td>
                     <td><form:input type="text" path="batchNumber"/></td>
+                    <td><div id="ppSum" class="addIncomeInput">0.00</div></td>
+                    <td><div id="ppActSum" class="addIncomeInput">0.00</div></td>
                 </tr>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="9">
                         <button type="submit">Добавить</button>
                     </td>
                 </tr>

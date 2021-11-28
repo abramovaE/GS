@@ -23,12 +23,16 @@ public class Item {
     //dd.MM.yyyy
     @Column(name = "date")
     private String date;
+    @Column(name = "count")
+    private Integer count;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<Income> incomes;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<Expand> expands;
+
+
 
     public Item() {}
     public Long getId() {return id;}
@@ -45,6 +49,8 @@ public class Item {
     public void setUserName(String userName) {this.userName = userName;}
     public String getDate() {return date;}
     public void setDate(String date) {this.date = date;}
+    public Integer getCount() {return count;}
+    public void setCount(Integer count) {this.count = count;}
 
     @Override
     public String toString() {
