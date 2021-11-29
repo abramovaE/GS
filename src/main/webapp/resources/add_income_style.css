@@ -91,6 +91,16 @@
     width: 100%;
 }
 
+/*.todayIncomes tr td a{*/
+/*    border: none;*/
+/*    padding:7px;*/
+/*    border-radius: 7px;*/
+/*    background-color: white;*/
+/*    font-size: 12pt;*/
+/*    font-family: Arial;*/
+/*    box-sizing: border-box;*/
+/*    width: 100%;*/
+/*}*/
 
 
 .h2TodayIncomes{
@@ -114,4 +124,8 @@
     font-family: Arial;
     box-sizing: border-box;
     width: 100%;
+}
+
+.edit{
+    margin: 2px;
 }

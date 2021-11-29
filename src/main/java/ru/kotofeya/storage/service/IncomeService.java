@@ -39,10 +39,18 @@ public class IncomeService {
         incomeFromDb.setBatchNumber(income.getBatchNumber());
         incomeFromDb.setCount(income.getCount());
         incomeFromDb.setUserName(income.getUserName());
-//        incomeFromDb.setPurchasePrice(income.getPurchasePrice());
-//        incomeFromDb.setPurchasePriceAct(income.getPurchasePriceAct());
-        incomeFromDb.setStoreArticle(income.getStore());
+        incomeFromDb.setStore(income.getStore());
         incomeFromDb.setStoreArticle(income.getStoreArticle());
         incomeRepository.save(incomeFromDb);
+    }
+
+    @Transactional
+    public Income getIncomeById(long id){
+        return incomeRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void deleteIncomeById(long id){
+        incomeRepository.deleteById(id);
     }
 }

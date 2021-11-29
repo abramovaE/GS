@@ -18,7 +18,6 @@
 
 <body class="bodyClassGreen">
 <script type="text/javascript">
-    // let ppDouble = 0;
 
     function handleSelect(elm) {
         if(elm.value == 0) {
@@ -56,6 +55,19 @@
         }
     }
 
+    function showEditPanel(id){
+        document.getElementById('edit' + id).style.display = 'block'
+        document.getElementById('delete' + id).style.display = 'block'
+        document.getElementById('editth').style.display = 'block'
+        document.getElementById('deleteth').style.display = 'block'
+    }
+    function hideEditPanel(id){
+        document.getElementById('edit' + id).style.display = 'none'
+        document.getElementById('delete' + id).style.display = 'none'
+        document.getElementById('editth').style.display = 'none'
+        document.getElementById('deleteth').style.display = 'none'
+    }
+
 
 
 </script>
@@ -82,7 +94,7 @@
                     <td>
                         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                         <form:select required="true" path="item" onchange="javascript:handleSelect(this)">
-<%--                            <form:option value="-1" label=""/>--%>
+                            <form:option value="-1" label=""/>
                             <form:option value="0" label="Добавить товар"/>
                                 <c:forEach items="${items}" var="item">
                                     <form:option value="${item.id}" label="${item.name}"/>
@@ -122,18 +134,31 @@
                 <th>Артикул в магазине</th>
                 <th>Магазин покупки</th>
                 <th>Номер партии</th>
+                <th>Сумма покупки, руб.</th>
+                <th>Сумма покупки окончательная, руб.</th>
+                <th id="editth" class="edit" hidden></th>
+                <th id="deleteth" class="edit" hidden></th>
             </tr>
                 <c:forEach items="${todayIncomes}" var="income">
-                    <tr>
+                    <tr onmouseover="javascript:showEditPanel(${income.id})"
+                        onmouseout="javascript:hideEditPanel(${income.id})">
                         <td>${income.userName}</td>
                         <td>${income.date}</td>
                         <td>${income.item.name}</td>
                         <td>${income.count}</td>
-                        <td>${income.purchasePrice}</td>
-                        <td>${income.purchasePriceAct}</td>
+                        <td>${income.purchasePrice/100}</td>
+                        <td>${income.purchasePriceAct/100}</td>
                         <td>${income.storeArticle}</td>
                         <td>${income.store}</td>
                         <td>${income.batchNumber}</td>
+                        <td>${income.count * income.purchasePrice/100}</td>
+                        <td>${income.count * income.purchasePriceAct/100}</td>
+                        <td class="edit" id="edit${income.id}" hidden>
+                            <a href="/edit_income/${income.id}">Редактировать</a>
+                        </td>
+                        <td class="edit" id="delete${income.id}" hidden>
+                            <a href="/delete_income/${income.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                        </td>
                     </tr>
                 </c:forEach>
         </table>
