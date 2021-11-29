@@ -24,15 +24,40 @@
         if(elm.value == 0) {
             window.location = "/add_item";
         }
+        if(elm.value > 0){
+            document.getElementById('subm').disabled = false
+        }
     }
 
     function handlePrice(){
         var count = document.getElementById('incomeForm').count.value
         var ppDouble = document.getElementById('incomeForm').purchasePriceDouble.value
         var ppActDouble = document.getElementById('incomeForm').purchasePriceActDouble.value
-        document.getElementById('ppSum').innerHTML = count * ppDouble
-        document.getElementById('ppActSum').innerHTML = count * ppActDouble
+        document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
+        document.getElementById('ppActSum').innerHTML = Math.round(count * ppActDouble * 100)/100
     }
+
+    function clearCount(){
+        let value = document.getElementById('incomeForm').count.value;
+        if(value == 0){
+            document.getElementById('incomeForm').count.value = "";
+        }
+    }
+    function  clearPpDouble() {
+        let value = document.getElementById('incomeForm').purchasePriceDouble.value;
+        if (value == 0) {
+            document.getElementById('incomeForm').purchasePriceDouble.value = "";
+        }
+    }
+    function clearPpActDouble() {
+        let value = document.getElementById('incomeForm').purchasePriceActDouble.value;
+        if (value == 0) {
+            document.getElementById('incomeForm').purchasePriceActDouble.value = "";
+        }
+    }
+
+
+
 </script>
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
@@ -56,28 +81,28 @@
                 <tr>
                     <td>
                         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
-                        <form:select path="item" onchange="javascript:handleSelect(this)">
-                            <form:option value="-" label=""/>
+                        <form:select required="true" path="item" onchange="javascript:handleSelect(this)">
+<%--                            <form:option value="-1" label=""/>--%>
                             <form:option value="0" label="Добавить товар"/>
                                 <c:forEach items="${items}" var="item">
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
-                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"
-                                    onchange="javascript:handlePrice()"/></td>
-                    <td><form:input type="number" step="0.01" path="purchasePriceDouble"
-                                    onchange="javascript:handlePrice()"/></td>
-                    <td><form:input type="number" step="0.01" path="purchasePriceActDouble"
-                                    onchange="javascript:handlePrice()"/></td>
+                    <td><form:input type="number" placeholder="Количество" min = "0" path="count"
+                                    onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/></td>
+                    <td><form:input type="number" placeholder="Цена покупки" min = "0" step="0.01" path="purchasePriceDouble"
+                                    onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/></td>
+                    <td><form:input type="number" placeholder="Цена покупки окончательная" min = "0" step="0.01" path="purchasePriceActDouble"
+                                    onchange="javascript:handlePrice()" onfocus="javascript:clearPpActDouble()"/></td>
                     <td><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
                     <td><form:input type="text" path="store" placeholder="Магазин покупки"/></td>
-                    <td><form:input type="text" path="batchNumber"/></td>
+                    <td><form:input type="text" placeholder="Номер партии"  path="batchNumber"/></td>
                     <td><div id="ppSum" class="addIncomeInput">0.00</div></td>
                     <td><div id="ppActSum" class="addIncomeInput">0.00</div></td>
                 </tr>
                 <tr>
                     <td colspan="9">
-                        <button type="submit">Добавить</button>
+                        <button type="submit" id="subm" disabled="true">Добавить</button>
                     </td>
                 </tr>
             </table>
