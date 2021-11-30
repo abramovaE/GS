@@ -1,6 +1,4 @@
 package ru.kotofeya.storage.model;
-
-
 import javax.persistence.*;
 
 @Entity
@@ -80,7 +78,7 @@ public class DeletedIncome {
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
     }
-    
+
     @Override
     public String toString() {
         return "Income{" +

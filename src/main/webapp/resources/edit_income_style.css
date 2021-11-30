@@ -1,0 +1,41 @@
+.outerDivLogin{
+    width: 50%;
+    /*margin: auto;*/
+    /*padding: 5px;*/
+}
+
+.innerDivLogin{
+    /*align-items: center;*/
+    /*display: flex;*/
+}
+
+.innerDivLogin label, .innerDivLogin .label{
+    width: 30%;
+    border: 2px solid white;
+    padding:7pt;
+    border-radius: 7pt;
+    font-family: Arial;
+    margin: auto;
+    margin-right: 2px;
+    /*border: 2px solid yellow;*/
+    display: inline-block;
+    font-size: 12pt;
+    color: white;
+    box-sizing: border-box;
+}
+
+.innerDivLogin input, .innerDivLogin select, .innerDivLogin .input {
+    width: 70%;
+    margin: 0;
+    box-sizing: border-box;
+}
+.input{
+    margin: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+    align-items: center;
+    display: flex;
+}
+.selected{
+    color: green;
+}

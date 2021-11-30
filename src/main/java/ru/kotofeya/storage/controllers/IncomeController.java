@@ -72,4 +72,25 @@ public class IncomeController {
         }
         return "redirect:/add_income";
     }
+
+    @GetMapping("/edit_income/{incomeId}")
+    public String editIncome(@PathVariable ("incomeId") Long incomeId,
+                               Model model) {
+        Income income = incomeService.getIncomeById(incomeId);
+        if(income != null){
+            Item item = itemService.getById(income.getItem().getId());
+            income.setItem(item);
+            income.setPurchasePriceDouble(income.getPurchasePrice()/100d);
+            income.setPurchasePriceActDouble(income.getPurchasePriceAct()/100d);
+            List<Item> allItems = itemService.getAllItems();
+            model.addAttribute("currentItem", item);
+            model.addAttribute("items", allItems);
+            model.addAttribute("incomeForm", income);
+            model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+            model.addAttribute("ppSum", (income.getCount() * income.getPurchasePrice()/100d));
+            model.addAttribute("ppSumAct", (income.getCount() * income.getPurchasePriceAct()/100d));
+            return "storage/edit_income";
+        }
+        return "redirect:/add_income";
+    }
 }
