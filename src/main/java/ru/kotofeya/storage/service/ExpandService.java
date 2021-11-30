@@ -35,7 +35,17 @@ public class ExpandService {
         expandFromDb.setBatchNumber(expand.getBatchNumber());
         expandFromDb.setCount(expand.getCount());
         expandFromDb.setUserName(expand.getUserName());
-        expandFromDb.setSalePrice(expand.getSalePrice());
+        expandFromDb.setSalePrice((expand.getSalePrice()));
         expandRepository.save(expandFromDb);
+    }
+
+    @Transactional
+    public Expand getExpandById(long id){
+        return expandRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void deleteExpandById(long id){
+        expandRepository.deleteById(id);
     }
 }

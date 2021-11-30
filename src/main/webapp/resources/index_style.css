@@ -1,0 +1,52 @@
+.topPanel{
+    /*border: 2px solid red;*/
+    display: inline-flex;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.topPanelFirst{
+    width: 30%;
+    box-sizing: border-box;
+    /*border: 2px solid green;*/
+    background-color: white;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px;
+    font-family: Arial;
+    font-size: 18pt;
+}
+
+.topPanelLast{
+    width: 70%;
+    box-sizing: border-box;
+    /*border: 2px solid pink;*/
+}
+
+.topPanelLast div{
+    background-color: white;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px;
+    text-align: right;
+    font-family: Arial;
+    font-size: 18pt;
+}
+
+.indexPanel{
+    border-radius: 7px;
+    border: 2px solid white;
+    margin: 5px;
+    padding: 10px;
+}
+
+.label{
+    background-color: white;
+    padding: 7px;
+    border-radius: 7px;
+    font-family: Arial;
+    font-size: 18pt;
+    text-align: center;
+    margin-bottom: 30px;
+}

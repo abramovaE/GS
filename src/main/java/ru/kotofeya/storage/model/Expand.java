@@ -19,6 +19,8 @@ public class Expand {
     private int count;
     @Column(name = "sale_price")
     private int salePrice;
+    @Transient
+    private double salePriceDouble;
     @Column(name = "batch_number")
     private int batchNumber;
 
@@ -34,8 +36,11 @@ public class Expand {
     public void setCount(int count) {this.count = count;}
     public int getSalePrice() {return salePrice;}
     public void setSalePrice(int salePrice) {this.salePrice = salePrice;}
+    public double getSalePriceDouble() {return salePriceDouble;}
+    public void setSalePriceDouble(double salePriceDouble) {this.salePriceDouble = salePriceDouble;}
     public int getBatchNumber() {return batchNumber;}
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
     }
+
 }

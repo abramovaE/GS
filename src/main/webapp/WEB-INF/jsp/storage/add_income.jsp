@@ -55,16 +55,17 @@
         }
     }
 
+
     function showEditPanel(id){
-        document.getElementById('edit' + id).style.display = 'block'
+        // document.getElementById('edit' + id).style.display = 'block'
         document.getElementById('delete' + id).style.display = 'block'
-        document.getElementById('editth').style.display = 'block'
+        // document.getElementById('editth').style.display = 'block'
         document.getElementById('deleteth').style.display = 'block'
     }
     function hideEditPanel(id){
-        document.getElementById('edit' + id).style.display = 'none'
+        // document.getElementById('edit' + id).style.display = 'none'
         document.getElementById('delete' + id).style.display = 'none'
-        document.getElementById('editth').style.display = 'none'
+        // document.getElementById('editth').style.display = 'none'
         document.getElementById('deleteth').style.display = 'none'
     }
 

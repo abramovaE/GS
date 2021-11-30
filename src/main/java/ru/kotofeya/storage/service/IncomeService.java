@@ -32,8 +32,8 @@ public class IncomeService {
         } else {
             incomeFromDb = incomeRepository.findById(income.getId()).orElse(new Income());
         }
-        incomeFromDb.setPurchasePrice((int) (income.getPurchasePriceDouble() * 100));
-        incomeFromDb.setPurchasePriceAct((int) (income.getPurchasePriceActDouble() * 100));
+        incomeFromDb.setPurchasePrice(income.getPurchasePrice());
+        incomeFromDb.setPurchasePriceAct(income.getPurchasePriceAct());
         incomeFromDb.setDate(income.getDate());
         incomeFromDb.setItem(income.getItem());
         incomeFromDb.setBatchNumber(income.getBatchNumber());

@@ -41,7 +41,6 @@
     width: 100%;
 }
 
-
 .addIncome tr td select{
     border: none;
     padding:7px;
@@ -72,6 +71,9 @@
     padding: 2px;
 }
 
+.todayIncomes{
+    width: 100%;
+}
 
 .todayIncomes th{
     color: white;

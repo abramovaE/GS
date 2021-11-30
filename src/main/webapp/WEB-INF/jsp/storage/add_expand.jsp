@@ -18,11 +18,35 @@
 
 <body class="bodyClassGreen">
 <script type="text/javascript">
-    function handleSelect(elm)
-    {
-        if(elm.value == 0) {
-            window.location = "/add_item";
+    function handlePrice(){
+        var count = document.getElementById('expandForm').count.value
+        var ppDouble = document.getElementById('expandForm').salePriceDouble.value
+        document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
+    }
+    function clearCount(){
+        let value = document.getElementById('expandForm').count.value;
+        if(value == 0){
+            document.getElementById('expandForm').count.value = "";
         }
+    }
+    function  clearPpDouble() {
+        let value = document.getElementById('expandForm').salePriceDouble.value;
+        if (value == 0) {
+            document.getElementById('expandForm').salePriceDouble.value = "";
+        }
+    }
+
+    function showEditPanel(id){
+        // document.getElementById('edit' + id).style.display = 'block'
+        document.getElementById('delete' + id).style.display = 'block'
+        // document.getElementById('editth').style.display = 'block'
+        document.getElementById('deleteth').style.display = 'block'
+    }
+    function hideEditPanel(id){
+        // document.getElementById('edit' + id).style.display = 'none'
+        document.getElementById('delete' + id).style.display = 'none'
+        // document.getElementById('editth').style.display = 'none'
+        document.getElementById('deleteth').style.display = 'none'
     }
 </script>
 <sec:authorize access="!isAuthenticated()">
@@ -37,24 +61,28 @@
                 <tr>
                     <th>Товар</th>
                     <th>Количество</th>
-                    <th>Цена продажи</th>
+                    <th>Цена продажи, руб.</th>
                     <th>Номер партии</th>
+                    <th>Сумма продажи, руб.</th>
                 </tr>
                 <tr>
                     <td>
                         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
-                        <form:select path="item" onchange="javascript:handleSelect(this)">
+                        <form:select path="item">
                             <form:option value="-" label=""/>
                                 <c:forEach items="${items}" var="item">
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
-                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"/></td>
-                    <td><form:input type="text" path="salePrice"/></td>
+                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"
+                                    onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/></td>
+                    <td><form:input type="text" path="salePriceDouble" placeholder="Цена продажи" min = "0" step="0.01"
+                                    onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/></td>
                     <td><form:input type="text" path="batchNumber"/></td>
+                    <td><div id="ppSum" class="addIncomeInput">0.00</div></td>
                 </tr>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <button type="submit">Добавить</button>
                     </td>
                 </tr>
@@ -73,16 +101,25 @@
                 <th>Цена продажи, руб.</th>
                 <th>Номер партии</th>
                 <th>Сумма продажи, руб.</th>
-                <th></th>
+                <th id="editth" class="edit" hidden></th>
+                <th id="deleteth" class="edit" hidden></th>
             </tr>
                 <c:forEach items="${todayExpands}" var="expand">
-                    <tr>
+                    <tr onmouseover="javascript:showEditPanel(${expand.id})"
+                        onmouseout="javascript:hideEditPanel(${expand.id})">
                         <td>${expand.userName}</td>
                         <td>${expand.date}</td>
                         <td>${expand.item.name}</td>
                         <td>${expand.count}</td>
                         <td>${expand.salePrice}</td>
                         <td>${expand.batchNumber}</td>
+                        <td>${expand.count * expand.salePrice/100}</td>
+                        <td class="edit" id="edit${expand.id}" hidden>
+                            <a href="/edit_expand/${expand.id}">Редактировать</a>
+                        </td>
+                        <td class="edit" id="delete${expand.id}" hidden>
+                            <a href="/delete_expand/${expand.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                        </td>
                     </tr>
                 </c:forEach>
         </table>

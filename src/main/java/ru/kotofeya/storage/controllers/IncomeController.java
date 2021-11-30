@@ -27,6 +27,7 @@ public class IncomeController {
     private ItemService itemService;
     @Autowired
     private DeletedIncomeService deletedIncomeService;
+
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/add_income")
@@ -44,6 +45,8 @@ public class IncomeController {
     public String addIncome(@ModelAttribute("incomeForm") Income income, Model model) {
         System.out.println("post add income: " + income);
         income.setDate(LocalDateTime.now().format(dateTimeFormatter));
+        income.setPurchasePrice((int) (income.getPurchasePriceDouble() * 100));
+        income.setPurchasePriceAct((int) (income.getPurchasePriceActDouble() * 100));
         incomeService.saveIncome(income);
         Item item = itemService.getById(income.getItem().getId());
         if(item != null) {
@@ -73,24 +76,33 @@ public class IncomeController {
         return "redirect:/add_income";
     }
 
-    @GetMapping("/edit_income/{incomeId}")
-    public String editIncome(@PathVariable ("incomeId") Long incomeId,
-                               Model model) {
-        Income income = incomeService.getIncomeById(incomeId);
-        if(income != null){
-            Item item = itemService.getById(income.getItem().getId());
-            income.setItem(item);
-            income.setPurchasePriceDouble(income.getPurchasePrice()/100d);
-            income.setPurchasePriceActDouble(income.getPurchasePriceAct()/100d);
-            List<Item> allItems = itemService.getAllItems();
-            model.addAttribute("currentItem", item);
-            model.addAttribute("items", allItems);
-            model.addAttribute("incomeForm", income);
-            model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-            model.addAttribute("ppSum", (income.getCount() * income.getPurchasePrice()/100d));
-            model.addAttribute("ppSumAct", (income.getCount() * income.getPurchasePriceAct()/100d));
-            return "storage/edit_income";
-        }
-        return "redirect:/add_income";
-    }
+//    @GetMapping("/edit_income/{incomeId}")
+//    public String editIncome(@PathVariable ("incomeId") Long incomeId,
+//                               Model model) {
+//        Income income = incomeService.getIncomeById(incomeId);
+//        if(income != null){
+//            Item item = itemService.getById(income.getItem().getId());
+//            income.setItem(item);
+//            income.setPurchasePriceDouble(income.getPurchasePrice()/100d);
+//            income.setPurchasePriceActDouble(income.getPurchasePriceAct()/100d);
+//            List<Item> allItems = itemService.getAllItems();
+//            model.addAttribute("currentItem", item);
+//            model.addAttribute("items", allItems);
+//            model.addAttribute("incomeForm", income);
+//            model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+//            model.addAttribute("ppSum", (income.getCount() * income.getPurchasePrice()/100d));
+//            model.addAttribute("ppSumAct", (income.getCount() * income.getPurchasePriceAct()/100d));
+//            return "storage/edit_income";
+//        }
+//        return "redirect:/add_income";
+//    }
+//
+//    @PostMapping("/edit_income/{incomeId}")
+//    public String editIncome(Model model,
+//                             @PathVariable("incomeId") Long incomeId,
+//                             @ModelAttribute("incomeForm") Income income) {
+    // TODO: 30.11.2021 save, logging, save editIncome 
+//        incomeService.saveIncome(income);
+//        return "redirect:/edit_income/" + incomeId;
+//    }
 }
