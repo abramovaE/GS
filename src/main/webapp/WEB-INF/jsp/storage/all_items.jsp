@@ -6,29 +6,30 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Storage</title>
+    <title>Show all items</title>
+    <style>
+        <%@include file="/resources/style.css" %>
+        <%@include file="/resources/all_items.css" %>
+    </style>
 </head>
 
-<body>
+<body  class="bodyClassGreen">
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<div>
-    <h2>Все товары</h2>
+<div class="outerDivTr">
+    <h2  class="h2Light">Все товары</h2>
     <h4><a href="/add_item">Добавить товар</a></h4>
-
-    <table>
-        <th>id</th>
-        <th>Артикул</th>
-        <th>Наименование</th>
-        <th>Тип</th>
-        <th>EAN-номер</th>
-        <th>Кто добавил</th>
-        <th>Когда добавил</th>
-        <th>Актуальное количество</th>
-        <c:forEach items="${allItems}" var="item">
+    <table class="addIncome">
+        <th><a href="<c:url value="/allItems/sortBy/article"/>">Артикул</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/name"/>">Наименование</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/type"/>">Тип</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/ean"/>">EAN-номер</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/username"/>">Кто добавил</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/date"/>">Дата добавления</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/count"/>">Актуальное количество</a></th>
+        <c:forEach items="${items}" var="item">
             <tr>
-                <td>${item.id}</td>
                 <td>${item.article}</td>
                 <td>${item.name}</td>
                 <td>${item.type}</td>

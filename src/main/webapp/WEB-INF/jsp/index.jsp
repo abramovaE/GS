@@ -32,11 +32,9 @@
         </div>
     </div>
 
-    <div class="indexPanel">
-        <sec:authorize access="isAuthenticated()">
+    <sec:authorize access="isAuthenticated()">
+        <div class="indexPanel">
             <div class="label">Склад</div>
-
-
             <div class="storageMainPanel">
                 <div class="squareImgDiv"><a href="/add_income">
                     <div>+</div>
@@ -51,10 +49,8 @@
                     <div>Посмотреть остатки</div>
                 </a></div>
             </div>
-
-
-        </sec:authorize>
-    </div>
+        </div>
+    </sec:authorize>
 
 
 <%--    <h4><a href="/news">Новости (только пользователь)</a></h4>--%>

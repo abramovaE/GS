@@ -20,11 +20,11 @@ public class ItemController {
     private ItemService itemService;
 
 
-    @GetMapping("/all_items")
-    public String  gtItems(Model model) {
-        model.addAttribute("allItems", itemService.getAllItems());
-        return "storage/all_items";
-    }
+//    @GetMapping("/all_items")
+//    public String  allItems(Model model) {
+//        model.addAttribute("allItems", itemService.getAllItems());
+//        return "storage/all_items";
+//    }
 
     @GetMapping("/add_item")
     public String  addItem(Model model) {
@@ -36,7 +36,8 @@ public class ItemController {
     public String addItem(@ModelAttribute("itemForm") Item item, Model model) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
         item.setDate(LocalDateTime.now().format(dateTimeFormatter));
+        item.setCount(0);
         itemService.saveItem(item);
-        return "redirect:/all_items";
+        return "redirect:/show_storage";
     }
 }
