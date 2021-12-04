@@ -9,6 +9,8 @@
     <title>Add new item</title>
     <style>
         <%@include file="/resources/style.css" %>
+        <%@include file="/resources/index_style.css" %>
+
     </style>
 </head>
 
@@ -16,6 +18,14 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
+<div class="topPanel">
+    <div class="topPanelFirst">
+        ${pageContext.request.userPrincipal.name}
+    </div>
+    <div class="topPanelLast">
+        <div><a href="/">На главную</a></div>
+    </div>
+</div>
 <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="itemForm">
         <h2 class="h2Light">Добавить товар</h2>

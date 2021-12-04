@@ -10,6 +10,8 @@
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/all_items.css" %>
+        <%@include file="/resources/index_style.css" %>
+
     </style>
 </head>
 
@@ -17,17 +19,28 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
+<div class="topPanel">
+    <div class="topPanelFirst">
+        ${pageContext.request.userPrincipal.name}
+    </div>
+    <div class="topPanelLast">
+            <div><a href="/">На главную</a></div>
+    </div>
+</div>
+
+
 <div class="outerDivTr">
     <h2  class="h2Light">Все товары</h2>
-    <h4><a href="/add_item">Добавить товар</a></h4>
+<%--    <h4><a href="/add_item">Добавить товар</a></h4>--%>
+
     <table class="addIncome">
-        <th><a href="<c:url value="/allItems/sortBy/article"/>">Артикул</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/name"/>">Наименование</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/type"/>">Тип</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/ean"/>">EAN-номер</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/username"/>">Кто добавил</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/date"/>">Дата добавления</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/count"/>">Актуальное количество</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/article/${count}"/>">Артикул</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/type/${count}"/>">Тип</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">EAN-номер</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Кто добавил</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <c:forEach items="${items}" var="item">
             <tr>
                 <td>${item.article}</td>

@@ -16,7 +16,6 @@
 </head>
 <body  class="bodyClassGreen">
 <div>
-
     <div class="topPanel">
         <div class="topPanelFirst">
             ${pageContext.request.userPrincipal.name}
@@ -45,7 +44,7 @@
                     <div>Создать расход</div>
                 </a></div>
                 <div class="squareImgDiv"><a href="/show_storage">
-                    <div>$</div>
+                    <div>=</div>
                     <div>Посмотреть остатки</div>
                 </a></div>
             </div>

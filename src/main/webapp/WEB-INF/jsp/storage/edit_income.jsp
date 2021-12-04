@@ -11,6 +11,7 @@
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/edit_income_style.css" %>
+        <%@include file="/resources/index_style.css" %>
 
     </style>
 </head>
@@ -19,6 +20,7 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
+
 <script>
     function handlePrice() {
         var count = document.getElementById('incomeForm').count.value;
@@ -46,6 +48,15 @@
         }
     }
 </script>
+
+<div class="topPanel">
+    <div class="topPanelFirst">
+        ${pageContext.request.userPrincipal.name}
+    </div>
+    <div class="topPanelLast">
+        <div><a href="/">На главную</a></div>
+    </div>
+</div>
 <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="incomeForm">
         <h2 class="h2Light">Редактировать приход</h2>

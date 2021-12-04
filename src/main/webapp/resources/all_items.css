@@ -12,21 +12,45 @@
     width: 100%;
     margin: 0 auto;
 }
+.h2Light{
+    margin-bottom: 20px;
+}
 
-.addIncome th{
-    color: white;
+.addIncome th {
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: #8fc7a0;
+    font-size: 12pt;
     font-family: Arial;
-    font-size: 16px;
-    padding: 5px;
+    /*width: 100%;*/
+    box-sizing: border-box;
+    /*display: inline-flex;*/
+}
+
+.addIncome th a{
+    border: none;
+    /*padding:7px;*/
+    /*border-radius: 7px;*/
+    background-color: #8fc7a0;
+    font-size: 12pt;
+    font-family: Arial;
+    /*width: 100%;*/
+    box-sizing: border-box;
+    display: inline-flex;
+    color: white;
 }
 
 .addIncome tr td{
     border: none;
-    /*border-radius: 7px;*/
+    border-radius: 3px;
+
+
     background-color: white;
     font-size: 16px;
     font-family: Arial;
     padding: 5px;
     text-align: center;
 
+    /*opacity: 50%;*/
 }
