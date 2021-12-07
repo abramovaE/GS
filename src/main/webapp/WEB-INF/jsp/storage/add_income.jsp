@@ -79,7 +79,7 @@
 </sec:authorize>
 <div class="topPanel">
     <div class="topPanelFirst">
-        ${pageContext.request.userPrincipal.name}
+        <div class="username">${pageContext.request.userPrincipal.name}</div>
     </div>
     <div class="topPanelLast">
         <div><a href="/">На главную</a></div>

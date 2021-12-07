@@ -18,7 +18,12 @@
 <div>
     <div class="topPanel">
         <div class="topPanelFirst">
-            ${pageContext.request.userPrincipal.name}
+            <sec:authorize access="!isAuthenticated()">
+                <div class="logo">Storage of goods</div>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div class="username">${pageContext.request.userPrincipal.name}</div>
+            </sec:authorize>
         </div>
         <div class="topPanelLast">
             <sec:authorize access="!isAuthenticated()">

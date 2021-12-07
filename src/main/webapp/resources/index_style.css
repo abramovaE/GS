@@ -9,22 +9,20 @@
 
 }
 .topPanel a{
+    padding-right: 10px;
     color: dimgray;
     font-weight: bold;
-    font-family: Arial;
+    font-family: Helvetica;
     text-transform: uppercase;
 }
 .topPanelFirst{
     width: 30%;
     box-sizing: border-box;
-    /*border: 2px solid green;*/
-    background-color: white;
-    border-radius: 7px;
-    padding: 10px;
-    margin: 5px;
-    font-family: Arial;
-    font-size: 18pt;
-    font-weight: bold;
+    /*margin: 5px;*/
+    /*padding: 5px;*/
+    border-radius: 17px;
+    /*border: 2px solid red;*/
+
 
 }
 
@@ -37,11 +35,11 @@
 
 .topPanelLast div{
     background-color: white;
-    border-radius: 7px;
+    border-radius: 500px;
     padding: 10px;
     margin: 5px;
     text-align: right;
-    font-family: Arial;
+    font-family: Helvetica;
     font-size: 18pt;
     color: dimgray;
     text-transform: uppercase;
@@ -50,7 +48,7 @@
 }
 
 .indexPanel{
-    border-radius: 7px;
+    border-radius: 17px;
     /*border: 2px solid white;*/
     margin: 5px;
     padding: 10px;
@@ -65,7 +63,7 @@
     /*background-color: white;*/
     padding: 7px;
     border-radius: 7px;
-    font-family: Arial;
+    font-family: Helvetica;
     font-size: 22pt;
     text-align: center;
     margin-bottom: 10px;
@@ -73,6 +71,7 @@
     font-weight: bold;
 
     text-transform: uppercase;
+
     /*z-index: 100;*/
     /*opacity: 100%;*/
 }
@@ -82,6 +81,29 @@
     font-size: 12pt;
     text-transform: uppercase;
     font-weight: bold;
+}
 
+.logo{
+    font-size: 40px;
+    font-family: Helvetica;
+    color: white;
+    background-color: mediumseagreen;
+    border: none;
+    /*border: 2px solid white;*/
+    border-radius: 17px;
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    /*margin: auto;*/
+}
 
+.username{
+    background-color: white;
+    border-radius: 17px;
+    padding: 10px;
+    font-family: Helvetica;
+    font-size: 18pt;
+    font-weight: bold;
+    box-sizing: border-box;
+    margin: 5px;
 }

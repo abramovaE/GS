@@ -7,10 +7,10 @@
 
 .inputClassLight{
     background-color: white;
-    padding:7pt;
-    border-radius: 7pt;
+    padding:7px;
+    border-radius: 7px;
     border: none;
-    font-family: Arial;
+    font-family: Helvetica;
     width: 100%;
     margin: auto;
     /*border: 2px solid yellow;*/
@@ -21,7 +21,7 @@
 a{
     text-decoration: none;
     color: black;
-    font-family: Arial;
+    font-family: Helvetica;
     text-align: center;
 }
 
@@ -32,7 +32,7 @@ button{
 
 .h2Light{
     align-self: center;
-    font-family: Arial;
+    font-family: Helvetica;
     width: 100%;
     margin: 20px auto 10px;
     font-style: normal;
@@ -52,7 +52,7 @@ button{
     display: inline-flex;
     width: 100%;
     color: black;
-    font-family: Arial;
+    font-family: Helvetica;
     /*border: 2px solid black;*/
     margin: 5px auto;
 }
@@ -66,7 +66,7 @@ button{
     width: 150px;
     height: 150px;
     border: 2px solid white;
-    border-radius: 10px;
+    border-radius: 17px;
     margin: 20px auto;
     color: white;
     background-color: mediumseagreen;
@@ -97,5 +97,4 @@ button{
     margin: 0 auto;
     display: inline-flex;
 }
-
 

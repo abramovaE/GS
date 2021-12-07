@@ -15,7 +15,7 @@
 
 .addIncome th{
     color: white;
-    font-family: Arial;
+    font-family: Helvetica;
     font-size: 16px;
     padding: 5px;
 }
@@ -25,7 +25,7 @@
     border-radius: 7px;
     background-color: mediumseagreen;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     padding: 2px;
 }
 
@@ -36,7 +36,7 @@
     border-radius: 7px;
     background-color: white;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     box-sizing: border-box;
     width: 100%;
 }
@@ -47,7 +47,7 @@
     border-radius: 7px;
     background-color: white;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     box-sizing: border-box;
     width: 100%;
 }
@@ -58,7 +58,7 @@
     border-radius: 7px;
     background-color: white;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     width: 100%;
 }
 
@@ -67,7 +67,7 @@
     border-radius: 7px;
     background-color: mediumseagreen;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     padding: 2px;
 }
 
@@ -77,7 +77,7 @@
 
 .todayIncomes th{
     color: white;
-    font-family: Arial;
+    font-family: Helvetica;
     font-size: 16px;
     padding: 5px;
 }
@@ -88,26 +88,15 @@
     border-radius: 7px;
     background-color: white;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     box-sizing: border-box;
     width: 100%;
 }
 
-/*.todayIncomes tr td a{*/
-/*    border: none;*/
-/*    padding:7px;*/
-/*    border-radius: 7px;*/
-/*    background-color: white;*/
-/*    font-size: 12pt;*/
-/*    font-family: Arial;*/
-/*    box-sizing: border-box;*/
-/*    width: 100%;*/
-/*}*/
-
 
 .h2TodayIncomes{
     align-self: center;
-    font-family: Arial;
+    font-family: Helvetica;
     width: 100%;
     margin: 50px auto 10px;
     font-style: normal;
@@ -123,7 +112,7 @@
     border-radius: 7px;
     background-color: white;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     box-sizing: border-box;
     width: 100%;
 }

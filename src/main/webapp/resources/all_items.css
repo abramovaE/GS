@@ -22,7 +22,7 @@
     border-radius: 7px;
     background-color: #8fc7a0;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     /*width: 100%;*/
     box-sizing: border-box;
     /*display: inline-flex;*/
@@ -34,7 +34,7 @@
     /*border-radius: 7px;*/
     background-color: #8fc7a0;
     font-size: 12pt;
-    font-family: Arial;
+    font-family: Helvetica;
     /*width: 100%;*/
     box-sizing: border-box;
     display: inline-flex;
@@ -48,7 +48,7 @@
 
     background-color: white;
     font-size: 16px;
-    font-family: Arial;
+    font-family: Helvetica;
     padding: 5px;
     text-align: center;
 
