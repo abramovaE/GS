@@ -29,7 +29,7 @@
 </div>
 
 
-<div class="outerDivTr">
+<div class="innerDivTr">
     <h2  class="h2Light">Все товары</h2>
 <%--    <h4><a href="/add_item">Добавить товар</a></h4>--%>
 

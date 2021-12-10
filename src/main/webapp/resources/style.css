@@ -1,6 +1,3 @@
-.main{
-    /*background-color: aquamarine;*/
-}
 .bodyClassGreen{
     background-color: mediumseagreen;
 }
@@ -56,45 +53,3 @@ button{
     /*border: 2px solid black;*/
     margin: 5px auto;
 }
-
-.buttonDivTr{
-    width: 100%;
-    margin: 5px auto;
-}
-.squareImgDiv{
-    display: flex;
-    width: 150px;
-    height: 150px;
-    border: 2px solid white;
-    border-radius: 17px;
-    margin: 20px auto;
-    color: white;
-    background-color: mediumseagreen;
-    padding: 5px 15px;
-    text-align: center;
-    color: white;
-}
-
-.squareImgDiv a{
-    width: 100%;
-    color: white;
-    margin: auto;
-}
-
-.squareImgDiv a div:first-child{
-    width: 100%;
-    font-size: 90px;
-    margin: auto;
-}
-
-.squareImgDiv a div:last-child{
-    width: 100%;
-    margin: auto;
-}
-
-.storageMainPanel{
-    width: 100%;
-    margin: 0 auto;
-    display: inline-flex;
-}
-

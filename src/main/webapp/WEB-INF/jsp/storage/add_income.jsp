@@ -86,8 +86,8 @@
     </div>
 </div>
 <div class="outerDivTr">
-        <h2 class="h2Light">Создать приход</h2>
         <div class="innerDivTr">
+            <h2 class="h2Light">Создать приход</h2>
             <form:form method="POST" modelAttribute="incomeForm" id="incomeForm">
             <table class="addIncome">
                 <tr>
@@ -132,8 +132,8 @@
             </form:form>
         </div>
 
-    <h2 class="h2TodayIncomes">Приходы ${date}</h2>
     <div class="innerDivTr">
+        <h2 class="h2Light">Приходы ${date}</h2>
         <table class="todayIncomes">
             <tr>
                 <th>Добавил</th>

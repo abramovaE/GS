@@ -31,7 +31,7 @@
         <h2 class="h2Light">Добавить товар</h2>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
         <div class="innerDivLogin">
-            <form:input type="text" path="article" placeholder="Артикул" autofocus="true" class="inputClassLight"/>
+            <form:input type="text" path="article" placeholder="Артикул"  class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
             <form:input type="text" path="name" placeholder="Наименование" class="inputClassLight"/>
@@ -40,7 +40,7 @@
             <form:input type="text" path="type" placeholder="Тип" class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
-            <form:input type="text" path="ean" placeholder="Штрих-код" class="inputClassLight"/>
+            <form:input type="text" path="ean" placeholder="Штрих-код" autofocus="true" class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Добавить</button>

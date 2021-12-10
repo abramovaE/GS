@@ -10,6 +10,5 @@ public class GSConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("auth/login");
         registry.addViewController("/news").setViewName("news");
-        registry.addViewController("/storage_main").setViewName("storage/storage_main");
     }
 }

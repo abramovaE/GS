@@ -63,8 +63,8 @@
     </div>
 </div>
 <div class="outerDivTr">
-        <h2 class="h2Light">Создать расход</h2>
         <div class="innerDivTr">
+            <h2 class="h2Light">Создать расход</h2>
             <form:form method="POST" modelAttribute="expandForm">
             <table class="addIncome">
                 <tr>
@@ -98,9 +98,8 @@
             </table>
             </form:form>
         </div>
-
-    <h2 class="h2TodayIncomes">Расходы ${date}</h2>
     <div class="innerDivTr">
+        <h2 class="h2Light">Расходы ${date}</h2>
         <table class="todayIncomes">
             <tr>
                 <th>Добавил</th>
