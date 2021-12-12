@@ -1,0 +1,45 @@
+
+.innerDivTr{
+    width: 100%;
+    margin: auto;
+    background-color: #8fc7a0;
+    padding: 10px;
+    border-radius: 17px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.addIncome{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.addIncome th {
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: #8fc7a0;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+}
+
+.addIncome th a{
+    border: none;
+    background-color: #8fc7a0;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    display: inline-flex;
+    color: white;
+}
+
+.addIncome tr td{
+    border: none;
+    border-radius: 3px;
+    background-color: white;
+    font-size: 16px;
+    font-family: Helvetica;
+    padding: 5px;
+    text-align: center;
+}

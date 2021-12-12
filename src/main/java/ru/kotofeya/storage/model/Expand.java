@@ -24,6 +24,7 @@ public class Expand {
     @Column(name = "batch_number")
     private int batchNumber;
 
+    public Expand() {}
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getUserName() {return userName;}

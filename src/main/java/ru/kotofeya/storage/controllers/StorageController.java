@@ -24,12 +24,16 @@ public class StorageController {
     // TODO: 22.11.2021 сделать актуальные остатки
     @GetMapping("/show_storage")
     public String  showStorage(Model model) {
-        model.addAttribute("items", itemService.getAllItems());
         Integer count = (Integer) model.asMap().get("count");
+        List<Item> items = (List<Item>) model.asMap().get("items");
         if(count == null){
             count = 0;
         }
+        if(items == null){
+            items = itemService.getAllItems();
+        }
         model.addAttribute("count", count);
+        model.addAttribute("items", items);
         return "storage/all_items";
     }
 
@@ -127,7 +131,7 @@ public class StorageController {
         model.addAttribute("items", allItems);
         count++;
         model.addAttribute("count", count);
-        return "storage/all_items";
+        return showStorage(model);
     }
 
     private int compareItems(String o1, String o2){
@@ -139,5 +143,4 @@ public class StorageController {
             }
             return o1.compareTo(o2);
         }
-
 }

@@ -1,0 +1,114 @@
+.outerDivTr{
+    padding: 5px;
+    display: inline;
+    width: 100%;
+}
+.innerDivTr{
+    width: 100%;
+    margin: auto;
+    background-color: #8fc7a0;
+    padding: 10px;
+    border-radius: 17px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.addIncome{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.addIncome th{
+    color: white;
+    font-family: Helvetica;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.addIncome tr td{
+    border: none;
+    border-radius: 7px;
+    /*background-color: mediumseagreen;*/
+    font-size: 12pt;
+    font-family: Helvetica;
+    /*box-sizing: border-box;*/
+    /*padding: 2px;*/
+}
+
+
+.addIncome tr td input{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.addIncome tr td select{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.addIncome tr td button{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    width: 100%;
+}
+
+.todayIncomes tr td{
+    border: none;
+    border-radius: 7px;
+    background-color: mediumseagreen;
+    font-size: 12pt;
+    font-family: Helvetica;
+    /*padding: 2px;*/
+}
+
+.todayIncomes{
+    width: 100%;
+}
+
+.todayIncomes th{
+    color: white;
+    font-family: Helvetica;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.todayIncomes tr td {
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#ppSum, #ppActSum{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.edit{
+    /*margin: 2px;*/
+}

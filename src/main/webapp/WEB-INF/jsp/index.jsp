@@ -27,11 +27,11 @@
         </div>
         <div class="topPanelLast">
             <sec:authorize access="!isAuthenticated()">
-                <div><a href="/login">Войти</a></div>
-                <div><a href="/registration">Зарегистрироваться</a></div>
+                <div><a href="login">Войти</a></div>
+                <div><a href="registration">Зарегистрироваться</a></div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">
-                <div><a href="/logout">Выйти</a></div>
+                <div><a href="logout">Выйти</a></div>
             </sec:authorize>
         </div>
     </div>
@@ -40,15 +40,15 @@
         <div class="indexPanel">
             <div class="label">Склад</div>
             <div class="storageMainPanel">
-                <div class="squareImgDiv"><a href="/add_income">
+                <div class="squareImgDiv"><a href="add_income">
                     <div>+</div>
                     <div>Создать приход</div>
                 </a></div>
-                <div class="squareImgDiv"><a href="/add_expand">
+                <div class="squareImgDiv"><a href="add_expand">
                     <div>-</div>
                     <div>Создать расход</div>
                 </a></div>
-                <div class="squareImgDiv"><a href="/show_storage">
+                <div class="squareImgDiv"><a href="show_storage">
                     <div>=</div>
                     <div>Посмотреть остатки</div>
                 </a></div>

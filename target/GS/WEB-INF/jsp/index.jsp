@@ -5,21 +5,61 @@
 <html>
 <head>
     <title>Главная</title>
+    <style>
+        <%@include file="/resources/style.css" %>
+        <%@include file="/resources/index_style.css" %>
+
+        <%--        <%@include file="/resources/add_income_style.css" %>--%>
+    </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
-<body>
+<body  class="bodyClassGreen">
 <div>
-    <h3>${pageContext.request.userPrincipal.name}</h3>
-    <sec:authorize access="!isAuthenticated()">
-        <h4><a href="/login">Войти</a></h4>
-        <h4><a href="/registration">Зарегистрироваться</a></h4>
-    </sec:authorize>
+    <div class="topPanel">
+        <div class="topPanelFirst">
+            <sec:authorize access="!isAuthenticated()">
+                <div class="logo">Storage of goods</div>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div class="username">${pageContext.request.userPrincipal.name}</div>
+            </sec:authorize>
+        </div>
+        <div class="topPanelLast">
+            <sec:authorize access="!isAuthenticated()">
+                <div><a href="login">Войти</a></div>
+                <div><a href="registration">Зарегистрироваться</a></div>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div><a href="logout">Выйти</a></div>
+            </sec:authorize>
+        </div>
+    </div>
+
     <sec:authorize access="isAuthenticated()">
-        <h4><a href="/logout">Выйти</a></h4>
+        <div class="indexPanel">
+            <div class="label">Склад</div>
+            <div class="storageMainPanel">
+                <div class="squareImgDiv"><a href="add_income">
+                    <div>+</div>
+                    <div>Создать приход</div>
+                </a></div>
+                <div class="squareImgDiv"><a href="add_expand">
+                    <div>-</div>
+                    <div>Создать расход</div>
+                </a></div>
+                <div class="squareImgDiv"><a href="show_storage">
+                    <div>=</div>
+                    <div>Посмотреть остатки</div>
+                </a></div>
+            </div>
+        </div>
     </sec:authorize>
-    <h4><a href="/news">Новости (только пользователь)</a></h4>
-    <h4><a href="/admin">Пользователи (только админ)</a></h4>
+
+
+<%--    <h4><a href="/news">Новости (только пользователь)</a></h4>--%>
+<%--    <h4><a href="/admin">Пользователи (только админ)</a></h4>--%>
+
 </div>
 </body>
 </html>

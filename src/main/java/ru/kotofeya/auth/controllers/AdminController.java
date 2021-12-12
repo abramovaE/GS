@@ -21,6 +21,12 @@ public class AdminController {
         return "auth/admin";
     }
 
+//    @GetMapping("/admin")
+//    public String userList(Model model) {
+//        model.addAttribute("allUsers", userService.allUsers());
+//        return "auth/admin";
+//    }
+
     @PostMapping("/admin")
     public String  deleteUser(@RequestParam(required = true, defaultValue = "" ) Long userId,
                               @RequestParam(required = true, defaultValue = "" ) String action,

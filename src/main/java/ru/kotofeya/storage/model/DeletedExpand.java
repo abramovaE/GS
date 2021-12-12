@@ -26,8 +26,7 @@ public class DeletedExpand {
     @Column(name = "batch_number")
     private int batchNumber;
 
-    public DeletedExpand() {
-    }
+    public DeletedExpand() {}
     public DeletedExpand(Expand expand, String deleteDate, String deleteUserName) {
         this.createUserName = expand.getUserName();
         this.deleteUserName = deleteUserName;

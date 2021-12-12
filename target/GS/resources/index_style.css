@@ -1,0 +1,139 @@
+.topPanel{
+    display: inline-flex;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 30px;
+    color: dimgray;
+    text-transform: uppercase;
+
+}
+.topPanel a{
+    padding-right: 10px;
+    color: dimgray;
+    font-weight: bold;
+    font-family: Helvetica;
+    text-transform: uppercase;
+}
+.topPanelFirst{
+    width: 30%;
+    box-sizing: border-box;
+    border-radius: 17px;
+}
+
+.topPanelLast{
+    width: 70%;
+    box-sizing: border-box;
+    color: dimgray;
+}
+
+.topPanelLast div{
+    background-color: white;
+    border-radius: 500px;
+    padding: 10px;
+    margin: 5px;
+    text-align: right;
+    font-family: Helvetica;
+    font-size: 18pt;
+    color: dimgray;
+    text-transform: uppercase;
+}
+
+.indexPanel{
+    border-radius: 17px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #8fc7a0;
+}
+
+.label{
+    padding: 7px;
+    border-radius: 7px;
+    font-family: Helvetica;
+    font-size: 22pt;
+    text-align: center;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.storageMainPanel{
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+    display: inline-flex;
+}
+
+.squareImgDiv{
+    border: none;
+    font-size: 12pt;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    height: 150px;
+    color: white;
+    background-color: mediumseagreen;
+    padding: 5px 15px;
+    width: 100%;
+    margin: auto;
+}
+
+.logo{
+    font-size: 40px;
+    font-family: Helvetica;
+    color: white;
+    background-color: mediumseagreen;
+    border: none;
+    border-radius: 17px;
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+
+}
+
+.username{
+    background-color: white;
+    border-radius: 17px;
+    padding: 10px;
+    font-family: Helvetica;
+    font-size: 18pt;
+    font-weight: bold;
+    box-sizing: border-box;
+    margin: 5px;
+    border-radius: 500px;
+}
+
+
+
+.squareImgDiv:first-child{
+    width: 100%;
+    margin: auto;
+    border-bottom-left-radius: 500px;
+    border-top-left-radius: 500px;
+    margin-right: 1px;
+    margin-left: 20px;
+}
+
+.squareImgDiv:last-child{
+    width: 100%;
+    margin: auto;
+    border-bottom-right-radius: 500px;
+    border-top-right-radius: 500px;
+    margin-left: 1px;
+    margin-right: 20px;
+}
+
+.squareImgDiv a{
+    width: 100%;
+    color: white;
+    margin: auto;
+}
+
+.squareImgDiv a div{
+    width: 100%;
+    margin: auto;
+}
+
+.squareImgDiv a div:first-child{
+    font-size: 90px;
+}
