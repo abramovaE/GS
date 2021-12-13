@@ -8,8 +8,6 @@
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/index_style.css" %>
-
-        <%--        <%@include file="/resources/add_income_style.css" %>--%>
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">

@@ -13,9 +13,7 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/add_income_style.css" %>
         <%@include file="/resources/index_style.css" %>
-
     </style>
-
 </head>
 
 <body class="bodyClassGreen">
@@ -57,7 +55,6 @@
         }
     }
 
-
     function showEditPanel(id){
         // document.getElementById('edit' + id).style.display = 'block'
         document.getElementById('delete' + id).style.display = 'block'
@@ -70,8 +67,6 @@
         // document.getElementById('editth').style.display = 'none'
         document.getElementById('deleteth').style.display = 'none'
     }
-
-
 
 </script>
 <sec:authorize access="!isAuthenticated()">
