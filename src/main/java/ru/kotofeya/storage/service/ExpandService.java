@@ -48,4 +48,9 @@ public class ExpandService {
     public void deleteExpandById(long id){
         expandRepository.deleteById(id);
     }
+
+    @Transactional
+    public List<Expand> getAllExpands(){
+        return expandRepository.findAll();
+    }
 }

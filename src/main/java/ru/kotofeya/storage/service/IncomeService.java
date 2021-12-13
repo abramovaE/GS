@@ -53,4 +53,8 @@ public class IncomeService {
     public void deleteIncomeById(long id){
         incomeRepository.deleteById(id);
     }
+    @Transactional
+    public List<Income> getAllIncomes(){
+        return incomeRepository.findAll();
+    }
 }

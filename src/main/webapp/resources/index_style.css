@@ -19,13 +19,27 @@
     box-sizing: border-box;
     border-radius: 17px;
 }
-
+.topPanelCentral{
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 17px;
+}
 .topPanelLast{
     width: 70%;
     box-sizing: border-box;
     color: dimgray;
 }
-
+.topPanelCentral div{
+    background-color: white;
+    border-radius: 500px;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    font-family: Helvetica;
+    font-size: 18pt;
+    color: dimgray;
+    text-transform: uppercase;
+}
 .topPanelLast div{
     background-color: white;
     border-radius: 500px;
@@ -88,7 +102,6 @@
     height: 100%;
     padding: 5px;
     box-sizing: border-box;
-
 }
 
 .username{
@@ -102,8 +115,6 @@
     margin: 5px;
     border-radius: 500px;
 }
-
-
 
 .squareImgDiv:first-child{
     width: 100%;

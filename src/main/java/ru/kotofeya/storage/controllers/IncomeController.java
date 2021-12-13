@@ -15,8 +15,11 @@ import ru.kotofeya.storage.service.DeletedIncomeService;
 import ru.kotofeya.storage.service.IncomeService;
 import ru.kotofeya.storage.service.ItemService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -105,4 +108,27 @@ public class IncomeController {
 //        incomeService.saveIncome(income);
 //        return "redirect:/edit_income/" + incomeId;
 //    }
+
+    @GetMapping("/incomes")
+    public String  showIncomes(Model model) {
+        List<Income> incomes = incomeService.getAllIncomes();
+        Collections.sort(incomes, new Comparator<Income>() {
+            @Override
+            public int compare(Income o1, Income o2) {
+                String date1 = o1.getDate();
+                String date2 = o2.getDate();
+                if (date1 == null) {
+                    date1 = LocalDate.now().format(dateTimeFormatter);
+                }
+                if (date2 == null) {
+                    date2 = LocalDate.now().format(dateTimeFormatter);
+                }
+                LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
+                LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
+                return localDate2.compareTo(localDate1);
+            }
+        });
+        model.addAttribute("incomes", incomes);
+        return"storage/incomes";
+    }
 }

@@ -20,20 +20,29 @@
 <script type="text/javascript">
 
     function handleSelect(elm) {
+        var count = document.getElementById('incomeForm').count.value
         if(elm.value == 0) {
             window.location = "add_item";
         }
-        if(elm.value > 0){
+        if(elm.value > 0 && count > 0){
             document.getElementById('subm').disabled = false
+        } else {
+            document.getElementById('subm').disabled = true
         }
     }
 
     function handlePrice(){
+        var item = document.getElementById('incomeForm').item.value
         var count = document.getElementById('incomeForm').count.value
         var ppDouble = document.getElementById('incomeForm').purchasePriceDouble.value
         var ppActDouble = document.getElementById('incomeForm').purchasePriceActDouble.value
         document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
         document.getElementById('ppActSum').innerHTML = Math.round(count * ppActDouble * 100)/100
+        if(count > 0 && item > 0){
+            document.getElementById('subm').disabled = false
+        } else {
+            document.getElementById('subm').disabled = true
+        }
     }
 
     function clearCount(){
@@ -106,7 +115,7 @@
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
-                    <td><form:input type="number" placeholder="Количество" min = "0" path="count"
+                    <td><form:input type="number" required="true" placeholder="Количество" min = "0" path="count"
                                     onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/></td>
                     <td><form:input type="number" placeholder="Цена покупки" min = "0" step="0.01" path="purchasePriceDouble"
                                     onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/></td>

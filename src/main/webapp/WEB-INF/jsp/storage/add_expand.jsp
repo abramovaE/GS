@@ -13,17 +13,33 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/add_income_style.css" %>
         <%@include file="/resources/index_style.css" %>
-
     </style>
-
 </head>
 
 <body class="bodyClassGreen">
 <script type="text/javascript">
+    function handleSelect(elm) {
+        var count = document.getElementById('expandForm').count.value
+        if(elm.value == 0) {
+            window.location = "add_item";
+        }
+        if(elm.value > 0 && count > 0){
+            document.getElementById('subm').disabled = false
+        } else {
+            document.getElementById('subm').disabled = true
+        }
+    }
+
     function handlePrice(){
+        var item = document.getElementById('expandForm').item.value
         var count = document.getElementById('expandForm').count.value
         var ppDouble = document.getElementById('expandForm').salePriceDouble.value
         document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
+        if(count > 0 && item > 0){
+            document.getElementById('subm').disabled = false
+        } else {
+            document.getElementById('subm').disabled = true
+        }
     }
     function clearCount(){
         let value = document.getElementById('expandForm').count.value;
@@ -77,13 +93,13 @@
                 <tr>
                     <td>
                         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
-                        <form:select path="item">
-                            <form:option value="-" label=""/>
+                        <form:select path="item" required="true" onchange="javascript:handleSelect(this)">
+                            <form:option value="-1" label=""/>
                                 <c:forEach items="${items}" var="item">
                                     <form:option value="${item.id}" label="${item.name}"/>
                                 </c:forEach>
                         </form:select>
-                    <td><form:input type="text" path="count" placeholder="Количество" autofocus="true"
+                    <td><form:input type="text" path="count" required="true" placeholder="Количество" autofocus="true"
                                     onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/></td>
                     <td><form:input type="text" path="salePriceDouble" placeholder="Цена продажи" min = "0" step="0.01"
                                     onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/></td>
@@ -92,7 +108,7 @@
                 </tr>
                 <tr>
                     <td colspan="5">
-                        <button type="submit">Добавить</button>
+                        <button type="submit" id="subm" disabled="true">Добавить</button>
                     </td>
                 </tr>
             </table>

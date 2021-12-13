@@ -12,8 +12,11 @@ import ru.kotofeya.storage.service.DeletedExpandService;
 import ru.kotofeya.storage.service.ExpandService;
 import ru.kotofeya.storage.service.ItemService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -70,5 +73,28 @@ public class ExpandController {
             expandService.deleteExpandById(expand.getId());
         }
         return "redirect:/add_expand";
+    }
+
+    @GetMapping("/expands")
+    public String  showIncomes(Model model) {
+        List<Expand> expands = expandService.getAllExpands();
+        Collections.sort(expands, new Comparator<Expand>() {
+            @Override
+            public int compare(Expand o1, Expand o2) {
+                String date1 = o1.getDate();
+                String date2 = o2.getDate();
+                if (date1 == null) {
+                    date1 = LocalDate.now().format(dateTimeFormatter);
+                }
+                if (date2 == null) {
+                    date2 = LocalDate.now().format(dateTimeFormatter);
+                }
+                LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
+                LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
+                return localDate2.compareTo(localDate1);
+            }
+        });
+        model.addAttribute("expands", expands);
+        return"storage/expands";
     }
 }

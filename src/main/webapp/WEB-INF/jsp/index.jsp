@@ -38,13 +38,21 @@
         <div class="indexPanel">
             <div class="label">Склад</div>
             <div class="storageMainPanel">
-                <div class="squareImgDiv"><a href="add_income">
+<%--                <div class="squareImgDiv"><a href="add_income">--%>
+<%--                    <div>+</div>--%>
+<%--                    <div>Создать приход</div>--%>
+<%--                </a></div>--%>
+                <div class="squareImgDiv"><a href="incomes">
                     <div>+</div>
-                    <div>Создать приход</div>
+                    <div>Приходы</div>
                 </a></div>
-                <div class="squareImgDiv"><a href="add_expand">
+<%--                <div class="squareImgDiv"><a href="add_expand">--%>
+<%--                    <div>-</div>--%>
+<%--                    <div>Создать расход</div>--%>
+<%--                </a></div>--%>
+                <div class="squareImgDiv"><a href="expands">
                     <div>-</div>
-                    <div>Создать расход</div>
+                    <div>Расходы</div>
                 </a></div>
                 <div class="squareImgDiv"><a href="show_storage">
                     <div>=</div>

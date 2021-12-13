@@ -92,7 +92,6 @@ public class StorageController {
                 Collections.sort(allItems, new Comparator<Item>() {
                     @Override
                     public int compare(Item o1, Item o2) {
-
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yy");
                             String date1 = o1.getDate();
                             String date2 = o2.getDate();
@@ -143,4 +142,7 @@ public class StorageController {
             }
             return o1.compareTo(o2);
         }
+
+
+
 }
