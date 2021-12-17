@@ -1,0 +1,10 @@
+.addIncomeInput{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}

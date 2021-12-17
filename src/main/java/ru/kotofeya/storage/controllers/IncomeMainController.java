@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kotofeya.storage.model.IncomeMain;
 import ru.kotofeya.storage.model.IncomeString;
 import ru.kotofeya.storage.model.Item;
@@ -33,17 +34,23 @@ public class IncomeMainController {
         model.addAttribute("items", allItems);
         model.addAttribute("incomeMainForm", new IncomeMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-        model.addAttribute("incomeStrings", new HashSet<IncomeString>());
-        model.addAttribute("testStrings", new HashSet<String>());
+//        model.addAttribute("incomeStrings", new HashSet<IncomeString>());
+        model.addAttribute("incomeJson", new String());
+        model.addAttribute("incomeString", new IncomeString());
 
         return "storage/add_income_main";
     }
 
+
+
     @PostMapping("/add_income_main")
     public String  addIncomeString(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
-        @ModelAttribute ("testStrings") HashSet<String> testStrings) {
-        System.out.println("testStrings: " + testStrings);
+                                   @ModelAttribute ("incomeJson") String incomeJson
+//                                   @RequestParam(name = "incomeStrings", required = false) HashSet<Object> testStrings
+                                   ) {
+//        incomeMain.get
+        System.out.println("testStrings: " + incomeMain.getIncomeJson());
         incomeMainService.saveIncomeMain(incomeMain);
         return "redirect:/incomes_main";
     }

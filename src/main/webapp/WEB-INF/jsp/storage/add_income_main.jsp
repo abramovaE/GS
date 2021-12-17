@@ -10,6 +10,8 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/add_income_style.css" %>
         <%@include file="/resources/index_style.css" %>
+        <%@include file="/resources/add_income_main_style.css" %>
+
     </style>
 </head>
 <body  class="bodyClassGreen">
@@ -19,26 +21,41 @@
 
 <script type="text/javascript">
     function addIncomeMain(){
-        <%--var incomeStrings = ${incomeStrings}--%>
-        <%--var testStrings = ${testStrings}--%>
+        var incomeStrings = new Array()
 
-        const id = 'incomeStringTable'
-        const table = document.getElementById(id)
-        // for (var i = 0, row; row = table.rows[i]; i++) {
-        //     var itemId = row.getElementById('item')
-        //     var count = row.getElementById('count')
-        //     var purPrice=row.getElementById('purPrice')
-        //     var storeArticle=row.getElementById('storeArticle')
-        //     var store=row.getElementById('store')
-        //     var batchNumber=row.getElementById('batchNumber')
-        //     var purPriceSum=row.getElementById('purPriceSum')
-        //     var purPriceActSum=row.getElementById('purPriceActSum')
-        //     // testStrings.add(itemId)
-        //     // testStrings.add(count)
-        // }
+        const id = 'incomeStringTable';
+        const table = document.getElementById(id);
 
-            // testStrings.add("dfgf")
+        var index;
+        for (index = 1; index < table.rows.length; ++index) {
+            const selectedIndex = document.getElementById("select" + index).options.selectedIndex;
+            const itemId = document.getElementById("select" + index).options[selectedIndex].value;
+            const count = document.getElementById("count" + index).value;
+            var purPrice = document.getElementById("purPrice" + index).value
+            var purPriceAct = document.getElementById("purPriceAct" + index).value
+            var storeArticle = document.getElementById("storeArticle" + index).value
+            var store = document.getElementById("store" + index).value
+            var batchNumber = document.getElementById("batchNumber" + index).value
+            // var purPriceSum = document.getElementById("ppSum" + index).value
+            // var purPriceActSum = document.getElementById("ppActSum" + index).value
+            var itemString = new Object();
+            itemString.itemId = itemId
+            itemString.count=count
+            itemString.purPrice=purPrice
+            itemString.purPriceAct=purPriceAct
+            itemString.storeArticle=storeArticle
+            itemString.store=store
+            itemString.batchNumber=batchNumber
+            incomeStrings.push(itemString)
+        }
+
+        // var incomeJson = JSON.stringify(incomeStrings)
+        // document.body.setAttribute('incomeJson', incomeJson)
+        var incomeMain = document.getElementById('incomeMainForm')
+        incomeMain.setAttribute("incomeJson", JSON.stringify(incomeStrings))
+        // incomeMain.incomeJson = JSON.stringify(incomeStrings)
         document.getElementById('incomeMainForm').submit();
+
 
     }
     function handlePrice(){}
@@ -46,25 +63,33 @@
     function clearPpDouble(){}
     function clearPpActDouble(){}
     function handleSelect(elm){}
+
     function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
+        var rowIndex = table.rows.length
+
         const tableHeader = document.getElementById('incomeStringTableHeader');
         tableHeader.hidden = false;
         const row = document.createElement('tr');
+
         const item = document.createElement('td');
         const select = document.createElement('select');
+        select.id="select"+rowIndex
         select.required=true
         select.onchange=handleSelect(this)
         select.options[select.options.length]=new Option("", "-1");
         select.options[select.options.length]=new Option("Добавить товар", "0");
         <c:forEach items="${items}" var="item">
-            <%--const str = ${item.name} + ' '--%>
-            select.options[select.options.length]=new Option("text", ${item.id});
+            select.options[select.options.length]=new Option(${item.id}, ${item.id});
         </c:forEach>
         item.appendChild(select)
+        item.id="item" + rowIndex
+
+
         const count = document.createElement('td');
         const countInput = document.createElement('input');
+        countInput.id="count" + rowIndex
         countInput.type="number"
         countInput.required=true
         countInput.placeholder="Количество"
@@ -75,6 +100,7 @@
 
         const purPrice = document.createElement('td');
         const purPriceInput = document.createElement('input');
+        purPriceInput.id="purPrice" + rowIndex
         purPriceInput.type="number"
         purPriceInput.placeholder="Цена покупки"
         purPriceInput.min="0"
@@ -85,6 +111,7 @@
 
         const purPriceAct = document.createElement('td');
         const purPriceActInput = document.createElement('input');
+        purPriceActInput.id="purPriceAct" + rowIndex
         purPriceActInput.type="number"
         purPriceActInput.placeholder="Цена покупки окончательная"
         purPriceActInput.min="0"
@@ -95,45 +122,40 @@
 
         const storeArticle = document.createElement('td');
         const storeArticleInput = document.createElement('input');
+        storeArticleInput.id="storeArticle" + rowIndex
         storeArticleInput.type="text"
         storeArticleInput.placeholder="Артикул в магазине"
         storeArticle.appendChild(storeArticleInput)
 
         const store = document.createElement('td');
         const storeInput = document.createElement('input');
+        storeInput.id="store" + rowIndex
         storeInput.type="text"
         storeInput.placeholder="Магазин покупки"
         store.appendChild(storeInput)
 
         const batchNumber = document.createElement('td');
         const batchNumberInput = document.createElement('input');
+        batchNumberInput.id= "batchNumber"+rowIndex
         batchNumberInput.type="text"
         batchNumberInput.placeholder="Номер партии"
         batchNumber.appendChild(batchNumberInput)
 
         const purPriceSum = document.createElement('td');
         const purPriceSumDiv = document.createElement('div');
-        purPriceSumDiv.id="ppSum"
+        purPriceSumDiv.id="ppSum"+rowIndex
         purPriceSumDiv.className="addIncomeInput"
         purPriceSumDiv.appendChild(document.createTextNode('0.00'))
         purPriceSum.appendChild(purPriceSumDiv)
+        purPriceSum.id="purPriceSum" + rowIndex
 
         const purPriceActSum = document.createElement('td');
         const purPriceActSumDiv = document.createElement('div');
-        purPriceActSumDiv.id="ppActSum"
+        purPriceActSumDiv.id="ppActSum"+rowIndex
         purPriceActSumDiv.className="addIncomeInput"
         purPriceActSumDiv.appendChild(document.createTextNode('0.00'))
         purPriceActSum.appendChild (purPriceActSumDiv)
-
-        item.id="item"
-        count.id="count"
-        purPrice.id="purPrice"
-        purPriceAct.id="purPriceAct"
-        storeArticle.id="storeArticle"
-        store.id="store"
-        batchNumber.id="batchNumber"
-        purPriceSum.id="purPriceSum"
-        purPriceActSum.id="purPriceActSum"
+        purPriceActSum.id="purPriceActSum" + rowIndex
 
         row.appendChild(item);
         row.appendChild(count);
@@ -177,6 +199,9 @@
         <div class="innerDivLogin">
             <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>
         </div>
+
+
+
         <div class="innerDivLogin">
             <button type="button" class="inputClassLight" onclick="javascript:addIncomeMain()">Добавить</button>
 
