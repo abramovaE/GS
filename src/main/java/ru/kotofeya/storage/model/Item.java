@@ -27,10 +27,10 @@ public class Item {
     private Integer count;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
-    private Set<Income> incomes;
+    private Set<IncomeString> incomeStrings;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
-    private Set<Expand> expands;
+    private Set<ExpandString> expandStrings;
 
 
 
@@ -62,8 +62,8 @@ public class Item {
                 ", ean='" + ean + '\'' +
                 ", userName='" + userName + '\'' +
                 ", date='" + date + '\'' +
-                ", incomes=" + incomes +
-                ", expands=" + expands +
+                ", incomes=" + incomeStrings +
+                ", expands=" + expandStrings +
                 '}';
     }
 }

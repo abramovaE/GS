@@ -42,7 +42,7 @@
 <%--                    <div>+</div>--%>
 <%--                    <div>Создать приход</div>--%>
 <%--                </a></div>--%>
-                <div class="squareImgDiv"><a href="incomes">
+                <div class="squareImgDiv"><a href="incomes_main">
                     <div>+</div>
                     <div>Приходы</div>
                 </a></div>
@@ -50,7 +50,7 @@
 <%--                    <div>-</div>--%>
 <%--                    <div>Создать расход</div>--%>
 <%--                </a></div>--%>
-                <div class="squareImgDiv"><a href="expands">
+                <div class="squareImgDiv"><a href="expands_main">
                     <div>-</div>
                     <div>Расходы</div>
                 </a></div>

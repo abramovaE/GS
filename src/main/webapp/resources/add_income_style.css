@@ -68,7 +68,7 @@
     width: 100%;
 }
 
-.todayIncomes tr td{
+.todayIncomeStrings tr td{
     border: none;
     border-radius: 7px;
     background-color: mediumseagreen;
@@ -77,18 +77,18 @@
     /*padding: 2px;*/
 }
 
-.todayIncomes{
+.todayIncomeStrings{
     width: 100%;
 }
 
-.todayIncomes th{
+.todayIncomeStrings th{
     color: white;
     font-family: Helvetica;
     font-size: 16px;
     padding: 5px;
 }
 
-.todayIncomes tr td {
+.todayIncomeStrings tr td {
     border: none;
     padding:7px;
     border-radius: 7px;

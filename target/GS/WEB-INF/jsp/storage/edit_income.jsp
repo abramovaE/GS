@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Edit income</title>
+    <title>Edit incomeString</title>
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/edit_income_style.css" %>
