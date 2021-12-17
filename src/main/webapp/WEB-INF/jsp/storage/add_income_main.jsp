@@ -16,13 +16,36 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<script type="text/javascript">
 
+<script type="text/javascript">
+    function addIncomeMain(){
+        <%--var incomeStrings = ${incomeStrings}--%>
+        <%--var testStrings = ${testStrings}--%>
+
+        const id = 'incomeStringTable'
+        const table = document.getElementById(id)
+        // for (var i = 0, row; row = table.rows[i]; i++) {
+        //     var itemId = row.getElementById('item')
+        //     var count = row.getElementById('count')
+        //     var purPrice=row.getElementById('purPrice')
+        //     var storeArticle=row.getElementById('storeArticle')
+        //     var store=row.getElementById('store')
+        //     var batchNumber=row.getElementById('batchNumber')
+        //     var purPriceSum=row.getElementById('purPriceSum')
+        //     var purPriceActSum=row.getElementById('purPriceActSum')
+        //     // testStrings.add(itemId)
+        //     // testStrings.add(count)
+        // }
+
+            // testStrings.add("dfgf")
+        document.getElementById('incomeMainForm').submit();
+
+    }
     function handlePrice(){}
     function clearCount(){}
     function clearPpDouble(){}
     function clearPpActDouble(){}
-
+    function handleSelect(elm){}
     function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -31,8 +54,15 @@
         const row = document.createElement('tr');
         const item = document.createElement('td');
         const select = document.createElement('select');
-        item.appendChild(document.createTextNode('item'))
-
+        select.required=true
+        select.onchange=handleSelect(this)
+        select.options[select.options.length]=new Option("", "-1");
+        select.options[select.options.length]=new Option("Добавить товар", "0");
+        <c:forEach items="${items}" var="item">
+            <%--const str = ${item.name} + ' '--%>
+            select.options[select.options.length]=new Option("text", ${item.id});
+        </c:forEach>
+        item.appendChild(select)
         const count = document.createElement('td');
         const countInput = document.createElement('input');
         countInput.type="number"
@@ -51,31 +81,59 @@
         purPriceInput.step="0.01"
         purPriceInput.onchange=handlePrice()
         purPriceInput.onfocus=clearPpDouble()
-        purPrice.appendChild (purPriceInput)
+        purPrice.appendChild(purPriceInput)
 
-        var purPriceAct = document.createElement('td')
-        var purPriceActInput = document.createElement('input')
+        const purPriceAct = document.createElement('td');
+        const purPriceActInput = document.createElement('input');
         purPriceActInput.type="number"
         purPriceActInput.placeholder="Цена покупки окончательная"
         purPriceActInput.min="0"
         purPriceActInput.step="0.01"
         purPriceActInput.onchange=handlePrice()
         purPriceActInput.onfocus=clearPpActDouble()
-        purPriceAct.appendChild (purPriceActInput)
+        purPriceAct.appendChild(purPriceActInput)
 
-        var storeArticle = document.createElement('td')
-        storeArticle.appendChild (document.createTextNode('article'))
+        const storeArticle = document.createElement('td');
+        const storeArticleInput = document.createElement('input');
+        storeArticleInput.type="text"
+        storeArticleInput.placeholder="Артикул в магазине"
+        storeArticle.appendChild(storeArticleInput)
 
+        const store = document.createElement('td');
+        const storeInput = document.createElement('input');
+        storeInput.type="text"
+        storeInput.placeholder="Магазин покупки"
+        store.appendChild(storeInput)
 
+        const batchNumber = document.createElement('td');
+        const batchNumberInput = document.createElement('input');
+        batchNumberInput.type="text"
+        batchNumberInput.placeholder="Номер партии"
+        batchNumber.appendChild(batchNumberInput)
 
-        var store = document.createElement('td')
-        store.appendChild (document.createTextNode('store'))
-        var batchNumber = document.createElement('td')
-        batchNumber.appendChild (document.createTextNode('batchNumber'))
-        var purPriceSum = document.createElement('td')
-        purPriceSum.appendChild (document.createTextNode('purPriceSum'))
-        var purPriceActSum = document.createElement('td')
-        purPriceActSum.appendChild (document.createTextNode('purPriceActSum'))
+        const purPriceSum = document.createElement('td');
+        const purPriceSumDiv = document.createElement('div');
+        purPriceSumDiv.id="ppSum"
+        purPriceSumDiv.className="addIncomeInput"
+        purPriceSumDiv.appendChild(document.createTextNode('0.00'))
+        purPriceSum.appendChild(purPriceSumDiv)
+
+        const purPriceActSum = document.createElement('td');
+        const purPriceActSumDiv = document.createElement('div');
+        purPriceActSumDiv.id="ppActSum"
+        purPriceActSumDiv.className="addIncomeInput"
+        purPriceActSumDiv.appendChild(document.createTextNode('0.00'))
+        purPriceActSum.appendChild (purPriceActSumDiv)
+
+        item.id="item"
+        count.id="count"
+        purPrice.id="purPrice"
+        purPriceAct.id="purPriceAct"
+        storeArticle.id="storeArticle"
+        store.id="store"
+        batchNumber.id="batchNumber"
+        purPriceSum.id="purPriceSum"
+        purPriceActSum.id="purPriceActSum"
 
         row.appendChild(item);
         row.appendChild(count);
@@ -87,28 +145,6 @@
         row.appendChild(purPriceSum);
         row.appendChild(purPriceActSum);
         table.appendChild(row);
-
-
-
-                    <%--<tr>--%>
-                    <%--    <td>--%>
-                    <%--        <select required="true" path="item" onchange="javascript:handleSelect(this)">--%>
-                    <%--            <option value="-1" label=""/>--%>
-                    <%--            <option value="0" label="Добавить товар"/>--%>
-                    <%--        <c:forEach items="${items}" var="item">--%>
-                    <%--            <option value="${item.id}" label="${item.name}"/>--%>
-                    <%--        </c:forEach>--%>
-                    <%--        </select>--%>
-
-                    <%--
-                    <%--    <td><input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>--%>
-                    <%--    <td><input type="text" path="store" placeholder="Магазин покупки"/></td>--%>
-                    <%--    <td><input type="text" placeholder="Номер партии"  path="batchNumber"/></td>--%>
-                    <%--    <td><div id="ppSum" class="addIncomeInput">0.00</div></td>--%>
-                    <%--    <td><div id="ppActSum" class="addIncomeInput">0.00</div></td>--%>
-                    <%--</tr>--%>
-
-                    // </tr>
     }
 </script>
 
@@ -127,7 +163,7 @@
 
 
 <div class="outerDivLogin">
-    <form:form method="POST" modelAttribute="incomeMainForm">
+    <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm">
         <h2 class="h2Light">Создать приход</h2>
         <form:hidden path="id"/>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
@@ -142,7 +178,9 @@
             <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>
         </div>
         <div class="innerDivLogin">
-            <button type="submit" class="inputClassLight">Добавить</button>
+            <button type="button" class="inputClassLight" onclick="javascript:addIncomeMain()">Добавить</button>
+
+<%--            <button type="submit" class="inputClassLight">Добавить</button>--%>
         </div>
     </form:form>
 </div>
