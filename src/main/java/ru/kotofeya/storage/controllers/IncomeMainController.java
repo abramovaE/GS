@@ -54,15 +54,10 @@ public class IncomeMainController {
     public String  addIncomeString(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson) {
-        System.out.println("incomeJson: " + incomeJson);
         Gson gson = new Gson();
         Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
         List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
-        System.out.println("incomeJsonList: " + incomeJsonList);
         Set<IncomeString> incomeStrings = new HashSet<>();
-//        incomeMainService.saveIncomeMain(incomeMain);
-        System.out.println("income main id: " + incomeMain.getId());
-
         for(IncomeJson i: incomeJsonList){
             IncomeString incomeString = new IncomeString();
             incomeString.setUserName(incomeMain.getUserName());
@@ -75,10 +70,7 @@ public class IncomeMainController {
             incomeString.setStore(i.getStore());
             incomeString.setBatchNumber(i.getBatchNumber());
             incomeString.setIncomeMain(incomeMain);
-//            incomeStringService.saveIncome(incomeString);
             incomeStrings.add(incomeString);
-            System.out.println("income string id: " + incomeString.getId());
-
         }
         incomeMain.setIncomeStrings(incomeStrings);
         incomeMainService.saveIncomeMain(incomeMain);

@@ -20,7 +20,8 @@
     </sec:authorize>
 
     <script type="text/javascript">
-    function addIncomeMain(){
+    function addIncomeMain() {
+        var isSubmit = true;
         let incomeStrings = new Array();
         const table = document.getElementById('incomeStringTable');
         let index;
@@ -34,25 +35,58 @@
             const store = document.getElementById("store" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
             const itemString = new Object();
+
+            if (itemId <= 0) {
+                alert("Выберите товар");
+                isSubmit = false;
+            }
+            else if (count.length == 0) {
+                alert("Введите количество");
+                isSubmit = false;
+            }
+            else if (purPrice.length == 0) {
+                alert("Введите цену");
+                isSubmit = false;
+            }
+            else if (purPriceAct.length == 0) {
+                alert("Введите фактическую цену");
+                isSubmit = false;
+            }
+            else if (storeArticle.length == 0) {
+                alert("Введите артикул товара в магазине покупки");
+                isSubmit = false;
+            }
+            else if (store.length == 0) {
+                alert("Введите магазин покупки");
+                isSubmit = false;
+            }
+            else if (batchNumber.length == 0) {
+                alert("Введите номер партии");
+                isSubmit = false;
+            }
+
             itemString.itemId = itemId;
-            itemString.count=count;
-            itemString.purPrice=purPrice;
-            itemString.purPriceAct=purPriceAct;
-            itemString.storeArticle=storeArticle;
-            itemString.store=store;
-            itemString.batchNumber=batchNumber;
+            itemString.count = count;
+            itemString.purPrice = purPrice;
+            itemString.purPriceAct = purPriceAct;
+            itemString.storeArticle = storeArticle;
+            itemString.store = store;
+            itemString.batchNumber = batchNumber;
             incomeStrings.push(itemString);
         }
-        let incomeMain = document.getElementById('incomeMainForm');
-        const incomeJson = document.createElement('input');
-        incomeJson.name="incomeJson";
-        incomeJson.value=JSON.stringify(incomeStrings);
-        incomeJson.hidden=true;
-        incomeMain.appendChild(incomeJson);
-        // alert(elm)
-        incomeMain.submit();
-        // HTMLElement
 
+
+        if (isSubmit) {
+            let incomeMain = document.getElementById('incomeMainForm');
+            const incomeJson = document.createElement('input');
+            incomeJson.name = "incomeJson";
+            incomeJson.value = JSON.stringify(incomeStrings);
+            incomeJson.hidden = true;
+            incomeMain.appendChild(incomeJson);
+            incomeMain.submit();
+        }
+
+        return isSubmit;
     }
 
     function handlePrice(){
@@ -135,6 +169,7 @@
         purPriceInput.min="0";
         purPriceInput.step="0.01";
         purPriceInput.addEventListener("input", handlePrice);
+        purPriceInput.required=true;
         // purPriceInput.addEventListener("focus", clearPpDouble);
         purPrice.appendChild(purPriceInput);
 
@@ -146,6 +181,7 @@
         purPriceActInput.min="0";
         purPriceActInput.step="0.01";
         purPriceActInput.addEventListener("input", handlePrice);
+        purPriceActInput.required=true
         // purPriceActInput.addEventListener("focus", clearPpActDouble);
         purPriceAct.appendChild(purPriceActInput);
 
@@ -154,6 +190,7 @@
         storeArticleInput.id="storeArticle" + rowIndex;
         storeArticleInput.type="text";
         storeArticleInput.placeholder="Артикул в магазине";
+        storeArticleInput.required=true
         storeArticle.appendChild(storeArticleInput);
 
         const store = document.createElement('td');
@@ -161,6 +198,8 @@
         storeInput.id="store" + rowIndex;
         storeInput.type="text";
         storeInput.placeholder="Магазин покупки";
+        storeInput.value = document.getElementById("incomeMainStore").value
+        storeInput.required=true
         store.appendChild(storeInput);
 
         const batchNumber = document.createElement('td');
@@ -168,6 +207,7 @@
         batchNumberInput.id= "batchNumber"+rowIndex;
         batchNumberInput.type="text";
         batchNumberInput.placeholder="Номер партии";
+        batchNumberInput.required=true;
         batchNumber.appendChild(batchNumberInput);
 
         const purPriceSum = document.createElement('td');
@@ -212,7 +252,7 @@
     <div class="leftright">
         <div class="left">
             <div class="outerDivLogin">
-                <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm">
+                <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm" onsubmit="return addIncomeMain();">
                     <form:hidden path="id"/>
                     <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                     <form:hidden path="incomeStrings"/>
@@ -220,14 +260,13 @@
                         <form:input type="text" path="date" placeholder="Дата" class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
-                        <form:input type="text" path="store" placeholder="Магазин покупки" class="inputClassLight"/>
+                        <form:input type="text" path="store" placeholder="Магазин покупки" id="incomeMainStore" class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
                         <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>
                     </div>
                     <div class="innerDivLogin">
-                        <button type="submit" class="inputClassLight" id="submit"
-                                onclick="javascript:addIncomeMain()">Добавить</button>
+                        <button type="submit" class="inputClassLight" id="submit">Добавить</button>
                     </div>
                 </form:form>
             </div>
