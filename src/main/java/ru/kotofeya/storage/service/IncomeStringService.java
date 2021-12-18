@@ -40,6 +40,7 @@ public class IncomeStringService {
         incomeStringFromDb.setUserName(incomeString.getUserName());
         incomeStringFromDb.setStore(incomeString.getStore());
         incomeStringFromDb.setStoreArticle(incomeString.getStoreArticle());
+        incomeStringFromDb.setIncomeMain(incomeString.getIncomeMain());
         incomeStringRepo.save(incomeStringFromDb);
     }
 

@@ -1,7 +1,7 @@
 package ru.kotofeya.storage.model;
 
+
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "income_string")
@@ -34,7 +34,7 @@ public class IncomeString {
     @Transient
     private double purchasePriceActDouble;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private IncomeMain incomeMain;
 
     public IncomeString() {}
