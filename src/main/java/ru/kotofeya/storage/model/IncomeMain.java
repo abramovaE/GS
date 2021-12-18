@@ -32,4 +32,14 @@ public class IncomeMain {
     public void setIncomeStrings(Set<IncomeString> incomeStrings) {
         this.incomeStrings = incomeStrings;
     }
+
+    @Override
+    public String toString() {
+        return "IncomeMain{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", store='" + store + '\'' +
+                '}';
+    }
 }

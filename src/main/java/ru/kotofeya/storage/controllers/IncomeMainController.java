@@ -46,11 +46,8 @@ public class IncomeMainController {
     @PostMapping("/add_income_main")
     public String  addIncomeString(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
-                                   @ModelAttribute ("incomeJson") String incomeJson
-//                                   @RequestParam(name = "incomeStrings", required = false) HashSet<Object> testStrings
-                                   ) {
-//        incomeMain.get
-        System.out.println("testStrings: " + incomeMain.getIncomeJson());
+                                   @ModelAttribute ("incomeJson") String incomeJson) {
+        System.out.println("incomeJson: " + incomeJson);
         incomeMainService.saveIncomeMain(incomeMain);
         return "redirect:/incomes_main";
     }
