@@ -19,6 +19,11 @@ public class IncomeMain {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "incomeMain", cascade = CascadeType.ALL)
     private Set<IncomeString> incomeStrings;
 
+    @Transient
+    private int sum;
+    @Transient
+    private int sumAct;
+
     public IncomeMain() {}
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -32,6 +37,11 @@ public class IncomeMain {
     public void setIncomeStrings(Set<IncomeString> incomeStrings) {
         this.incomeStrings = incomeStrings;
     }
+
+    public int getSum() {return sum;}
+    public void setSum(int sum) {this.sum = sum;}
+    public int getSumAct() {return sumAct;}
+    public void setSumAct(int sumAct) {this.sumAct = sumAct;}
 
     @Override
     public String toString() {

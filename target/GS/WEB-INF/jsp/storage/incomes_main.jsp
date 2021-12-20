@@ -13,6 +13,11 @@
   </style>
 </head>
 <body class="bodyClassGreen">
+<script>
+  function showIncome(id){
+    window.location("/show_income_main/" + id)
+  }
+</script>
 <sec:authorize access="!isAuthenticated()">
   <% response.sendRedirect("/"); %>
 </sec:authorize>
@@ -41,13 +46,13 @@
         <th>Сумма покупки, руб.</th>
         <th>Сумма покупки окончательная, руб.</th>
       </tr>
-      <c:forEach items="${incomesMain}" var="incomesMain">
-        <tr>
-          <td>${incomesMain.userName}</td>
-          <td>${incomesMain.date}</td>
-          <td>${incomesMain.store}</td>
-<%--          <td>${incomesMain.summ}</td>--%>
-<%--          <td>${incomesMain.summAct}</td>--%>
+      <c:forEach items="${incomesMain}" var="incomeMain">
+        <tr onclick="javascript:showIncome(${incomeMain.id})">
+          <td>${incomeMain.userName}</td>
+          <td>${incomeMain.date}</td>
+          <td>${incomeMain.store}</td>
+          <td>${incomeMain.sum/100}</td>
+          <td>${incomeMain.sumAct/100}</td>
         </tr>
       </c:forEach>
     </table>

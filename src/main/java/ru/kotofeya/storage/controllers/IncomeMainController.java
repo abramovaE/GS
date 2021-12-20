@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.IncomeMain;
 import ru.kotofeya.storage.model.IncomeString;
@@ -45,7 +47,6 @@ public class IncomeMainController {
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("incomeJson", new String());
         model.addAttribute("incomeString", new IncomeString());
-
         return "storage/add_income_main";
     }
 
@@ -78,9 +79,41 @@ public class IncomeMainController {
         return "redirect:/incomes_main";
     }
 
+    @GetMapping("/show_income_main/{incomeId}")
+    public String  showIncomeString(Model model, @PathVariable("incomeId") long incomeId) {
+        List<Item> allItems = itemService.getAllItems();
+        model.addAttribute("income_main", incomeMainService.findById(incomeId));
+
+//        System.out.println("allitems size: " + allItems);
+//        model.addAttribute("items", allItems);
+//        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
+//        model.addAttribute("incomeMainForm", new IncomeMain());
+//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+//        model.addAttribute("incomeJson", new String());
+//        model.addAttribute("incomeString", new IncomeString());
+        return "storage/add_income_main";
+    }
+
+
     @GetMapping("/incomes_main")
     public String getAllIncomesMAin(Model model){
         List<IncomeMain> incomesMain = incomeMainService.getAllIncomesMain();
+        for(IncomeMain incomeMain: incomesMain){
+            int sum = 0;
+            int sumAct = 0;
+            List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
+
+            for(IncomeString incomeString: incomeStrings){
+                if(incomeString.getIncomeMain() != null &&
+                        incomeString.getIncomeMain().getId() != null &&
+                        incomeString.getIncomeMain().getId().equals(incomeMain.getId())){
+                    sum += incomeString.getCount() * incomeString.getPurchasePrice();
+                    sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
+                }
+            }
+            incomeMain.setSum(sum);
+            incomeMain.setSumAct(sumAct);
+        }
         model.addAttribute("incomesMain", incomesMain);
         return "storage/incomes_main";
     }

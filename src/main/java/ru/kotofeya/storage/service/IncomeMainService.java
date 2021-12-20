@@ -36,4 +36,9 @@ public class IncomeMainService {
         incomeMainFromDb.setIncomeStrings(incomeMain.getIncomeStrings());
         incomeMainRepo.save(incomeMainFromDb);
     }
+    @Transactional
+    public IncomeMain findById(long id){
+        return incomeMainRepo.findById(id).orElse(null);
+    }
+
 }

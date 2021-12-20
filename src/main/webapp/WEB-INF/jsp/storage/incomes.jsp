@@ -13,6 +13,9 @@
   </style>
 </head>
 <body class="bodyClassGreen">
+<script>
+
+</script>
 <sec:authorize access="!isAuthenticated()">
   <% response.sendRedirect("/"); %>
 </sec:authorize>

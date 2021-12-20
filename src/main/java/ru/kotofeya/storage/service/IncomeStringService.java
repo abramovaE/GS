@@ -57,4 +57,5 @@ public class IncomeStringService {
     public List<IncomeString> getAllIncomes(){
         return incomeStringRepo.findAll();
     }
+
 }
