@@ -15,7 +15,8 @@
 <body class="bodyClassGreen">
 <script>
   function showIncome(id){
-    window.location("/show_income_main/" + id)
+    alert("khjhj")
+    // window.location("show_income_main/" + id)
   }
 </script>
 <sec:authorize access="!isAuthenticated()">
@@ -47,7 +48,7 @@
         <th>Сумма покупки окончательная, руб.</th>
       </tr>
       <c:forEach items="${incomesMain}" var="incomeMain">
-        <tr onclick="javascript:showIncome(${incomeMain.id})">
+        <tr onclick="window.location.href='show_income_main/${incomeMain.id}';">
           <td>${incomeMain.userName}</td>
           <td>${incomeMain.date}</td>
           <td>${incomeMain.store}</td>

@@ -50,8 +50,6 @@ public class IncomeMainController {
         return "storage/add_income_main";
     }
 
-
-
     @PostMapping("/add_income_main")
     public String  addIncomeString(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
@@ -80,20 +78,33 @@ public class IncomeMainController {
     }
 
     @GetMapping("/show_income_main/{incomeId}")
-    public String  showIncomeString(Model model, @PathVariable("incomeId") long incomeId) {
+    public String  showIncomeString(Model model,
+                                    @PathVariable("incomeId") Long incomeId) {
         List<Item> allItems = itemService.getAllItems();
-        model.addAttribute("income_main", incomeMainService.findById(incomeId));
+        IncomeMain incomeMain = incomeMainService.findById(incomeId);
+        model.addAttribute("incomeMain", incomeMain);
+        int sum = 0;
+            int sumAct = 0;
+            List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
+            for(IncomeString incomeString: incomeStrings){
+                if(incomeString.getIncomeMain() != null &&
+                        incomeString.getIncomeMain().getId() != null &&
+                        incomeString.getIncomeMain().getId().equals(incomeMain.getId())){
+                    sum += incomeString.getCount() * incomeString.getPurchasePrice();
+                    sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
+                }
+            incomeMain.setSum(sum);
+            incomeMain.setSumAct(sumAct);
+        }
 
-//        System.out.println("allitems size: " + allItems);
-//        model.addAttribute("items", allItems);
-//        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
-//        model.addAttribute("incomeMainForm", new IncomeMain());
-//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-//        model.addAttribute("incomeJson", new String());
-//        model.addAttribute("incomeString", new IncomeString());
-        return "storage/add_income_main";
+        model.addAttribute("items", allItems);
+        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
+        model.addAttribute("incomeMainForm", new IncomeMain());
+        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+        model.addAttribute("incomeJson", new String());
+        model.addAttribute("incomeString", new IncomeString());
+        return "storage/show_income_main";
     }
-
 
     @GetMapping("/incomes_main")
     public String getAllIncomesMAin(Model model){
