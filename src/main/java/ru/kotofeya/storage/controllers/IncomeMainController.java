@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class IncomeMainController {
@@ -39,9 +40,9 @@ public class IncomeMainController {
         List<Item> allItems = itemService.getAllItems();
         System.out.println("allitems size: " + allItems);
         model.addAttribute("items", allItems);
+        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("incomeMainForm", new IncomeMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-//        model.addAttribute("incomeStrings", new HashSet<IncomeString>());
         model.addAttribute("incomeJson", new String());
         model.addAttribute("incomeString", new IncomeString());
 
