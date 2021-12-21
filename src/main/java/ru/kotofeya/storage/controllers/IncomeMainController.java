@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kotofeya.storage.model.DeletedIncomeString;
 import ru.kotofeya.storage.model.IncomeMain;
 import ru.kotofeya.storage.model.IncomeString;
 import ru.kotofeya.storage.model.Item;
+import ru.kotofeya.storage.service.DeletedIncomeService;
 import ru.kotofeya.storage.service.IncomeMainService;
 import ru.kotofeya.storage.service.IncomeStringService;
 import ru.kotofeya.storage.service.ItemService;
@@ -34,6 +36,8 @@ public class IncomeMainController {
     private ItemService itemService;
     @Autowired
     private IncomeStringService incomeStringService;
+    @Autowired
+    private DeletedIncomeService deletedIncomeService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
@@ -71,6 +75,12 @@ public class IncomeMainController {
             incomeString.setBatchNumber(i.getBatchNumber());
             incomeString.setIncomeMain(incomeMain);
             incomeStrings.add(incomeString);
+            Item item = itemService.getById(i.getItemId());
+            if(item != null) {
+                int count = item.getCount() == null? 0 : item.getCount();
+                item.setCount(count + incomeString.getCount());
+                itemService.saveItem(item);
+            }
         }
         incomeMain.setIncomeStrings(incomeStrings);
         incomeMainService.saveIncomeMain(incomeMain);
@@ -127,6 +137,30 @@ public class IncomeMainController {
         }
         model.addAttribute("incomesMain", incomesMain);
         return "storage/incomes_main";
+    }
+
+
+    @GetMapping("/delete_income_main/{incomeMainId}/{deleteUserName}")
+    public String deleteIncome(@PathVariable ("incomeMainId") Long incomeMainId,
+                               @PathVariable ("deleteUserName") String deleteUserName,
+                               Model model) {
+        IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
+        if(incomeMain != null){
+            Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();
+            for(IncomeString incomeString: incomeStrings){
+                Item incomeItem = itemService.getById(incomeString.getItem().getId());
+                if(incomeItem != null){
+                    incomeItem.setCount(incomeItem.getCount() - incomeString.getCount());
+                    itemService.saveItem(incomeItem);
+                }
+                DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
+                        LocalDateTime.now().format(dateTimeFormatter),
+                        deleteUserName);
+                deletedIncomeService.saveDeletedIncome(deletedIncome);
+            }
+            incomeMainService.deleteIncomeMainById(incomeMain.getId());
+        }
+        return "redirect:/incomes_main";
     }
 }
 
@@ -192,4 +226,3 @@ class IncomeJson{
         this.batchNumber = batchNumber;
     }
 }
-

@@ -18,6 +18,20 @@
     alert("khjhj")
     // window.location("show_income_main/" + id)
   }
+
+
+  function showEditPanel(id){
+    // document.getElementById('edit' + id).style.display = 'block'
+    document.getElementById('delete' + id).style.display = 'block'
+    // document.getElementById('editth').style.display = 'block'
+    document.getElementById('deleteth').style.display = 'block'
+  }
+  function hideEditPanel(id){
+    // document.getElementById('edit' + id).style.display = 'none'
+    document.getElementById('delete' + id).style.display = 'none'
+    // document.getElementById('editth').style.display = 'none'
+    document.getElementById('deleteth').style.display = 'none'
+  }
 </script>
 <sec:authorize access="!isAuthenticated()">
   <% response.sendRedirect("/"); %>
@@ -48,12 +62,21 @@
         <th>Сумма покупки окончательная, руб.</th>
       </tr>
       <c:forEach items="${incomesMain}" var="incomeMain">
-        <tr onclick="window.location.href='show_income_main/${incomeMain.id}';">
+        <tr onmouseover="javascript:showEditPanel(${incomeMain.id})"
+            onmouseout="javascript:hideEditPanel(${incomeMain.id})">
+
+<%--                onclick="window.location.href='show_income_main/${incomeMain.id}';">--%>
           <td>${incomeMain.userName}</td>
           <td>${incomeMain.date}</td>
           <td>${incomeMain.store}</td>
           <td>${incomeMain.sum/100}</td>
           <td>${incomeMain.sumAct/100}</td>
+          <td class="edit" id="edit${incomeMain.id}" hidden>
+            <a href="edit_income_main/${incomeMain.id}">Редактировать</a>
+          </td>
+          <td class="edit" id="delete${incomeMain.id}" hidden>
+            <a href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+          </td>
         </tr>
       </c:forEach>
     </table>

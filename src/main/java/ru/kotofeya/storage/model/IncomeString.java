@@ -28,12 +28,10 @@ public class IncomeString {
     private String store;
     @Column(name = "batch_number")
     private int batchNumber;
-
     @Transient
     private double purchasePriceDouble;
     @Transient
     private double purchasePriceActDouble;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private IncomeMain incomeMain;
 
