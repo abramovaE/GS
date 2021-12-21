@@ -21,15 +21,15 @@
 
 
   function showEditPanel(id){
-    // document.getElementById('edit' + id).style.display = 'block'
+    document.getElementById('edit' + id).style.display = 'block'
     document.getElementById('delete' + id).style.display = 'block'
-    // document.getElementById('editth').style.display = 'block'
+    document.getElementById('editth').style.display = 'block'
     document.getElementById('deleteth').style.display = 'block'
   }
   function hideEditPanel(id){
-    // document.getElementById('edit' + id).style.display = 'none'
+    document.getElementById('edit' + id).style.display = 'none'
     document.getElementById('delete' + id).style.display = 'none'
-    // document.getElementById('editth').style.display = 'none'
+    document.getElementById('editth').style.display = 'none'
     document.getElementById('deleteth').style.display = 'none'
   }
 </script>
@@ -72,7 +72,7 @@
           <td>${incomeMain.sum/100}</td>
           <td>${incomeMain.sumAct/100}</td>
           <td class="edit" id="edit${incomeMain.id}" hidden>
-            <a href="edit_income_main/${incomeMain.id}">Редактировать</a>
+            <a href="show_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
           </td>
           <td class="edit" id="delete${incomeMain.id}" hidden>
             <a href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>

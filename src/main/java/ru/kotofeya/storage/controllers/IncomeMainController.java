@@ -11,18 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.kotofeya.storage.model.DeletedIncomeString;
-import ru.kotofeya.storage.model.IncomeMain;
-import ru.kotofeya.storage.model.IncomeString;
-import ru.kotofeya.storage.model.Item;
-import ru.kotofeya.storage.service.DeletedIncomeService;
-import ru.kotofeya.storage.service.IncomeMainService;
-import ru.kotofeya.storage.service.IncomeStringService;
-import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.model.*;
+import ru.kotofeya.storage.service.*;
 
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +33,8 @@ public class IncomeMainController {
     private IncomeStringService incomeStringService;
     @Autowired
     private DeletedIncomeService deletedIncomeService;
+    @Autowired
+    private EditedIncomeMainService editedIncomeMainService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
@@ -87,9 +84,11 @@ public class IncomeMainController {
         return "redirect:/incomes_main";
     }
 
-    @GetMapping("/show_income_main/{incomeId}")
+    @GetMapping("/show_income_main/{incomeId}/{editUserName}")
     public String  showIncomeString(Model model,
-                                    @PathVariable("incomeId") Long incomeId) {
+                                    @PathVariable("incomeId") Long incomeId,
+                                    @PathVariable("editUserName") String editUserName) {
+
         List<Item> allItems = itemService.getAllItems();
         IncomeMain incomeMain = incomeMainService.findById(incomeId);
         model.addAttribute("incomeMain", incomeMain);
@@ -114,6 +113,65 @@ public class IncomeMainController {
         model.addAttribute("incomeJson", new String());
         model.addAttribute("incomeString", new IncomeString());
         return "storage/show_income_main";
+    }
+
+
+    @PostMapping("/show_income_main/{incomeId}/{editUserName}")
+    public String  showIncomeString(Model model,
+                                   @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
+                                   @ModelAttribute ("incomeJson") String incomeJson,
+                                   @PathVariable("editUserName") String editUserName) {
+//        Gson gson = new Gson();
+//        Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
+//        List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
+//        Set<IncomeString> incomeStrings = new HashSet<>();
+//        for(IncomeJson i: incomeJsonList){
+//            IncomeString incomeString = new IncomeString();
+//            incomeString.setUserName(incomeMain.getUserName());
+//            incomeString.setDate(incomeMain.getDate());
+//            incomeString.setItem(itemService.getById(i.getItemId()));
+//            incomeString.setCount(i.getCount());
+//            incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
+//            incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
+//            incomeString.setStoreArticle(i.getStoreArticle());
+//            incomeString.setStore(i.getStore());
+//            incomeString.setBatchNumber(i.getBatchNumber());
+//            incomeString.setIncomeMain(incomeMain);
+//            incomeStrings.add(incomeString);
+//            Item item = itemService.getById(i.getItemId());
+//            if(item != null) {
+//                int count = item.getCount() == null? 0 : item.getCount();
+//                item.setCount(count + incomeString.getCount());
+//                itemService.saveItem(item);
+//            }
+//        }
+//        incomeMain.setIncomeStrings(incomeStrings);
+        EditedIncomeMain editedIncomeMain = new EditedIncomeMain();
+        IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
+        editedIncomeMain.setCreateUserName(incomeMainFromDb.getUserName());
+        editedIncomeMain.setEditUserName(editUserName);
+        editedIncomeMain.setCreateDate(incomeMainFromDb.getDate());
+        editedIncomeMain.setEditDate(LocalDateTime.now().format(dateTimeFormatter));
+        editedIncomeMain.setCreateStore(incomeMainFromDb.getStore());
+        editedIncomeMain.setEditStore(incomeMain.getStore());
+
+        List<Long> incomeStringIds = new ArrayList<>();
+        incomeMainFromDb.getIncomeStrings().stream().forEach(
+                        it->incomeStringIds.add(it.getId()));
+        editedIncomeMain.setCreateIncomeStringIds(incomeStringIds.toString());
+        List<Long> editIncomeStringIds = new ArrayList<>();
+        incomeMain.getIncomeStrings().stream().forEach(
+                it->editIncomeStringIds.add(it.getId()));
+        editedIncomeMain.setEditIncomeStringIds(editIncomeStringIds.toString());
+
+//        incomeMainService.detach(incomeMainFromDb);
+        incomeMainFromDb.setIncomeStrings(incomeMain.getIncomeStrings());
+        incomeMainFromDb.setDate(incomeMain.getDate());
+        incomeMainFromDb.setStore(incomeMain.getStore());
+        incomeMainFromDb.setUserName(incomeMain.getUserName());
+        editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
+        incomeMainService.saveIncomeMain(incomeMainFromDb);
+        return "redirect:/incomes_main";
     }
 
     @GetMapping("/incomes_main")

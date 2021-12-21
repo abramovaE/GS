@@ -106,6 +106,10 @@
             incomeJson.value = JSON.stringify(incomeStrings);
             incomeJson.hidden = true;
             incomeMain.appendChild(incomeJson);
+            <%--const editUserName = document.createAttribute('div');--%>
+            <%--editUserName.hidden = true;--%>
+            <%--editUserName.value = ${pageContext.request.userPrincipal.name};--%>
+            <%--incomeMain.appendChild(editUserName);--%>
             incomeMain.submit();
         }
         return isSubmit;
@@ -165,7 +169,7 @@
         </div>
     </div>
 
-    <h2 class="h2Light">Приход</h2>
+    <h2 class="h2Light">Редактировать приход</h2>
     <form:form method="POST" modelAttribute="incomeMain" id="incomeMain" onsubmit="return addIncomeMain();">
 
     <div class="leftright">
@@ -174,15 +178,15 @@
                     <form:hidden path="id"/>
                     <form:hidden path="incomeStrings"/>
                     <div class="innerDivLogin">
-                        <form:input type="text" path="userName"  readonly="true"
+                        <form:input type="text" path="userName" readonly="true"
                                     class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
-                        <form:input readonly="true" type="text" path="date"
+                        <form:input type="text" path="date"
                                     placeholder="Дата" class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
-                        <form:input readonly="true" type="text" path="store"
+                        <form:input type="text" path="store"
                                     placeholder="Магазин покупки"
                                     id="incomeMainStore"
                                     onchange="javascript:handleStore()"
@@ -191,9 +195,9 @@
 <%--                    <div class="innerDivLogin">--%>
 <%--                        <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>--%>
 <%--                    </div>--%>
-<%--                    <div class="innerDivLogin">--%>
-<%--                        <button type="submit" class="inputClassLight" id="submit">Добавить</button>--%>
-<%--                    </div>--%>
+                    <div class="innerDivLogin">
+                        <button type="submit" class="inputClassLight" id="submit">Сохранить</button>
+                    </div>
             </div>
         </div>
             <div class="right">

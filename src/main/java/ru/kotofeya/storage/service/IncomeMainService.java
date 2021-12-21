@@ -35,10 +35,15 @@ public class IncomeMainService {
 //        incomeMainFromDb.setUserName(incomeMain.getUserName());
 //        incomeMainFromDb.setIncomeStrings(incomeMain.getIncomeStrings());
         incomeMainRepo.save(incomeMain);
+
     }
     @Transactional
     public IncomeMain findById(long id){
         return incomeMainRepo.findById(id).orElse(null);
+    }
+    @Transactional
+    public void detach(IncomeMain incomeMain){
+        entityManager.detach(incomeMain);
     }
 
     @Transactional

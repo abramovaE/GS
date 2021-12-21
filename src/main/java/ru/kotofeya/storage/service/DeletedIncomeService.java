@@ -20,4 +20,5 @@ public class DeletedIncomeService {
     public void saveDeletedIncome(DeletedIncomeString deletedIncome){
         deletedIncomeStringRepo.save(deletedIncome);
     }
+
 }
