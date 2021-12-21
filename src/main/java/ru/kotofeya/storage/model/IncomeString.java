@@ -32,7 +32,7 @@ public class IncomeString {
     private double purchasePriceDouble;
     @Transient
     private double purchasePriceActDouble;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private IncomeMain incomeMain;
 
     public IncomeString() {}

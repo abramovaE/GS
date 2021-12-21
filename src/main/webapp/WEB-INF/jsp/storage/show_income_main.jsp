@@ -159,6 +159,18 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
+        function showEditPanel(id){
+            document.getElementById('edit' + id).style.display = 'block'
+            document.getElementById('delete' + id).style.display = 'block'
+            document.getElementById('editth').style.display = 'block'
+            document.getElementById('deleteth').style.display = 'block'
+        }
+        function hideEditPanel(id){
+            document.getElementById('edit' + id).style.display = 'none'
+            document.getElementById('delete' + id).style.display = 'none'
+            document.getElementById('editth').style.display = 'none'
+            document.getElementById('deleteth').style.display = 'none'
+        }
 </script>
     <div class="topPanel">
         <div class="topPanelFirst">
@@ -214,26 +226,10 @@
         </div>
     </div>
 
-
-        <div class="innerDivTr">
-            <table class="addIncome" id="incomeStringTable">
-                <tr id="incomeStringTableHeader" hidden="true">
-                    <th>Товар</th>
-                    <th>Количество</th>
-                    <th>Цена покупки, руб.</th>
-                    <th>Цена покупки окончательная, руб.</th>
-                    <th>Артикул в магазине</th>
-                    <th>Магазин покупки</th>
-                    <th>Номер партии</th>
-                    <th>Сумма покупки, руб.</th>
-                    <th>Сумма покупки окончательная, руб.</th>
-                </tr>
-            </table>
-        </div>
     </form:form>
 
     <div class="innerDivTr">
-        <table class="addIncome" id="incomeStringTable">
+        <table class="todayIncomeStrings" id="incomeStringTable">
             <tr id="incomeStringTableHeader">
                 <th>Товар</th>
                 <th>Количество</th>
@@ -248,51 +244,23 @@
 
             <c:forEach items="${incomeMain.incomeStrings}"
                        var="incomeString" varStatus="index">
-                    <tr id="tr${index.count}">
-                        <td>
-                            <input readonly="true" autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                    placeholder="Товар" id="item${index.count}" autofocus="true"
-                                    onchange="javascript:handleItem(${index.count})"
-                                    value="${incomeString.item.name}::${incomeString.item.count}::${incomeString.item.id}::${incomeString.item.ean}">
-                            <datalist id="dataList${index.count}">
-                                <c:forEach var="item" items="${items}">
-                                    <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
-                                </c:forEach>
-                            </datalist>
+                    <tr id="tr${index.count}"
+                        onmouseover="javascript:showEditPanel(${index.count})"
+                        onmouseout="javascript:hideEditPanel(${index.count})">
+                        <td>${incomeString.item.name}</td>
+                        <td>${incomeString.count}</td>
+                        <td>${incomeString.purchasePrice/100}</td>
+                        <td>${incomeString.purchasePriceAct/100}</td>
+                        <td>${incomeString.storeArticle}</td>
+                        <td>${incomeString.store}</td>
+                        <td>${incomeString.batchNumber}</td>
+                        <td>${incomeString.count * incomeString.purchasePrice/100}</td>
+                        <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>
+                        <td class="edit" id="edit${index.count}" hidden>
+                            <a href="show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
                         </td>
-                        <td>
-                            <input readonly="true" type="number" required="true" id="count${index.count}"
-                                   placeholder="Количество" min = "0" value="${incomeString.count}"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
-                        </td>
-                        <td><input readonly="true" type="number" placeholder="Цена покупки"
-                                   id="purPrice${index.count}"
-                                   min = "0" step="0.01"
-                                   required="true" value="${incomeString.purchasePrice/100}"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/>
-                        </td>
-                        <td><input readonly="true" type="number" id="purPriceAct${index.count}" required="true"
-                                   placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                   value="${incomeString.purchasePriceAct/100}"
-                                   oninput="javascript:handlePrice()"
-                                   onchange="javascript:clearPpActDouble()"/>
-                        </td>
-                        <td><input readonly="true" type="text" id="storeArticle${index.count}"
-                                   placeholder="Артикул в магазине" required="true"
-                                   value="${incomeString.storeArticle}"/></td>
-                        <td><input readonly="true" type="text" id="store${index.count}" required="true"
-                                   placeholder="Магазин покупки" value="${incomeString.store}" /></td>
-                        <td><input readonly="true" type="text" id="batchNumber${index.count}" required="true"
-                                   placeholder="Номер партии"  path="batchNumber" value="${incomeString.batchNumber}"/></td>
-                        <td id="purPriceSum${index.count}">
-                            <div type="text" id="ppSum${index.count}" class="addIncomeInput">
-                                ${incomeString.count * incomeString.purchasePrice/100}
-                            </div>
-                        </td>
-                        <td id="purPriceActSum${index.count}">
-                            <div type="text" id="ppActSum${index.count}" class="addIncomeInput">
-                                    ${incomeString.count * incomeString.purchasePriceAct/100}
-                            </div>
+                        <td class="edit" id="delete${index.count}" hidden>
+                            <a href="delete_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>
                     </tr>
             </c:forEach>

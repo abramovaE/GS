@@ -59,6 +59,8 @@ public class IncomeMainController {
         Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
         List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
         Set<IncomeString> incomeStrings = new HashSet<>();
+        incomeMainService.saveIncomeMain(incomeMain);
+
         for(IncomeJson i: incomeJsonList){
             IncomeString incomeString = new IncomeString();
             incomeString.setUserName(incomeMain.getUserName());
@@ -78,17 +80,18 @@ public class IncomeMainController {
                 item.setCount(count + incomeString.getCount());
                 itemService.saveItem(item);
             }
+            incomeStringService.saveIncome(incomeString);
         }
+
         incomeMain.setIncomeStrings(incomeStrings);
         incomeMainService.saveIncomeMain(incomeMain);
         return "redirect:/incomes_main";
     }
 
     @GetMapping("/show_income_main/{incomeId}/{editUserName}")
-    public String  showIncomeString(Model model,
+    public String showIncomeString(Model model,
                                     @PathVariable("incomeId") Long incomeId,
                                     @PathVariable("editUserName") String editUserName) {
-
         List<Item> allItems = itemService.getAllItems();
         IncomeMain incomeMain = incomeMainService.findById(incomeId);
         model.addAttribute("incomeMain", incomeMain);
@@ -105,13 +108,11 @@ public class IncomeMainController {
             incomeMain.setSum(sum);
             incomeMain.setSumAct(sumAct);
         }
-
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
-        model.addAttribute("incomeMainForm", new IncomeMain());
-        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-        model.addAttribute("incomeJson", new String());
-        model.addAttribute("incomeString", new IncomeString());
+//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+//        model.addAttribute("incomeJson", new String());
+//        model.addAttribute("incomeString", new IncomeString());
         return "storage/show_income_main";
     }
 
@@ -121,9 +122,10 @@ public class IncomeMainController {
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
-//        Gson gson = new Gson();
-//        Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
-//        List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
+        List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
+        System.out.println(incomeJsonList);
 //        Set<IncomeString> incomeStrings = new HashSet<>();
 //        for(IncomeJson i: incomeJsonList){
 //            IncomeString incomeString = new IncomeString();
@@ -181,7 +183,6 @@ public class IncomeMainController {
             int sum = 0;
             int sumAct = 0;
             List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
-
             for(IncomeString incomeString: incomeStrings){
                 if(incomeString.getIncomeMain() != null &&
                         incomeString.getIncomeMain().getId() != null &&
@@ -215,6 +216,7 @@ public class IncomeMainController {
                         LocalDateTime.now().format(dateTimeFormatter),
                         deleteUserName);
                 deletedIncomeService.saveDeletedIncome(deletedIncome);
+                incomeStringService.deleteIncomeById(incomeString.getId());
             }
             incomeMainService.deleteIncomeMainById(incomeMain.getId());
         }

@@ -16,7 +16,7 @@ public class IncomeMain {
     private String date;
     @Column(name = "store")
     private String store;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "incomeMain", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "incomeMain")
     private Set<IncomeString> incomeStrings;
 
     @Transient

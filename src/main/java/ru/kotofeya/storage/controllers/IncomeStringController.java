@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.DeletedIncomeString;
+import ru.kotofeya.storage.model.IncomeMain;
 import ru.kotofeya.storage.model.IncomeString;
 import ru.kotofeya.storage.model.Item;
 import ru.kotofeya.storage.service.DeletedIncomeService;
+import ru.kotofeya.storage.service.IncomeMainService;
 import ru.kotofeya.storage.service.IncomeStringService;
 import ru.kotofeya.storage.service.ItemService;
 
@@ -21,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class IncomeStringController {
@@ -30,6 +33,8 @@ public class IncomeStringController {
     private ItemService itemService;
     @Autowired
     private DeletedIncomeService deletedIncomeService;
+    @Autowired
+    private IncomeMainService incomeMainService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
@@ -59,25 +64,48 @@ public class IncomeStringController {
         }
         return "redirect:/add_income_string";
     }
-    @GetMapping("/delete_income_string/{incomeStringId}/{deleteUserName}")
+    @GetMapping({"/delete_income_string/{incomeStringId}/{deleteUserName}",
+            "show_income_main/{incomeMainId}/delete_income_string/{incomeStringId}/{deleteUserName}"})
     public String deleteIncome(@PathVariable ("incomeStringId") Long incomeStringId,
                                @PathVariable ("deleteUserName") String deleteUserName,
+                               @PathVariable ("incomeMainId") Long incomeMainId,
                                Model model) {
+
         IncomeString incomeString = incomeStringService.getIncomeById(incomeStringId);
         if(incomeString != null){
             Item incomeItem = itemService.getById(incomeString.getItem().getId());
             if(incomeItem != null){
-                incomeItem.setCount(incomeItem.getCount() - incomeString.getCount());
+                Integer incomeItemCount = incomeItem.getCount();
+                if(incomeItemCount == null){
+                    incomeItemCount = 0;
+                }
+                Integer incomeStringCount = incomeString.getCount();
+                if(incomeStringCount == null){
+                    incomeStringCount = 0;
+                }
+                incomeItem.setCount(incomeItemCount - incomeStringCount);
                 itemService.saveItem(incomeItem);
             }
             DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
                     LocalDateTime.now().format(dateTimeFormatter),
                     deleteUserName);
+
+            IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
+            Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();
+            incomeStrings.remove(incomeString);
+            incomeMain.setIncomeStrings(incomeStrings);
+
             deletedIncomeService.saveDeletedIncome(deletedIncome);
             incomeStringService.deleteIncomeById(incomeString.getId());
+            incomeMainService.saveIncomeMain(incomeMain);
+
         }
-        return "redirect:/add_income_string";
+
+        return "redirect:/show_income_main/" +
+                incomeString.getIncomeMain().getId() + "/" + deleteUserName;
     }
+
+
 
 //    @GetMapping("/edit_income/{incomeId}")
 //    public String editIncome(@PathVariable ("incomeId") Long incomeId,
