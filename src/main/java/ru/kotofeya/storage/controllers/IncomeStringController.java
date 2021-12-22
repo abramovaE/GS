@@ -112,6 +112,8 @@ public class IncomeStringController {
         IncomeString incomeString = incomeStringService.getIncomeById(incomeStringId);
         List<Item> allItems = itemService.getAllItems();
         model.addAttribute("items", allItems);
+        incomeString.setPurchasePriceDouble(incomeString.getPurchasePrice()/100d);
+        incomeString.setPurchasePriceActDouble(incomeString.getPurchasePriceAct()/100d);
         model.addAttribute("incomeStringForm", incomeString);
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         return "storage/show_income_string";
@@ -138,9 +140,9 @@ public class IncomeStringController {
         editedIncomeString.setCreateCount(oldCount);
         editedIncomeString.setEditCount(newCount);
         editedIncomeString.setCreatePurchasePrice(incomeStringFromDb.getPurchasePrice());
-        editedIncomeString.setEditPurchasePrice(incomeString.getPurchasePrice());
+        editedIncomeString.setEditPurchasePrice((int) (incomeString.getPurchasePriceDouble() * 100));
         editedIncomeString.setCreatePurchasePriceAct(incomeStringFromDb.getPurchasePriceAct());
-        editedIncomeString.setEditPurchasePriceAct(incomeString.getPurchasePriceAct());
+        editedIncomeString.setEditPurchasePriceAct((int) (incomeString.getPurchasePriceActDouble() * 100));
         editedIncomeString.setCreateStoreArticle(incomeStringFromDb.getStoreArticle());
         editedIncomeString.setEditStoreArticle(incomeString.getStoreArticle());
         editedIncomeString.setCreateStore(incomeStringFromDb.getStore());
@@ -155,8 +157,8 @@ public class IncomeStringController {
         incomeStringFromDb.setDate(incomeString.getDate());
         incomeStringFromDb.setItem(incomeString.getItem());
         incomeStringFromDb.setCount(incomeString.getCount());
-        incomeStringFromDb.setPurchasePrice(incomeString.getPurchasePrice());
-        incomeStringFromDb.setPurchasePriceAct(incomeString.getPurchasePriceAct());
+        incomeStringFromDb.setPurchasePrice((int) (incomeString.getPurchasePriceDouble() * 100));
+        incomeStringFromDb.setPurchasePriceAct((int) (incomeString.getPurchasePriceActDouble() * 100));
         incomeStringFromDb.setStoreArticle(incomeString.getStoreArticle());
         incomeStringFromDb.setStore(incomeString.getStore());
         incomeStringFromDb.setBatchNumber(incomeString.getBatchNumber());
@@ -168,7 +170,7 @@ public class IncomeStringController {
         incomeStringService.saveIncome(incomeStringFromDb);
         return "redirect:/show_income_main/" + incomeMainId + "/" + editUserName;
     }
-    
+
     @GetMapping("/income_strings")
     public String  showIncomes(Model model) {
         List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();

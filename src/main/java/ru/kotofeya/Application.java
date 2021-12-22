@@ -10,6 +10,7 @@ public class Application {
     }
 }
 
+//price во всех сценариях п
 //show_income_string - controkller, css
 //edit_income-main - add income-string
 //редактировать income_string

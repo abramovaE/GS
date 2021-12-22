@@ -1,0 +1,67 @@
+.outerDivLogin{
+    background-color: #8fc7a0;
+    border-radius: 17px;
+    padding: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.innerDivLogin input{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 12pt;
+    font-family: Helvetica;
+    /*border: 2px solid red;*/
+    box-sizing: border-box;
+    padding: 7px;
+    display: flex;
+}
+
+.innerDivLogin label{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 12pt;
+    font-family: Helvetica;
+    color: white;
+    box-sizing: border-box;
+    padding: 7px;
+    /*border: 2px solid blue;*/
+    display: flex;
+    font-weight: bold;
+
+}
+
+.innerDivLogin div{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+}
+
+.innerDivLogin div:first-child{
+    margin: auto;
+    color: white;
+    vertical-align: middle;
+    padding: 7px;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: bold;
+    /*border: 2px solid green;*/
+    display: flex;
+}
+
+.innerDivLogin div:last-child{
+    margin: 0;
+    color: black;
+    background-color: white;
+    border-radius: 7px;
+    padding: 7px;
+    width: 100%;
+    box-sizing: border-box;
+    /*border: 2px solid yellow;*/
+    display: flex;
+}
