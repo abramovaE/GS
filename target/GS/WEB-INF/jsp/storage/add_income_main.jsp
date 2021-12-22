@@ -64,27 +64,27 @@
                 //     alert("Выберите товар");
                 //     isSubmit = false;
                 // }
-                if (count.length == 0) {
+                if (count.length === 0) {
                     alert("Введите количество");
                     isSubmit = false;
                 }
-                else if (purPrice.length == 0) {
+                else if (purPrice.length === 0) {
                     alert("Введите цену");
                     isSubmit = false;
                 }
-                else if (purPriceAct.length == 0) {
+                else if (purPriceAct.length === 0) {
                     alert("Введите фактическую цену");
                     isSubmit = false;
                 }
-                else if (storeArticle.length == 0) {
+                else if (storeArticle.length === 0) {
                     alert("Введите артикул товара в магазине покупки");
                     isSubmit = false;
                 }
-                else if (store.length == 0) {
+                else if (store.length === 0) {
                     alert("Введите магазин покупки");
                     isSubmit = false;
                 }
-                else if (batchNumber.length == 0) {
+                else if (batchNumber.length === 0) {
                     alert("Введите номер партии");
                     isSubmit = false;
                 }
@@ -145,43 +145,6 @@
         function clearPpDouble(){}
         function clearPpActDouble(){}
         function handleSelect(elm){}
-
-<%--    class Search {--%>
-<%--        constructor(rowIndex) {--%>
-<%--            this.rowIndex = rowIndex;--%>
-<%--        }--%>
-<%--        handleEvent(event) {--%>
-<%--            let method = 'on' + event.type[0].toUpperCase() + event.type.slice(1);--%>
-<%--            this[method](event);--%>
-<%--        }--%>
-<%--        onKeyup(){--%>
-<%--            let arr = [];--%>
-<%--            response.--%>
-<%--            let items = document.getElementById("items");--%>
-<%--            &lt;%&ndash;items.push(${items})&ndash;%&gt;--%>
-<%--            &lt;%&ndash;items.forEach(function(item, i,  items) {&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    arr.push(item.name)&ndash;%&gt;--%>
-<%--            &lt;%&ndash;});&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <c:forEach var="item" items="${items}">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                arr.push(${item.name})&ndash;%&gt;--%>
-<%--&lt;%&ndash;            </c:forEach>&ndash;%&gt;--%>
-<%--            alert(items.values())--%>
-<%--            // let result = document.getElementById('result');--%>
-<%--            // let search = document.getElementById('item' + this.rowIndex);--%>
-<%--            // let l = search.value.length;--%>
-<%--            // if(l>0){--%>
-<%--            //     for(var i=0;i<arr.length;i++){--%>
-<%--            //         var _ = arr[i].split('').slice(0,l).join('');--%>
-<%--            //         if(_==search.value){--%>
-<%--            //             result.innerHTML+=arr[i]+'<br/>';--%>
-<%--            //         }--%>
-<%--            //     }--%>
-<%--            // }--%>
-<%--        }--%>
-<%--    }--%>
-
-
-
     function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -190,118 +153,6 @@
         tableHeader.hidden = false;
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
-        //
-        // alert(tr)
-        // tr.hidden=false
-        <%--const row = document.createElement('tr');--%>
-        <%--const item = document.createElement('td');--%>
-        <%--const inputItem = document.createElement('input');--%>
-
-        <%--const dataList = document.createElement('datalist');--%>
-        <%--dataList.id="dataList"+rowIndex;--%>
-        <%--<c:forEach var="item" items="${items}">--%>
-        <%--    var option = document.createElement('option');--%>
-        <%--    option.value="${item.id}" + "-" + "${item.name}" + "-" + "${item.count}";--%>
-        <%--    dataList.appendChild(option);--%>
-        <%--</c:forEach>--%>
-        <%--inputItem.autocomplete="off";--%>
-        <%--inputItem.name="inputItem";--%>
-        <%--inputItem.placeholder="Товар";--%>
-        <%--inputItem.list=dataList;--%>
-        <%--inputItem.id="item"+rowIndex;--%>
-        <%--inputItem.autofocus=true;--%>
-        <%--// inputItem.addEventListener("input", handleItem);--%>
-
-        <%--item.appendChild(inputItem);--%>
-
-
-        <%--const count = document.createElement('td');--%>
-        <%--let countInput = document.createElement('input');--%>
-        <%--countInput.id="count" + rowIndex;--%>
-        <%--countInput.type="number";--%>
-        <%--countInput.required=true;--%>
-        <%--countInput.placeholder="Количество";--%>
-        <%--countInput.min="0";--%>
-        <%--count.addEventListener("input", handlePrice);--%>
-        <%--// count.addEventListener("focus", clearCount);--%>
-        <%--count.appendChild(countInput);--%>
-
-
-        <%--const purPrice = document.createElement('td');--%>
-        <%--const purPriceInput = document.createElement('input');--%>
-        <%--purPriceInput.id="purPrice" + rowIndex;--%>
-        <%--purPriceInput.type="number";--%>
-        <%--purPriceInput.placeholder="Цена покупки";--%>
-        <%--purPriceInput.min="0";--%>
-        <%--purPriceInput.step="0.01";--%>
-        <%--purPriceInput.addEventListener("input", handlePrice);--%>
-        <%--purPriceInput.required=true;--%>
-        <%--// purPriceInput.addEventListener("focus", clearPpDouble);--%>
-        <%--purPrice.appendChild(purPriceInput);--%>
-
-        <%--const purPriceAct = document.createElement('td');--%>
-        <%--const purPriceActInput = document.createElement('input');--%>
-        <%--purPriceActInput.id="purPriceAct" + rowIndex;--%>
-        <%--purPriceActInput.type="number";--%>
-        <%--purPriceActInput.placeholder="Цена покупки окончательная";--%>
-        <%--purPriceActInput.min="0";--%>
-        <%--purPriceActInput.step="0.01";--%>
-        <%--purPriceActInput.addEventListener("input", handlePrice);--%>
-        <%--purPriceActInput.required=true--%>
-        <%--// purPriceActInput.addEventListener("focus", clearPpActDouble);--%>
-        <%--purPriceAct.appendChild(purPriceActInput);--%>
-
-        <%--const storeArticle = document.createElement('td');--%>
-        <%--const storeArticleInput = document.createElement('input');--%>
-        <%--storeArticleInput.id="storeArticle" + rowIndex;--%>
-        <%--storeArticleInput.type="text";--%>
-        <%--storeArticleInput.placeholder="Артикул в магазине";--%>
-        <%--storeArticleInput.required=true--%>
-        <%--storeArticle.appendChild(storeArticleInput);--%>
-
-        <%--const store = document.createElement('td');--%>
-        <%--const storeInput = document.createElement('input');--%>
-        <%--storeInput.id="store" + rowIndex;--%>
-        <%--storeInput.type="text";--%>
-        <%--storeInput.placeholder="Магазин покупки";--%>
-        <%--storeInput.value = document.getElementById("incomeMainStore").value--%>
-        <%--storeInput.required=true--%>
-        <%--store.appendChild(storeInput);--%>
-
-        <%--const batchNumber = document.createElement('td');--%>
-        <%--const batchNumberInput = document.createElement('input');--%>
-        <%--batchNumberInput.id= "batchNumber"+rowIndex;--%>
-        <%--batchNumberInput.type="text";--%>
-        <%--batchNumberInput.placeholder="Номер партии";--%>
-        <%--batchNumberInput.required=true;--%>
-        <%--batchNumber.appendChild(batchNumberInput);--%>
-
-        <%--const purPriceSum = document.createElement('td');--%>
-        <%--const purPriceSumDiv = document.createElement('div');--%>
-        <%--purPriceSumDiv.id="ppSum"+rowIndex;--%>
-        <%--purPriceSumDiv.className="addIncomeInput";--%>
-        <%--purPriceSumDiv.appendChild(document.createTextNode('0.00'));--%>
-        <%--purPriceSum.appendChild(purPriceSumDiv);--%>
-        <%--purPriceSum.id="purPriceSum" + rowIndex;--%>
-
-        <%--const purPriceActSum = document.createElement('td');--%>
-        <%--const purPriceActSumDiv = document.createElement('div');--%>
-        <%--purPriceActSumDiv.id="ppActSum"+rowIndex;--%>
-        <%--purPriceActSumDiv.className="addIncomeInput";--%>
-        <%--purPriceActSumDiv.appendChild(document.createTextNode('0.00'));--%>
-        <%--purPriceActSum.appendChild (purPriceActSumDiv);--%>
-        <%--purPriceActSum.id="purPriceActSum" + rowIndex;--%>
-
-        <%--row.appendChild(item);--%>
-        <%--row.appendChild(count);--%>
-        <%--row.appendChild(purPrice);--%>
-        <%--row.appendChild(purPriceAct);--%>
-        <%--row.appendChild(storeArticle);--%>
-        <%--row.appendChild(store);--%>
-        <%--row.appendChild(batchNumber);--%>
-        <%--row.appendChild(purPriceSum);--%>
-        <%--row.appendChild(purPriceActSum);--%>
-        <%--table.appendChild(row);--%>
     }
 </script>
     <div class="topPanel">
@@ -317,7 +168,8 @@
     <div class="leftright">
         <div class="left">
             <div class="outerDivLogin">
-                <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm" onsubmit="return addIncomeMain();">
+                <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm"
+                           onsubmit="return addIncomeMain();">
                     <form:hidden path="id"/>
                     <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                     <form:hidden path="incomeStrings"/>
@@ -377,7 +229,6 @@
                                     placeholder="Товар" id="item${index.count}" autofocus="true"
                                     onchange="javascript:handleItem(${index.count})">
                             <datalist id="dataList${index.count}">
-                                    <%--                        <form:option value="0" label="Добавить товар"/>--%>
                                 <c:forEach var="item" items="${items}">
                                     <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
                                 </c:forEach>

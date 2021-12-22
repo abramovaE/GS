@@ -1,7 +1,6 @@
 package ru.kotofeya.storage.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "edited_income_main")

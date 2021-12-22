@@ -119,7 +119,7 @@ public class IncomeMainController {
 
     @PostMapping("/show_income_main/{incomeId}/{editUserName}")
     public String  showIncomeString(Model model,
-                                   @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
+                                   @ModelAttribute ("incomeMain") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
         Gson gson = new Gson();
@@ -161,6 +161,7 @@ public class IncomeMainController {
         incomeMainFromDb.getIncomeStrings().stream().forEach(
                         it->incomeStringIds.add(it.getId()));
         editedIncomeMain.setCreateIncomeStringIds(incomeStringIds.toString());
+
         List<Long> editIncomeStringIds = new ArrayList<>();
         incomeMain.getIncomeStrings().stream().forEach(
                 it->editIncomeStringIds.add(it.getId()));

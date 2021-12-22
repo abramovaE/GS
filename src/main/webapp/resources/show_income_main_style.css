@@ -1,0 +1,50 @@
+.showIncome {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.showIncome td{
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 7px;
+    font-size: 12pt;
+    font-family: Helvetica;
+    border: 1px solid blueviolet;
+}
+
+
+.showIncome td input{
+    margin: 0;
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.showIncome td select{
+    margin: 0;
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    box-sizing: border-box;
+    width: 100%;
+    -webkit-appearance: none;
+}
+
+.showIncome td button{
+    border: none;
+    padding:7px;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 12pt;
+    font-family: Helvetica;
+    width: 100%;
+}
