@@ -100,7 +100,6 @@
                     <th>Цена покупки, руб.</th>
                     <th>Цена покупки окончательная, руб.</th>
                     <th>Артикул в магазине</th>
-<%--                    <th>Магазин покупки</th>--%>
                     <th>Номер партии</th>
                     <th>Сумма покупки, руб.</th>
                     <th>Сумма покупки окончательная, руб.</th>
@@ -122,7 +121,6 @@
                     <td><form:input type="number" placeholder="Цена покупки окончательная" min = "0" step="0.01" path="purchasePriceActDouble"
                                     onchange="javascript:handlePrice()" onfocus="javascript:clearPpActDouble()"/></td>
                     <td><form:input type="text" path="storeArticle" placeholder="Артикул в магазине"/></td>
-<%--                    <td><form:input type="text" path="store" placeholder="Магазин покупки"/></td>--%>
                     <td><form:input type="text" placeholder="Номер партии"  path="batchNumber"/></td>
                     <td><div id="ppSum" class="addIncomeInput">0.00</div></td>
                     <td><div id="ppActSum" class="addIncomeInput">0.00</div></td>
@@ -164,7 +162,6 @@
                         <td>${incomeString.purchasePrice/100}</td>
                         <td>${incomeString.purchasePriceAct/100}</td>
                         <td>${incomeString.storeArticle}</td>
-<%--                        <td>${incomeString.store}</td>--%>
                         <td>${incomeString.batchNumber}</td>
                         <td>${incomeString.count * incomeString.purchasePrice/100}</td>
                         <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>

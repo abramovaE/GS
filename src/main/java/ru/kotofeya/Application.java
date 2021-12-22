@@ -12,8 +12,8 @@ public class Application {
 
 //store delete
 //price во всех сценариях п
-//show_income_string - controkller, css
-//edit_income-main - add income-string
+//edit_income-main - add income-string (controller)
+
 //редактировать income_string
 //поправить jsp show_incom
 //create expand

@@ -11,8 +11,6 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/show_income_string_style.css" %>
-
-
     </style>
 </head>
 
@@ -46,6 +44,7 @@
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
         <form:hidden path="item.id"/>
         <form:hidden path="incomeMain.id"/>
+        <form:hidden path="date"/>
         <div class="innerDivLogin">
             <div>Товар</div>
             <div> ${incomeStringForm.item.name}</div>
@@ -70,17 +69,15 @@
         </div>
         <div class="innerDivLogin">
             <form:label path="storeArticle">Артикул в магазине</form:label>
-            <form:input type="text" path="storeArticle" placeholder="Артикул в магазине"
+            <form:input type="text" path="storeArticle" required="true"
+                        placeholder="Артикул в магазине"
                         autofocus="true" class="inputClassLight"/>
         </div>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:label path="store">Магазин покупки</form:label>--%>
-<%--            <form:input type="text" path="store" placeholder="Магазин покупки"--%>
-<%--                        autofocus="true" class="inputClassLight"/>--%>
-<%--        </div>--%>
+
         <div class="innerDivLogin">
             <form:label path="batchNumber">Номер партии</form:label>
             <form:input type="text" path="batchNumber" placeholder="Номер партии"
+                        required="true"
                         autofocus="true" class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">

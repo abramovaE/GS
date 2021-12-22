@@ -14,12 +14,6 @@
 </head>
 <body class="bodyClassGreen">
 <script>
-  function showIncome(id){
-    alert("khjhj")
-    // window.location("show_income_main/" + id)
-  }
-
-
   function showEditPanel(id){
     document.getElementById('edit' + id).style.display = 'block'
     document.getElementById('delete' + id).style.display = 'block'
@@ -50,7 +44,6 @@
 
 
 <div class="outerDivTr">
-
   <div class="innerDivTr">
     <h2 class="h2Light">Приходы</h2>
     <table class="todayIncomeStrings">
@@ -64,8 +57,6 @@
       <c:forEach items="${incomesMain}" var="incomeMain">
         <tr onmouseover="javascript:showEditPanel(${incomeMain.id})"
             onmouseout="javascript:hideEditPanel(${incomeMain.id})">
-
-<%--                onclick="window.location.href='show_income_main/${incomeMain.id}';">--%>
           <td>${incomeMain.userName}</td>
           <td>${incomeMain.date}</td>
           <td>${incomeMain.store}</td>

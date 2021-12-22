@@ -70,7 +70,6 @@ public class IncomeMainController {
             incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
             incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
             incomeString.setStoreArticle(i.getStoreArticle());
-//            incomeString.setStore(i.getStore());
             incomeString.setBatchNumber(i.getBatchNumber());
             incomeString.setIncomeMain(incomeMain);
             incomeStrings.add(incomeString);
@@ -125,29 +124,36 @@ public class IncomeMainController {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
         List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
-        System.out.println(incomeJsonList);
-//        Set<IncomeString> incomeStrings = new HashSet<>();
-//        for(IncomeJson i: incomeJsonList){
-//            IncomeString incomeString = new IncomeString();
-//            incomeString.setUserName(incomeMain.getUserName());
-//            incomeString.setDate(incomeMain.getDate());
-//            incomeString.setItem(itemService.getById(i.getItemId()));
-//            incomeString.setCount(i.getCount());
-//            incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
-//            incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
-//            incomeString.setStoreArticle(i.getStoreArticle());
-//            incomeString.setStore(i.getStore());
-//            incomeString.setBatchNumber(i.getBatchNumber());
-//            incomeString.setIncomeMain(incomeMain);
-//            incomeStrings.add(incomeString);
-//            Item item = itemService.getById(i.getItemId());
-//            if(item != null) {
-//                int count = item.getCount() == null? 0 : item.getCount();
-//                item.setCount(count + incomeString.getCount());
-//                itemService.saveItem(item);
-//            }
-//        }
-//        incomeMain.setIncomeStrings(incomeStrings);
+
+        Set<IncomeString> incomeStringListDb = incomeMain.getIncomeStrings();
+
+        Set<IncomeString> incomeStrings = new HashSet<>();
+        for(IncomeJson i: incomeJsonList){
+            IncomeString incomeString = new IncomeString();
+            incomeString.setUserName(incomeMain.getUserName());
+            incomeString.setDate(incomeMain.getDate());
+            incomeString.setItem(itemService.getById(i.getItemId()));
+            incomeString.setCount(i.getCount());
+            incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
+            incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
+            incomeString.setStoreArticle(i.getStoreArticle());
+            incomeString.setBatchNumber(i.getBatchNumber());
+            incomeString.setIncomeMain(incomeMain);
+            incomeStrings.add(incomeString);
+            Item item = itemService.getById(i.getItemId());
+            if(item != null) {
+                int count = item.getCount() == null? 0 : item.getCount();
+                item.setCount(count + incomeString.getCount());
+                itemService.saveItem(item);
+            }
+            incomeStringService.saveIncome(incomeString);
+        }
+
+        System.out.println(incomeStrings.size());
+//        Set<IncomeString> incomeStringListNew = new HashSet<>(incomeStringListDb);
+//        incomeStringListNew.addAll(incomeStrings);
+
+
         EditedIncomeMain editedIncomeMain = new EditedIncomeMain();
         IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
         editedIncomeMain.setCreateUserName(incomeMainFromDb.getUserName());
@@ -158,17 +164,16 @@ public class IncomeMainController {
         editedIncomeMain.setEditStore(incomeMain.getStore());
 
         List<Long> incomeStringIds = new ArrayList<>();
-        incomeMainFromDb.getIncomeStrings().stream().forEach(
+        incomeStringListDb.stream().forEach(
                         it->incomeStringIds.add(it.getId()));
         editedIncomeMain.setCreateIncomeStringIds(incomeStringIds.toString());
 
         List<Long> editIncomeStringIds = new ArrayList<>();
-        incomeMain.getIncomeStrings().stream().forEach(
+        incomeMainFromDb.getIncomeStrings().stream().forEach(
                 it->editIncomeStringIds.add(it.getId()));
         editedIncomeMain.setEditIncomeStringIds(editIncomeStringIds.toString());
 
-//        incomeMainService.detach(incomeMainFromDb);
-        incomeMainFromDb.setIncomeStrings(incomeMain.getIncomeStrings());
+//        incomeMainFromDb.setIncomeStrings(incomeStringListNew);
         incomeMainFromDb.setDate(incomeMain.getDate());
         incomeMainFromDb.setStore(incomeMain.getStore());
         incomeMainFromDb.setUserName(incomeMain.getUserName());
@@ -240,8 +245,6 @@ class IncomeJson{
     @Expose
     private String storeArticle;
     @Expose
-    private String store;
-    @Expose
     private int batchNumber;
 
     public IncomeJson() {
@@ -276,16 +279,22 @@ class IncomeJson{
     public void setStoreArticle(String storeArticle) {
         this.storeArticle = storeArticle;
     }
-    public String getStore() {
-        return store;
-    }
-    public void setStore(String store) {
-        this.store = store;
-    }
     public int getBatchNumber() {
         return batchNumber;
     }
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "IncomeJson{" +
+                "itemId=" + itemId +
+                ", count=" + count +
+                ", purPrice=" + purPrice +
+                ", purPriceAct=" + purPriceAct +
+                ", storeArticle='" + storeArticle + '\'' +
+                ", batchNumber=" + batchNumber +
+                '}';
     }
 }

@@ -151,8 +151,6 @@ public class IncomeStringController {
         editedIncomeString.setEditBatchNumber(incomeString.getBatchNumber());
         editedIncomeString.setCreateIncomeMainId(incomeStringFromDb.getIncomeMain().getId());
         editedIncomeString.setEditIncomeMainId(incomeString.getIncomeMain().getId());
-        System.out.println(editedIncomeString);
-
         incomeStringFromDb.setUserName(incomeString.getUserName());
         incomeStringFromDb.setDate(incomeString.getDate());
         incomeStringFromDb.setItem(incomeString.getItem());
@@ -169,28 +167,5 @@ public class IncomeStringController {
         editIncomeStringService.saveEditedIncomeString(editedIncomeString);
         incomeStringService.saveIncome(incomeStringFromDb);
         return "redirect:/show_income_main/" + incomeMainId + "/" + editUserName;
-    }
-
-    @GetMapping("/income_strings")
-    public String  showIncomes(Model model) {
-        List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
-        Collections.sort(incomeStrings, new Comparator<IncomeString>() {
-            @Override
-            public int compare(IncomeString o1, IncomeString o2) {
-                String date1 = o1.getDate();
-                String date2 = o2.getDate();
-                if (date1 == null) {
-                    date1 = LocalDate.now().format(dateTimeFormatter);
-                }
-                if (date2 == null) {
-                    date2 = LocalDate.now().format(dateTimeFormatter);
-                }
-                LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
-                LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
-                return localDate2.compareTo(localDate1);
-            }
-        });
-        model.addAttribute("incomeStrings", incomeStrings);
-        return"storage/income_strings";
     }
 }

@@ -11,7 +11,6 @@
         <%@include file="/resources/add_income_style.css" %>
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/add_income_main_style.css" %>
-
     </style>
 </head>
 <body  class="bodyClassGreen">
@@ -20,15 +19,6 @@
     </sec:authorize>
 
     <script type="text/javascript">
-        // function handleStore(){
-        //     const id = 'incomeStringTable';
-        //     const table = document.getElementById(id);
-        //     let index;
-        //     for (index = 1; index < table.rows.length; ++index) {
-        //         const storeItem = document.getElementById("store"+index);
-        //         storeItem.value=document.getElementById("incomeMainStore").value
-        //     }
-        // }
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
             if(inputItem.indexOf("::") === -1){
@@ -48,22 +38,15 @@
         const table = document.getElementById('incomeStringTable');
         let index;
         for (index = 1; index < table.rows.length; ++index) {
-            // const selectedIndex = document.getElementById("select" + index).options.selectedIndex;
-            // const itemId = document.getElementById("select" + index).options[selectedIndex].value;
             var itemId = document.getElementById("item" + index).value;
             const count = document.getElementById("count" + index).value;
             const purPrice = document.getElementById("purPrice" + index).value;
             const purPriceAct = document.getElementById("purPriceAct" + index).value;
             const storeArticle = document.getElementById("storeArticle" + index).value;
-            // const store = document.getElementById("store" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
             const itemString = new Object();
-
             if (itemId.length > 0) {
                 itemId=itemId.split("::")[2]
-                //     alert("Выберите товар");
-                //     isSubmit = false;
-                // }
                 if (count.length === 0) {
                     alert("Введите количество");
                     isSubmit = false;
@@ -80,21 +63,15 @@
                     alert("Введите артикул товара в магазине покупки");
                     isSubmit = false;
                 }
-                // else if (store.length === 0) {
-                //     alert("Введите магазин покупки");
-                //     isSubmit = false;
-                // }
                 else if (batchNumber.length === 0) {
                     alert("Введите номер партии");
                     isSubmit = false;
                 }
-
                 itemString.itemId = itemId;
                 itemString.count = count;
                 itemString.purPrice = purPrice;
                 itemString.purPriceAct = purPriceAct;
                 itemString.storeArticle = storeArticle;
-                // itemString.store = store;
                 itemString.batchNumber = batchNumber;
                 incomeStrings.push(itemString);
             }
@@ -114,14 +91,10 @@
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
         let index;
-        // let submitDisable;
         let generalSum = 0;
         let generalSumAct = 0;
 
         for (index = 1; index < table.rows.length; ++index) {
-            // const selectedIndex = document.getElementById("select" + index).options.selectedIndex;
-            // const itemId = document.getElementById("select" + index).options[selectedIndex].value;
-            const itemId = document.getElementById("item" + index).value;
             const count = document.getElementById("count" + index).value;
             const purPrice = document.getElementById("purPrice" + index).value;
             const purPriceAct = document.getElementById("purPriceAct" + index).value;
@@ -131,18 +104,11 @@
             document.getElementById('ppActSum'+index).innerHTML = ppActSum
             generalSum = generalSum + ppSum
             generalSumAct = generalSumAct + ppActSum
-            // if(count > 0 && itemId > 0){
-            //     submitDisable = false;
-            // } else {
-            //     submitDisable = true;
-            // }
-
         }
         document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
-        // document.getElementById('submit').disabled = submitDisable;
     }
-        function clearPpDouble(){}
+    function clearPpDouble(){}
         function clearPpActDouble(){}
         function handleSelect(elm){}
     function addIncomeString() {
@@ -181,12 +147,7 @@
                         <form:input type="text" path="store"
                                     placeholder="Магазин покупки"
                                     id="incomeMainStore" class="inputClassLight"/>
-<%--                                    onchange="javascript:handleStore()"--%>
-
                     </div>
-<%--                    <div class="innerDivLogin">--%>
-<%--                        <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>--%>
-<%--                    </div>--%>
                     <div class="innerDivLogin">
                         <button type="submit" class="inputClassLight" id="submit">Добавить</button>
                     </div>
@@ -215,7 +176,6 @@
                 <th>Цена покупки, руб.</th>
                 <th>Цена покупки окончательная, руб.</th>
                 <th>Артикул в магазине</th>
-<%--                <th>Магазин покупки</th>--%>
                 <th>Номер партии</th>
                 <th>Сумма покупки, руб.</th>
                 <th>Сумма покупки окончательная, руб.</th>
@@ -252,8 +212,6 @@
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
                                    placeholder="Артикул в магазине" required="true"/></td>
-<%--                        <td><input type="text" id="store${index.count}" required="true"--%>
-<%--                                   placeholder="Магазин покупки"/></td>--%>
                         <td><input type="text" id="batchNumber${index.count}" required="true"
                                    placeholder="Номер партии"  path="batchNumber"/></td>
                         <td id="purPriceSum${index.count}">
@@ -271,7 +229,6 @@
                                 placeholder="Товар" id="item${index.count}" autofocus="true"
                                 onchange="javascript:handleItem(${index.count})">
                         <datalist id="dataList${index.count}">
-                                <%--                        <form:option value="0" label="Добавить товар"/>--%>
                             <c:forEach var="item" items="${items}">
                                 <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
                             </c:forEach>
@@ -295,8 +252,6 @@
                     </td>
                     <td><input type="text" id="storeArticle${index.count}"
                                placeholder="Артикул в магазине" required="true"/></td>
-<%--                    <td><input type="text" id="store${index.count}" required="true"--%>
-<%--                               placeholder="Магазин покупки"/></td>--%>
                     <td><input type="text" id="batchNumber${index.count}" required="true"
                                placeholder="Номер партии"  path="batchNumber"/></td>
                     <td id="purPriceSum${index.count}">

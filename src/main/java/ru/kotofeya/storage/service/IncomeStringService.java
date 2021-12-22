@@ -38,7 +38,6 @@ public class IncomeStringService {
         incomeStringFromDb.setBatchNumber(incomeString.getBatchNumber());
         incomeStringFromDb.setCount(incomeString.getCount());
         incomeStringFromDb.setUserName(incomeString.getUserName());
-//        incomeStringFromDb.setStore(incomeString.getStore());
         incomeStringFromDb.setStoreArticle(incomeString.getStoreArticle());
         incomeStringFromDb.setIncomeMain(incomeString.getIncomeMain());
         incomeStringRepo.save(incomeStringFromDb);

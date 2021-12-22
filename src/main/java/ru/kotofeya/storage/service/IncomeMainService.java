@@ -24,28 +24,12 @@ public class IncomeMainService {
 
     @Transactional
     public void saveIncomeMain(IncomeMain incomeMain){
-//        IncomeMain incomeMainFromDb;
-//        if(incomeMain.getId() == null){
-//            incomeMainFromDb = new IncomeMain();
-//        } else {
-//            incomeMainFromDb = incomeMainRepo.findById(incomeMain.getId()).orElse(new IncomeMain());
-//        }
-//        incomeMainFromDb.setDate(incomeMain.getDate());
-//        incomeMainFromDb.setStore(incomeMain.getStore());
-//        incomeMainFromDb.setUserName(incomeMain.getUserName());
-//        incomeMainFromDb.setIncomeStrings(incomeMain.getIncomeStrings());
         incomeMainRepo.save(incomeMain);
-
     }
     @Transactional
     public IncomeMain findById(long id){
         return incomeMainRepo.findById(id).orElse(null);
     }
-    @Transactional
-    public void detach(IncomeMain incomeMain){
-        entityManager.detach(incomeMain);
-    }
-
     @Transactional
     public void deleteIncomeMainById(long id){
         incomeMainRepo.deleteById(id);
