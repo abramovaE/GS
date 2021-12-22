@@ -26,8 +26,8 @@ public class DeletedIncomeString {
     private int purchasePriceAct;
     @Column(name = "store_article")
     private String storeArticle;
-    @Column(name = "store")
-    private String store;
+//    @Column(name = "store")
+//    private String store;
     @Column(name = "batch_number")
     private int batchNumber;
     @Column(name = "income_main_id")
@@ -45,7 +45,7 @@ public class DeletedIncomeString {
         this.purchasePrice = incomeString.getPurchasePrice();
         this.purchasePriceAct = incomeString.getPurchasePriceAct();
         this.storeArticle = incomeString.getStoreArticle();
-        this.store = incomeString.getStore();
+//        this.store = incomeString.getStore();
         this.batchNumber = incomeString.getBatchNumber();
         this.incomeMainId = incomeString.getIncomeMain().getId();
     }
@@ -75,8 +75,8 @@ public class DeletedIncomeString {
     public void setStoreArticle(String storeArticle) {
         this.storeArticle = storeArticle;
     }
-    public String getStore() {return store;}
-    public void setStore(String store) {this.store = store;}
+//    public String getStore() {return store;}
+//    public void setStore(String store) {this.store = store;}
     public int getBatchNumber() {return batchNumber;}
     public void setBatchNumber(int batchNumber) {
         this.batchNumber = batchNumber;
@@ -92,7 +92,7 @@ public class DeletedIncomeString {
                 ", purchasePrice=" + purchasePrice +
                 ", purchasePriceAct=" + purchasePriceAct +
                 ", storeArticle='" + storeArticle + '\'' +
-                ", store='" + store + '\'' +
+//                ", store='" + store + '\'' +
                 ", batchNumber=" + batchNumber +
                 '}';
     }

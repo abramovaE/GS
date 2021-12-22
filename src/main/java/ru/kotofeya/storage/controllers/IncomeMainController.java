@@ -70,7 +70,7 @@ public class IncomeMainController {
             incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
             incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
             incomeString.setStoreArticle(i.getStoreArticle());
-            incomeString.setStore(i.getStore());
+//            incomeString.setStore(i.getStore());
             incomeString.setBatchNumber(i.getBatchNumber());
             incomeString.setIncomeMain(incomeMain);
             incomeStrings.add(incomeString);
@@ -216,6 +216,8 @@ public class IncomeMainController {
                 DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
                         LocalDateTime.now().format(dateTimeFormatter),
                         deleteUserName);
+
+
                 deletedIncomeService.saveDeletedIncome(deletedIncome);
                 incomeStringService.deleteIncomeById(incomeString.getId());
             }

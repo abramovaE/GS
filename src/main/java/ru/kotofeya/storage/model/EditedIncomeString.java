@@ -36,10 +36,10 @@ public class EditedIncomeString {
     private String createStoreArticle;
     @Column(name = "edit_store_article")
     private String editStoreArticle;
-    @Column(name = "create_store")
-    private String createStore;
-    @Column(name = "edit_store")
-    private String editStore;
+//    @Column(name = "create_store")
+//    private String createStore;
+//    @Column(name = "edit_store")
+//    private String editStore;
     @Column(name = "create_batch_number")
     private int createBatchNumber;
     @Column(name = "edit_batch_number")
@@ -80,10 +80,10 @@ public class EditedIncomeString {
     public void setCreateStoreArticle(String createStoreArticle) {this.createStoreArticle = createStoreArticle;}
     public String getEditStoreArticle() {return editStoreArticle;}
     public void setEditStoreArticle(String editStoreArticle) {this.editStoreArticle = editStoreArticle;}
-    public String getCreateStore() {return createStore;}
-    public void setCreateStore(String createStore) {this.createStore = createStore;}
-    public String getEditStore() {return editStore;}
-    public void setEditStore(String editStore) {this.editStore = editStore;}
+//    public String getCreateStore() {return createStore;}
+//    public void setCreateStore(String createStore) {this.createStore = createStore;}
+//    public String getEditStore() {return editStore;}
+//    public void setEditStore(String editStore) {this.editStore = editStore;}
     public int getCreateBatchNumber() {return createBatchNumber;}
     public void setCreateBatchNumber(int createBatchNumber) {this.createBatchNumber = createBatchNumber;}
     public int getEditBatchNumber() {return editBatchNumber;}
@@ -111,8 +111,8 @@ public class EditedIncomeString {
                 ", editPurchasePriceAct=" + editPurchasePriceAct +
                 ", createStoreArticle='" + createStoreArticle + '\'' +
                 ", editStoreArticle='" + editStoreArticle + '\'' +
-                ", createStore='" + createStore + '\'' +
-                ", editStore='" + editStore + '\'' +
+//                ", createStore='" + createStore + '\'' +
+//                ", editStore='" + editStore + '\'' +
                 ", createBatchNumber=" + createBatchNumber +
                 ", editBatchNumber=" + editBatchNumber +
                 ", createIncomeMainId=" + createIncomeMainId +

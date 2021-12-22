@@ -20,15 +20,15 @@
     </sec:authorize>
 
     <script type="text/javascript">
-        function handleStore(){
-            const id = 'incomeStringTable';
-            const table = document.getElementById(id);
-            let index;
-            for (index = 1; index < table.rows.length; ++index) {
-                const storeItem = document.getElementById("store"+index);
-                storeItem.value=document.getElementById("incomeMainStore").value
-            }
-        }
+        // function handleStore(){
+        //     const id = 'incomeStringTable';
+        //     const table = document.getElementById(id);
+        //     let index;
+        //     for (index = 1; index < table.rows.length; ++index) {
+        //         const storeItem = document.getElementById("store"+index);
+        //         storeItem.value=document.getElementById("incomeMainStore").value
+        //     }
+        // }
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
             if(inputItem.indexOf("::") === -1){
@@ -55,7 +55,7 @@
             const purPrice = document.getElementById("purPrice" + index).value;
             const purPriceAct = document.getElementById("purPriceAct" + index).value;
             const storeArticle = document.getElementById("storeArticle" + index).value;
-            const store = document.getElementById("store" + index).value;
+            // const store = document.getElementById("store" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
             const itemString = new Object();
 
@@ -80,10 +80,10 @@
                     alert("Введите артикул товара в магазине покупки");
                     isSubmit = false;
                 }
-                else if (store.length === 0) {
-                    alert("Введите магазин покупки");
-                    isSubmit = false;
-                }
+                // else if (store.length === 0) {
+                //     alert("Введите магазин покупки");
+                //     isSubmit = false;
+                // }
                 else if (batchNumber.length === 0) {
                     alert("Введите номер партии");
                     isSubmit = false;
@@ -94,7 +94,7 @@
                 itemString.purPrice = purPrice;
                 itemString.purPriceAct = purPriceAct;
                 itemString.storeArticle = storeArticle;
-                itemString.store = store;
+                // itemString.store = store;
                 itemString.batchNumber = batchNumber;
                 incomeStrings.push(itemString);
             }
@@ -180,9 +180,9 @@
                     <div class="innerDivLogin">
                         <form:input type="text" path="store"
                                     placeholder="Магазин покупки"
-                                    id="incomeMainStore"
-                                    onchange="javascript:handleStore()"
-                                    class="inputClassLight"/>
+                                    id="incomeMainStore" class="inputClassLight"/>
+<%--                                    onchange="javascript:handleStore()"--%>
+
                     </div>
 <%--                    <div class="innerDivLogin">--%>
 <%--                        <button type="button" class="inputClassLight" onclick="javascript:addIncomeString()">Добавить товар</button>--%>
@@ -215,7 +215,7 @@
                 <th>Цена покупки, руб.</th>
                 <th>Цена покупки окончательная, руб.</th>
                 <th>Артикул в магазине</th>
-                <th>Магазин покупки</th>
+<%--                <th>Магазин покупки</th>--%>
                 <th>Номер партии</th>
                 <th>Сумма покупки, руб.</th>
                 <th>Сумма покупки окончательная, руб.</th>
@@ -252,8 +252,8 @@
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
                                    placeholder="Артикул в магазине" required="true"/></td>
-                        <td><input type="text" id="store${index.count}" required="true"
-                                   placeholder="Магазин покупки"/></td>
+<%--                        <td><input type="text" id="store${index.count}" required="true"--%>
+<%--                                   placeholder="Магазин покупки"/></td>--%>
                         <td><input type="text" id="batchNumber${index.count}" required="true"
                                    placeholder="Номер партии"  path="batchNumber"/></td>
                         <td id="purPriceSum${index.count}">
@@ -295,8 +295,8 @@
                     </td>
                     <td><input type="text" id="storeArticle${index.count}"
                                placeholder="Артикул в магазине" required="true"/></td>
-                    <td><input type="text" id="store${index.count}" required="true"
-                               placeholder="Магазин покупки"/></td>
+<%--                    <td><input type="text" id="store${index.count}" required="true"--%>
+<%--                               placeholder="Магазин покупки"/></td>--%>
                     <td><input type="text" id="batchNumber${index.count}" required="true"
                                placeholder="Номер партии"  path="batchNumber"/></td>
                     <td id="purPriceSum${index.count}">

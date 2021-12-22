@@ -43,7 +43,7 @@
         <th>Цена покупки</th>
         <th>Цена покупки окончательная</th>
         <th>Артикул в магазине</th>
-        <th>Магазин покупки</th>
+<%--        <th>Магазин покупки</th>--%>
         <th>Номер партии</th>
         <th>Сумма покупки, руб.</th>
         <th>Сумма покупки окончательная, руб.</th>
@@ -60,7 +60,7 @@
           <td>${incomeString.purchasePrice/100}</td>
           <td>${incomeString.purchasePriceAct/100}</td>
           <td>${incomeString.storeArticle}</td>
-          <td>${incomeString.store}</td>
+<%--          <td>${incomeString.store}</td>--%>
           <td>${incomeString.batchNumber}</td>
           <td>${incomeString.count * incomeString.purchasePrice/100}</td>
           <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>

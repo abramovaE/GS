@@ -145,8 +145,8 @@ public class IncomeStringController {
         editedIncomeString.setEditPurchasePriceAct((int) (incomeString.getPurchasePriceActDouble() * 100));
         editedIncomeString.setCreateStoreArticle(incomeStringFromDb.getStoreArticle());
         editedIncomeString.setEditStoreArticle(incomeString.getStoreArticle());
-        editedIncomeString.setCreateStore(incomeStringFromDb.getStore());
-        editedIncomeString.setEditStore(incomeString.getStore());
+//        editedIncomeString.setCreateStore(incomeStringFromDb.getStore());
+//        editedIncomeString.setEditStore(incomeString.getStore());
         editedIncomeString.setCreateBatchNumber(incomeStringFromDb.getBatchNumber());
         editedIncomeString.setEditBatchNumber(incomeString.getBatchNumber());
         editedIncomeString.setCreateIncomeMainId(incomeStringFromDb.getIncomeMain().getId());
@@ -160,7 +160,7 @@ public class IncomeStringController {
         incomeStringFromDb.setPurchasePrice((int) (incomeString.getPurchasePriceDouble() * 100));
         incomeStringFromDb.setPurchasePriceAct((int) (incomeString.getPurchasePriceActDouble() * 100));
         incomeStringFromDb.setStoreArticle(incomeString.getStoreArticle());
-        incomeStringFromDb.setStore(incomeString.getStore());
+//        incomeStringFromDb.setStore(incomeString.getStore());
         incomeStringFromDb.setBatchNumber(incomeString.getBatchNumber());
         incomeStringFromDb.setIncomeMain(incomeString.getIncomeMain());
         Item item = itemService.getById(incomeString.getItem().getId());

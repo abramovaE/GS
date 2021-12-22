@@ -73,11 +73,11 @@
             <form:input type="text" path="storeArticle" placeholder="Артикул в магазине"
                         autofocus="true" class="inputClassLight"/>
         </div>
-        <div class="innerDivLogin">
-            <form:label path="store">Магазин покупки</form:label>
-            <form:input type="text" path="store" placeholder="Магазин покупки"
-                        autofocus="true" class="inputClassLight"/>
-        </div>
+<%--        <div class="innerDivLogin">--%>
+<%--            <form:label path="store">Магазин покупки</form:label>--%>
+<%--            <form:input type="text" path="store" placeholder="Магазин покупки"--%>
+<%--                        autofocus="true" class="inputClassLight"/>--%>
+<%--        </div>--%>
         <div class="innerDivLogin">
             <form:label path="batchNumber">Номер партии</form:label>
             <form:input type="text" path="batchNumber" placeholder="Номер партии"
@@ -85,11 +85,11 @@
         </div>
         <div class="innerDivLogin">
             <div>Сумма покупки, руб.</div>
-            <div id="ppSum">${incomeStringForm.count*incomeStringForm.purchasePrice}/100</div>
+            <div id="ppSum">${incomeStringForm.count*incomeStringForm.purchasePrice/100}</div>
         </div>
         <div class="innerDivLogin">
             <div>Сумма покупки окончательная, руб.</div>
-            <div id="ppActSum">${incomeStringForm.count*incomeStringForm.purchasePriceAct}/100</div>
+            <div id="ppActSum">${incomeStringForm.count*incomeStringForm.purchasePriceAct/100}</div>
         </div>
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Сохранить</button>

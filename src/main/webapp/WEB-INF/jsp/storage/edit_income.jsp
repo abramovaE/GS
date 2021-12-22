@@ -92,10 +92,10 @@
             <form:label path="storeArticle">Артикул в магазине</form:label>
             <form:input type="text" path="storeArticle" placeholder="Артикул в магазине" class="inputClassLight"/>
         </div>
-        <div class="innerDivLogin">
-            <form:label path="store">Магазин покупки</form:label>
-            <form:input type="text" path="store" placeholder="Магазин покупки" class="inputClassLight"/>
-        </div>
+<%--        <div class="innerDivLogin">--%>
+<%--            <form:label path="store">Магазин покупки</form:label>--%>
+<%--            <form:input type="text" path="store" placeholder="Магазин покупки" class="inputClassLight"/>--%>
+<%--        </div>--%>
         <div class="innerDivLogin">
             <form:label path="batchNumber">Номер партии</form:label>
             <form:input type="text" placeholder="Номер партии" path="batchNumber" class="inputClassLight"/>
