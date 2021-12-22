@@ -32,6 +32,7 @@
         <form:hidden path="id"/>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
         <form:hidden path="item.id"/>
+        <form:hidden path="incomeMain.id"/>
         <div class="innerDivLogin">
             ${incomeStringForm.item.name}
         </div>

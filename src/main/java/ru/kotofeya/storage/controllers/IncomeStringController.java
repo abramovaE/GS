@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.*;
-import ru.kotofeya.storage.service.DeletedIncomeService;
-import ru.kotofeya.storage.service.IncomeMainService;
-import ru.kotofeya.storage.service.IncomeStringService;
-import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.service.*;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +30,8 @@ public class IncomeStringController {
     private DeletedIncomeService deletedIncomeService;
     @Autowired
     private IncomeMainService incomeMainService;
+    @Autowired
+    private EditIncomeStringService editIncomeStringService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
@@ -119,24 +119,56 @@ public class IncomeStringController {
 
     @PostMapping({"/show_income_string/{incomeStringId}/{editUserName}",
             "show_income_main/{incomeMainId}/show_income_string/{incomeStringId}/{editUserName}"})
-    public String  showIncomeStringPost(@PathVariable ("incomeStringId") Long incomeStringId,
+    public String  showIncomeString(@ModelAttribute ("incomeStringForm") IncomeString incomeString,
+                                    @PathVariable ("incomeStringId") Long incomeStringId,
                                     @PathVariable ("editUserName") String editUserName,
                                     @PathVariable ("incomeMainId") Long incomeMainId,
                                     Model model) {
         System.out.println("post show");
         EditedIncomeString editedIncomeString = new EditedIncomeString();
+        IncomeString incomeStringFromDb = incomeStringService.getIncomeById(incomeStringId);
+        int oldCount = incomeStringFromDb.getCount();
+        int newCount = incomeString.getCount();
+        editedIncomeString.setCreateUserName(incomeStringFromDb.getUserName());
+        editedIncomeString.setEditUserName(editUserName);
+        editedIncomeString.setCreateDate(incomeStringFromDb.getDate());
+        editedIncomeString.setEditDate(LocalDateTime.now().format(dateTimeFormatter));
+        editedIncomeString.setCreateItemId(incomeStringFromDb.getItem().getId());
+        editedIncomeString.setEditItemId(incomeString.getItem().getId());
+        editedIncomeString.setCreateCount(oldCount);
+        editedIncomeString.setEditCount(newCount);
+        editedIncomeString.setCreatePurchasePrice(incomeStringFromDb.getPurchasePrice());
+        editedIncomeString.setEditPurchasePrice(incomeString.getPurchasePrice());
+        editedIncomeString.setCreatePurchasePriceAct(incomeStringFromDb.getPurchasePriceAct());
+        editedIncomeString.setEditPurchasePriceAct(incomeString.getPurchasePriceAct());
+        editedIncomeString.setCreateStoreArticle(incomeStringFromDb.getStoreArticle());
+        editedIncomeString.setEditStoreArticle(incomeString.getStoreArticle());
+        editedIncomeString.setCreateStore(incomeStringFromDb.getStore());
+        editedIncomeString.setEditStore(incomeString.getStore());
+        editedIncomeString.setCreateBatchNumber(incomeStringFromDb.getBatchNumber());
+        editedIncomeString.setEditBatchNumber(incomeString.getBatchNumber());
+        editedIncomeString.setCreateIncomeMainId(incomeStringFromDb.getIncomeMain().getId());
+        editedIncomeString.setEditIncomeMainId(incomeString.getIncomeMain().getId());
+        System.out.println(editedIncomeString);
 
-
-
-//        IncomeString incomeString = incomeStringService.getIncomeById(incomeStringId);
-//        List<Item> allItems = itemService.getAllItems();
-//        model.addAttribute("items", allItems);
-//        model.addAttribute("incomeStringForm", incomeString);
-//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+        incomeStringFromDb.setUserName(incomeString.getUserName());
+        incomeStringFromDb.setDate(incomeString.getDate());
+        incomeStringFromDb.setItem(incomeString.getItem());
+        incomeStringFromDb.setCount(incomeString.getCount());
+        incomeStringFromDb.setPurchasePrice(incomeString.getPurchasePrice());
+        incomeStringFromDb.setPurchasePriceAct(incomeString.getPurchasePriceAct());
+        incomeStringFromDb.setStoreArticle(incomeString.getStoreArticle());
+        incomeStringFromDb.setStore(incomeString.getStore());
+        incomeStringFromDb.setBatchNumber(incomeString.getBatchNumber());
+        incomeStringFromDb.setIncomeMain(incomeString.getIncomeMain());
+        Item item = itemService.getById(incomeString.getItem().getId());
+        item.setCount(item.getCount() - oldCount + newCount);
+        itemService.saveItem(item);
+        editIncomeStringService.saveEditedIncomeString(editedIncomeString);
+        incomeStringService.saveIncome(incomeStringFromDb);
         return "redirect:/show_income_main/" + incomeMainId + "/" + editUserName;
     }
-
-
+    
     @GetMapping("/income_strings")
     public String  showIncomes(Model model) {
         List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();

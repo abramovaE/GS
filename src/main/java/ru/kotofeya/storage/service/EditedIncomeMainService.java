@@ -20,8 +20,6 @@ public class EditedIncomeMainService {
 
     @Transactional
     public void saveEditedIncomeMain(EditedIncomeMain editedIncomeMain){
-
         editedIncomeMainRepo.save(editedIncomeMain);
     }
-
 }

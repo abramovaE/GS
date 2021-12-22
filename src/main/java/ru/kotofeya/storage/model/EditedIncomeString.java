@@ -16,10 +16,10 @@ public class EditedIncomeString {
     private String createDate;
     @Column(name = "edit_date")
     private String editDate;
-    @Column(name = "create_items")
-    private String createItemIds;
-    @Column(name = "edit_items")
-    private String editItemIds;
+    @Column(name = "create_item")
+    private Long createItemId;
+    @Column(name = "edit_item")
+    private Long editItemId;
     @Column(name = "create_count")
     private int createCount;
     @Column(name = "edit_count")
@@ -45,9 +45,9 @@ public class EditedIncomeString {
     @Column(name = "edit_batch_number")
     private int editBatchNumber;
     @Column(name = "create_income_main")
-    private int createIncomeMain;
+    private Long createIncomeMainId;
     @Column(name = "edit_income_main")
-    private int editIncomeMain;
+    private Long editIncomeMainId;
 
     public EditedIncomeString() {}
     public Long getId() {return id;}
@@ -60,10 +60,10 @@ public class EditedIncomeString {
     public void setCreateDate(String createDate) {this.createDate = createDate;}
     public String getEditDate() {return editDate;}
     public void setEditDate(String editDate) {this.editDate = editDate;}
-    public String getCreateItemIds() {return createItemIds;}
-    public void setCreateItemIds(String createItemIds) {this.createItemIds = createItemIds;}
-    public String getEditItemIds() {return editItemIds;}
-    public void setEditItemIds(String editItemIds) {this.editItemIds = editItemIds;}
+    public Long getCreateItemId() {return createItemId;}
+    public void setCreateItemId(Long createItemId) {this.createItemId = createItemId;}
+    public Long getEditItemId() {return editItemId;}
+    public void setEditItemId(Long editItemId) {this.editItemId = editItemId;}
     public int getCreateCount() {return createCount;}
     public void setCreateCount(int createCount) {this.createCount = createCount;}
     public int getEditCount() {return editCount;}
@@ -88,8 +88,35 @@ public class EditedIncomeString {
     public void setCreateBatchNumber(int createBatchNumber) {this.createBatchNumber = createBatchNumber;}
     public int getEditBatchNumber() {return editBatchNumber;}
     public void setEditBatchNumber(int editBatchNumber) {this.editBatchNumber = editBatchNumber;}
-    public int getCreateIncomeMain() {return createIncomeMain;}
-    public void setCreateIncomeMain(int createIncomeMain) {this.createIncomeMain = createIncomeMain;}
-    public int getEditIncomeMain() {return editIncomeMain;}
-    public void setEditIncomeMain(int editIncomeMain) {this.editIncomeMain = editIncomeMain;}
+    public Long getCreateIncomeMainId() {return createIncomeMainId;}
+    public void setCreateIncomeMainId(Long createIncomeMainId) {this.createIncomeMainId = createIncomeMainId;}
+    public Long getEditIncomeMainId() {return editIncomeMainId;}
+    public void setEditIncomeMainId(Long editIncomeMainId) {this.editIncomeMainId = editIncomeMainId;}
+
+    @Override
+    public String toString() {
+        return "EditedIncomeString{" +
+                "id=" + id +
+                ", createUserName='" + createUserName + '\'' +
+                ", editUserName='" + editUserName + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", editDate='" + editDate + '\'' +
+                ", createItemId=" + createItemId +
+                ", editItemId=" + editItemId +
+                ", createCount=" + createCount +
+                ", editCount=" + editCount +
+                ", createPurchasePrice=" + createPurchasePrice +
+                ", editPurchasePrice=" + editPurchasePrice +
+                ", createPurchasePriceAct=" + createPurchasePriceAct +
+                ", editPurchasePriceAct=" + editPurchasePriceAct +
+                ", createStoreArticle='" + createStoreArticle + '\'' +
+                ", editStoreArticle='" + editStoreArticle + '\'' +
+                ", createStore='" + createStore + '\'' +
+                ", editStore='" + editStore + '\'' +
+                ", createBatchNumber=" + createBatchNumber +
+                ", editBatchNumber=" + editBatchNumber +
+                ", createIncomeMainId=" + createIncomeMainId +
+                ", editIncomeMainId=" + editIncomeMainId +
+                '}';
+    }
 }
