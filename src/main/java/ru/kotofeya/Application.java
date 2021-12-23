@@ -10,12 +10,7 @@ public class Application {
     }
 }
 
-//store delete
-//price во всех сценариях п
-//edit_income-main - add income-string (controller) edit income main
 
-//редактировать income_string
-//поправить jsp show_incom
 //create expand
 //delete expand
 //edit expand

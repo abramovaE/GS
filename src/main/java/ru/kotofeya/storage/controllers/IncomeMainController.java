@@ -40,14 +40,13 @@ public class IncomeMainController {
     @GetMapping("/add_income_main")
     public String  addIncomeString(Model model) {
         List<Item> allItems = itemService.getAllItems();
-        System.out.println("allitems size: " + allItems);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("incomeMainForm", new IncomeMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("incomeJson", new String());
         model.addAttribute("incomeString", new IncomeString());
-        return "storage/add_income_main";
+        return "storage/incomes/add_income_main";
     }
 
     @PostMapping("/add_income_main")
@@ -68,11 +67,11 @@ public class IncomeMainController {
                                     @PathVariable("editUserName") String editUserName) {
         List<Item> allItems = itemService.getAllItems();
         IncomeMain incomeMain = incomeMainService.findById(incomeId);
-        model.addAttribute("incomeMain", incomeMain);
         incomeMain = setSumsForJsp(incomeMain);
+        model.addAttribute("incomeMain", incomeMain);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
-        return "storage/show_income_main";
+        return "storage/incomes/show_income_main";
     }
 
 
@@ -111,7 +110,7 @@ public class IncomeMainController {
             setSumsForJsp(incomeMain);
         }
         model.addAttribute("incomesMain", incomesMain);
-        return "storage/incomes_main";
+        return "storage/incomes/incomes_main";
     }
 
     @GetMapping("/delete_income_main/{incomeMainId}/{deleteUserName}")

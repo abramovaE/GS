@@ -68,7 +68,7 @@ public class IncomeStringController {
         incomeString.setPurchasePriceActDouble(incomeString.getPurchasePriceAct()/100d);
         model.addAttribute("incomeStringForm", incomeString);
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-        return "storage/show_income_string";
+        return "storage/incomes/show_income_string";
     }
 
     @PostMapping({"/show_income_string/{incomeStringId}/{editUserName}",

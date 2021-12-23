@@ -112,13 +112,9 @@
                 const purPriceAct = document.getElementById("purPriceAct" + index).value;
                 let ppSum = Math.round(count * purPrice * 100) / 100
                 let ppActSum = Math.round(count * purPriceAct * 100) / 100
-
-                alert(ppActSum)
-
                 document.getElementById('ppSum' + index).innerHTML = ppSum
                 document.getElementById('ppActSum' + index).innerHTML = ppActSum
                 generalSum = generalSum + ppSum
-                alert(generalSum)
                 generalSumAct = generalSumAct + ppActSum
             }
         }
