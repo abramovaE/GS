@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,33 +54,9 @@ public class IncomeMainController {
     public String  addIncomeString(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson) {
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
-        List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
-        Set<IncomeString> incomeStrings = new HashSet<>();
         incomeMainService.saveIncomeMain(incomeMain);
-
-        for(IncomeJson i: incomeJsonList){
-            IncomeString incomeString = new IncomeString();
-            incomeString.setUserName(incomeMain.getUserName());
-            incomeString.setDate(incomeMain.getDate());
-            incomeString.setItem(itemService.getById(i.getItemId()));
-            incomeString.setCount(i.getCount());
-            incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
-            incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
-            incomeString.setStoreArticle(i.getStoreArticle());
-            incomeString.setBatchNumber(i.getBatchNumber());
-            incomeString.setIncomeMain(incomeMain);
-            incomeStrings.add(incomeString);
-            Item item = itemService.getById(i.getItemId());
-            if(item != null) {
-                int count = item.getCount() == null? 0 : item.getCount();
-                item.setCount(count + incomeString.getCount());
-                itemService.saveItem(item);
-            }
-            incomeStringService.saveIncome(incomeString);
-        }
-
+        Set<IncomeString> incomeStrings = createIncomeStringsFromJson(incomeJson, incomeMain.getId());
+        incomeStrings.stream().forEach(it->incomeStringService.saveIncome(it));
         incomeMain.setIncomeStrings(incomeStrings);
         incomeMainService.saveIncomeMain(incomeMain);
         return "redirect:/incomes_main";
@@ -94,26 +69,12 @@ public class IncomeMainController {
         List<Item> allItems = itemService.getAllItems();
         IncomeMain incomeMain = incomeMainService.findById(incomeId);
         model.addAttribute("incomeMain", incomeMain);
-        int sum = 0;
-            int sumAct = 0;
-            List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
-            for(IncomeString incomeString: incomeStrings){
-                if(incomeString.getIncomeMain() != null &&
-                        incomeString.getIncomeMain().getId() != null &&
-                        incomeString.getIncomeMain().getId().equals(incomeMain.getId())){
-                    sum += incomeString.getCount() * incomeString.getPurchasePrice();
-                    sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
-                }
-            incomeMain.setSum(sum);
-            incomeMain.setSumAct(sumAct);
-        }
+        incomeMain = setSumsForJsp(incomeMain);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
-//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-//        model.addAttribute("incomeJson", new String());
-//        model.addAttribute("incomeString", new IncomeString());
         return "storage/show_income_main";
     }
+
 
 
     @PostMapping("/show_income_main/{incomeId}/{editUserName}")
@@ -121,12 +82,78 @@ public class IncomeMainController {
                                    @ModelAttribute ("incomeMain") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
+
+        IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
+        Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
+        List<Long> incomeStringIds = new ArrayList<>();
+        incomeStringListDb.stream().forEach(
+                it->incomeStringIds.add(it.getId()));
+        Set<IncomeString> incomeStrings = createIncomeStringsFromJson(incomeJson, incomeMain.getId());
+        incomeStrings.stream().forEach(it->incomeStringService.saveIncome(it));
+
+        List<IncomeString> incomeStringList = incomeStringService.findByIncomeMain(incomeMain);
+
+        EditedIncomeMain editedIncomeMain = new EditedIncomeMain(incomeMainFromDb,
+                incomeMain,LocalDateTime.now().format(dateTimeFormatter), editUserName, incomeStringList);
+
+        incomeMainFromDb.setDate(incomeMain.getDate());
+        incomeMainFromDb.setStore(incomeMain.getStore());
+        incomeMainFromDb.setUserName(incomeMain.getUserName());
+        incomeMainService.saveIncomeMain(incomeMainFromDb);
+        editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
+        return "redirect:/incomes_main";
+    }
+
+    @GetMapping("/incomes_main")
+    public String getAllIncomesMain(Model model){
+        List<IncomeMain> incomesMain = incomeMainService.getAllIncomesMain();
+        for(IncomeMain incomeMain: incomesMain){
+            setSumsForJsp(incomeMain);
+        }
+        model.addAttribute("incomesMain", incomesMain);
+        return "storage/incomes_main";
+    }
+
+    @GetMapping("/delete_income_main/{incomeMainId}/{deleteUserName}")
+    public String deleteIncome(@PathVariable ("incomeMainId") Long incomeMainId,
+                               @PathVariable ("deleteUserName") String deleteUserName,
+                               Model model) {
+        IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
+        if(incomeMain != null){
+            Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();
+            for(IncomeString incomeString: incomeStrings){
+                DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
+                        LocalDateTime.now().format(dateTimeFormatter),
+                        deleteUserName);
+                deletedIncomeService.saveDeletedIncome(deletedIncome);
+                incomeStringService.deleteIncomeById(incomeString.getId());
+            }
+            incomeMainService.deleteIncomeMainById(incomeMain.getId());
+        }
+        return "redirect:/incomes_main";
+    }
+
+
+
+
+    private IncomeMain setSumsForJsp(IncomeMain incomeMain){
+        int sum = 0;
+        int sumAct = 0;
+        List<IncomeString> incomeStrings = incomeStringService.findByIncomeMain(incomeMain);
+        for(IncomeString incomeString: incomeStrings){
+            sum += incomeString.getCount() * incomeString.getPurchasePrice();
+            sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
+            incomeMain.setSum(sum);
+            incomeMain.setSumAct(sumAct);
+        }
+        return incomeMain;
+    }
+
+    private Set<IncomeString> createIncomeStringsFromJson(String incomeJson, Long incomeMainId){
+        IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
         Gson gson = new Gson();
         Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
         List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
-
-        Set<IncomeString> incomeStringListDb = incomeMain.getIncomeStrings();
-
         Set<IncomeString> incomeStrings = new HashSet<>();
         for(IncomeJson i: incomeJsonList){
             IncomeString incomeString = new IncomeString();
@@ -140,98 +167,10 @@ public class IncomeMainController {
             incomeString.setBatchNumber(i.getBatchNumber());
             incomeString.setIncomeMain(incomeMain);
             incomeStrings.add(incomeString);
-            Item item = itemService.getById(i.getItemId());
-            if(item != null) {
-                int count = item.getCount() == null? 0 : item.getCount();
-                item.setCount(count + incomeString.getCount());
-                itemService.saveItem(item);
-            }
-            incomeStringService.saveIncome(incomeString);
         }
-
-        System.out.println(incomeStrings.size());
-//        Set<IncomeString> incomeStringListNew = new HashSet<>(incomeStringListDb);
-//        incomeStringListNew.addAll(incomeStrings);
-
-
-        EditedIncomeMain editedIncomeMain = new EditedIncomeMain();
-        IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
-        editedIncomeMain.setCreateUserName(incomeMainFromDb.getUserName());
-        editedIncomeMain.setEditUserName(editUserName);
-        editedIncomeMain.setCreateDate(incomeMainFromDb.getDate());
-        editedIncomeMain.setEditDate(LocalDateTime.now().format(dateTimeFormatter));
-        editedIncomeMain.setCreateStore(incomeMainFromDb.getStore());
-        editedIncomeMain.setEditStore(incomeMain.getStore());
-
-        List<Long> incomeStringIds = new ArrayList<>();
-        incomeStringListDb.stream().forEach(
-                        it->incomeStringIds.add(it.getId()));
-        editedIncomeMain.setCreateIncomeStringIds(incomeStringIds.toString());
-
-        List<Long> editIncomeStringIds = new ArrayList<>();
-        incomeMainFromDb.getIncomeStrings().stream().forEach(
-                it->editIncomeStringIds.add(it.getId()));
-        editedIncomeMain.setEditIncomeStringIds(editIncomeStringIds.toString());
-
-//        incomeMainFromDb.setIncomeStrings(incomeStringListNew);
-        incomeMainFromDb.setDate(incomeMain.getDate());
-        incomeMainFromDb.setStore(incomeMain.getStore());
-        incomeMainFromDb.setUserName(incomeMain.getUserName());
-        editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
-        incomeMainService.saveIncomeMain(incomeMainFromDb);
-        return "redirect:/incomes_main";
-    }
-
-    @GetMapping("/incomes_main")
-    public String getAllIncomesMAin(Model model){
-        List<IncomeMain> incomesMain = incomeMainService.getAllIncomesMain();
-        for(IncomeMain incomeMain: incomesMain){
-            int sum = 0;
-            int sumAct = 0;
-            List<IncomeString> incomeStrings = incomeStringService.getAllIncomes();
-            for(IncomeString incomeString: incomeStrings){
-                if(incomeString.getIncomeMain() != null &&
-                        incomeString.getIncomeMain().getId() != null &&
-                        incomeString.getIncomeMain().getId().equals(incomeMain.getId())){
-                    sum += incomeString.getCount() * incomeString.getPurchasePrice();
-                    sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
-                }
-            }
-            incomeMain.setSum(sum);
-            incomeMain.setSumAct(sumAct);
-        }
-        model.addAttribute("incomesMain", incomesMain);
-        return "storage/incomes_main";
-    }
-
-
-    @GetMapping("/delete_income_main/{incomeMainId}/{deleteUserName}")
-    public String deleteIncome(@PathVariable ("incomeMainId") Long incomeMainId,
-                               @PathVariable ("deleteUserName") String deleteUserName,
-                               Model model) {
-        IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
-        if(incomeMain != null){
-            Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();
-            for(IncomeString incomeString: incomeStrings){
-                Item incomeItem = itemService.getById(incomeString.getItem().getId());
-                if(incomeItem != null){
-                    incomeItem.setCount(incomeItem.getCount() - incomeString.getCount());
-                    itemService.saveItem(incomeItem);
-                }
-                DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
-                        LocalDateTime.now().format(dateTimeFormatter),
-                        deleteUserName);
-
-
-                deletedIncomeService.saveDeletedIncome(deletedIncome);
-                incomeStringService.deleteIncomeById(incomeString.getId());
-            }
-            incomeMainService.deleteIncomeMainById(incomeMain.getId());
-        }
-        return "redirect:/incomes_main";
+        return incomeStrings;
     }
 }
-
 
 class IncomeJson{
     @Expose
@@ -247,8 +186,7 @@ class IncomeJson{
     @Expose
     private int batchNumber;
 
-    public IncomeJson() {
-    }
+    public IncomeJson() {}
     public int getItemId() {
         return itemId;
     }

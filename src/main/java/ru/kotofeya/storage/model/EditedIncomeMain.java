@@ -1,6 +1,10 @@
 package ru.kotofeya.storage.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "edited_income_main")
@@ -26,6 +30,24 @@ public class EditedIncomeMain {
     @Column(name = "edit_income_strings")
     private String editIncomeStringIds;
     public EditedIncomeMain() {}
+    public EditedIncomeMain(IncomeMain incomeMainFromDb, IncomeMain incomeMain,
+                            String editedDate, String editUserName, List<IncomeString> incomeStringList){
+        this.setCreateUserName(incomeMainFromDb.getUserName());
+        this.setEditUserName(editUserName);
+        this.setCreateDate(incomeMainFromDb.getDate());
+        this.setEditDate(editedDate);
+        this.setCreateStore(incomeMainFromDb.getStore());
+        this.setEditStore(incomeMain.getStore());
+        Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
+        List<Long> incomeStringIds = new ArrayList<>();
+        incomeStringListDb.stream().forEach(
+                it->incomeStringIds.add(it.getId()));
+        this.setCreateIncomeStringIds(incomeStringIds.toString());
+        List<Long> editIncomeStringIds = new ArrayList<>();
+        incomeStringList.stream().forEach(
+                it->editIncomeStringIds.add(it.getId()));
+        this.setEditIncomeStringIds(editIncomeStringIds.toString());
+    }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getCreateUserName() {return createUserName;}

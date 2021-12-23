@@ -24,8 +24,6 @@ public class IncomeString {
     private int purchasePriceAct;
     @Column(name = "store_article")
     private String storeArticle;
-//    @Column(name = "store")
-//    private String store;
     @Column(name = "batch_number")
     private int batchNumber;
     @Transient

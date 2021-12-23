@@ -15,43 +15,30 @@ public class ItemService {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
-    ItemRepo itemRepository;
+    ItemRepo itemRepo;
 
     @Transactional
     public void saveItem(Item item){
-        Item itemFromDb;
-        if(item.getId() == null){
-            itemFromDb = new Item();
-        } else {
-            itemFromDb = itemRepository.findById(item.getId()).orElse(new Item());
-        }
-        itemFromDb.setArticle(item.getArticle());
-        itemFromDb.setName(item.getName());
-        itemFromDb.setType(item.getType());
-        itemFromDb.setEan(item.getEan());
-        itemFromDb.setUserName(item.getUserName());
-        itemFromDb.setDate(item.getDate());
-        itemFromDb.setCount(item.getCount());
-        itemRepository.save(itemFromDb);
+        itemRepo.save(item);
     }
 
     @Transactional
     public void deleteItem(long id){
-        itemRepository.deleteById(id);
+        itemRepo.deleteById(id);
     }
 
     @Transactional
     public Item getById(long id){
-        return itemRepository.findById(id).orElse(null);
+        return itemRepo.findById(id).orElse(null);
     }
 
     @Transactional
     public List<Item> getAllItems(){
-        return itemRepository.findAll();
+        return itemRepo.findAll();
     }
 
     @Transactional
     public List<Item> getAllItemsWithCount(){
-        return itemRepository.findByCountIsNotNull();
+        return itemRepo.findByCountIsNotNull();
     }
 }

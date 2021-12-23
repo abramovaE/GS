@@ -88,7 +88,6 @@
             }
         }
 
-
             if (isSubmit) {
             let incomeMain = document.getElementById('incomeMain');
             const incomeJson = document.createElement('input');
@@ -106,20 +105,28 @@
         let index;
         let generalSum = 0;
         let generalSumAct = 0;
-
         for (index = 1; index < table.rows.length; ++index) {
             const count = document.getElementById("count" + index).value;
-            const purPrice = document.getElementById("purPrice" + index).value;
-            const purPriceAct = document.getElementById("purPriceAct" + index).value;
-            let ppSum = Math.round(count * purPrice * 100)/100
-            let ppActSum = Math.round(count * purPriceAct * 100)/100
-            document.getElementById('ppSum'+index).innerHTML = ppSum
-            document.getElementById('ppActSum'+index).innerHTML = ppActSum
-            generalSum = generalSum + ppSum
-            generalSumAct = generalSumAct + ppActSum
+            if (count.length > 0) {
+                const purPrice = document.getElementById("purPrice" + index).value;
+                const purPriceAct = document.getElementById("purPriceAct" + index).value;
+                let ppSum = Math.round(count * purPrice * 100) / 100
+                let ppActSum = Math.round(count * purPriceAct * 100) / 100
+
+                alert(ppActSum)
+
+                document.getElementById('ppSum' + index).innerHTML = ppSum
+                document.getElementById('ppActSum' + index).innerHTML = ppActSum
+                generalSum = generalSum + ppSum
+                alert(generalSum)
+                generalSumAct = generalSumAct + ppActSum
+            }
         }
+
         document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
+
+
     }
         function clearPpDouble(){}
         function clearPpActDouble(){}

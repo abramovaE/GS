@@ -1,6 +1,8 @@
 package ru.kotofeya.storage.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "edited_income_string")
 public class EditedIncomeString {
@@ -36,10 +38,6 @@ public class EditedIncomeString {
     private String createStoreArticle;
     @Column(name = "edit_store_article")
     private String editStoreArticle;
-//    @Column(name = "create_store")
-//    private String createStore;
-//    @Column(name = "edit_store")
-//    private String editStore;
     @Column(name = "create_batch_number")
     private int createBatchNumber;
     @Column(name = "edit_batch_number")
@@ -50,6 +48,27 @@ public class EditedIncomeString {
     private Long editIncomeMainId;
 
     public EditedIncomeString() {}
+    public EditedIncomeString(IncomeString incomeStringFromDb, IncomeString incomeString,
+                              String editedDate, String editUserName){
+        this.setCreateUserName(incomeStringFromDb.getUserName());
+        this.setEditUserName(editUserName);
+        this.setCreateDate(incomeStringFromDb.getDate());
+        this.setEditDate(editedDate);
+        this.setCreateItemId(incomeStringFromDb.getItem().getId());
+        this.setEditItemId(incomeString.getItem().getId());
+        this.setCreateCount(incomeStringFromDb.getCount());
+        this.setEditCount(incomeString.getCount());
+        this.setCreatePurchasePrice(incomeStringFromDb.getPurchasePrice());
+        this.setEditPurchasePrice(incomeString.getPurchasePrice());
+        this.setCreatePurchasePriceAct(incomeStringFromDb.getPurchasePriceAct());
+        this.setEditPurchasePriceAct(incomeString.getPurchasePriceAct());
+        this.setCreateStoreArticle(incomeStringFromDb.getStoreArticle());
+        this.setEditStoreArticle(incomeString.getStoreArticle());
+        this.setCreateBatchNumber(incomeStringFromDb.getBatchNumber());
+        this.setEditBatchNumber(incomeString.getBatchNumber());
+        this.setCreateIncomeMainId(incomeStringFromDb.getIncomeMain().getId());
+        this.setEditIncomeMainId(incomeString.getIncomeMain().getId());
+    }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public String getCreateUserName() {return createUserName;}
@@ -80,10 +99,6 @@ public class EditedIncomeString {
     public void setCreateStoreArticle(String createStoreArticle) {this.createStoreArticle = createStoreArticle;}
     public String getEditStoreArticle() {return editStoreArticle;}
     public void setEditStoreArticle(String editStoreArticle) {this.editStoreArticle = editStoreArticle;}
-//    public String getCreateStore() {return createStore;}
-//    public void setCreateStore(String createStore) {this.createStore = createStore;}
-//    public String getEditStore() {return editStore;}
-//    public void setEditStore(String editStore) {this.editStore = editStore;}
     public int getCreateBatchNumber() {return createBatchNumber;}
     public void setCreateBatchNumber(int createBatchNumber) {this.createBatchNumber = createBatchNumber;}
     public int getEditBatchNumber() {return editBatchNumber;}

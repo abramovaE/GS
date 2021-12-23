@@ -28,11 +28,8 @@ public class Item {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<IncomeString> incomeStrings;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<ExpandString> expandStrings;
-
-
 
     public Item() {}
     public Long getId() {return id;}
@@ -62,8 +59,9 @@ public class Item {
                 ", ean='" + ean + '\'' +
                 ", userName='" + userName + '\'' +
                 ", date='" + date + '\'' +
-                ", incomes=" + incomeStrings +
-                ", expands=" + expandStrings +
+                ", count=" + count +
+//                ", incomeStrings=" + incomeStrings +
+//                ", expandStrings=" + expandStrings +
                 '}';
     }
 }

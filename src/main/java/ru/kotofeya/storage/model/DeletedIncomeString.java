@@ -45,7 +45,6 @@ public class DeletedIncomeString {
         this.purchasePrice = incomeString.getPurchasePrice();
         this.purchasePriceAct = incomeString.getPurchasePriceAct();
         this.storeArticle = incomeString.getStoreArticle();
-//        this.store = incomeString.getStore();
         this.batchNumber = incomeString.getBatchNumber();
         this.incomeMainId = incomeString.getIncomeMain().getId();
     }

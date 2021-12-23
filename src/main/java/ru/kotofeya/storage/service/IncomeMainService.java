@@ -34,20 +34,4 @@ public class IncomeMainService {
     public void deleteIncomeMainById(long id){
         incomeMainRepo.deleteById(id);
     }
-
 }
-
-
-// income main id = 102
-//strings = 34, 35
-//items = 6, 1
-
-
-//id = 103;
-//strings =
-
-
-//id = 107
-//strings = 40, 41
-//items = 4 - 302
-//        9 - -40;
