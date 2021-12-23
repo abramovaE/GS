@@ -109,8 +109,8 @@
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
     }
     function clearPpDouble(){}
-        function clearPpActDouble(){}
-        function handleSelect(elm){}
+    function clearPpActDouble(){}
+    function handleSelect(elm){}
     function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -170,7 +170,7 @@
 
     <div class="innerDivTr">
         <table class="addIncome" id="incomeStringTable">
-            <tr id="incomeStringTableHeader" hidden="true">
+            <tr id="incomeStringTableHeader">
                 <th>Товар</th>
                 <th>Количество</th>
                 <th>Цена покупки, руб.</th>

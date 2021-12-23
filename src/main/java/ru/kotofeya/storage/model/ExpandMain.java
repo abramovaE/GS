@@ -18,6 +18,8 @@ public class ExpandMain {
     private String store;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "expandMain")
     private Set<ExpandString> expandStrings;
+    @Transient
+    private int sum;
 
     public ExpandMain() {}
     public Long getId() {return id;}
@@ -32,4 +34,6 @@ public class ExpandMain {
     public void setExpandStrings(Set<ExpandString> incomeStrings) {
         this.expandStrings = expandStrings;
     }
+    public int getSum() {return sum;}
+    public void setSum(int sum) {this.sum = sum;}
 }

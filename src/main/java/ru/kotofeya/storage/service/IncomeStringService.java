@@ -24,11 +24,6 @@ public class IncomeStringService {
     ItemRepo itemRepo;
 
     @Transactional
-    public List<IncomeString> getTodayIncomes(String date) {
-        return incomeStringRepo.findIncomeByDate(date);
-    }
-
-    @Transactional
     public List<IncomeString> findByIncomeMain(IncomeMain incomeMain){
         return incomeStringRepo.findIncomeStringByIncomeMain(incomeMain);
     }

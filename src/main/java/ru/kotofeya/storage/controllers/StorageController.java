@@ -111,15 +111,8 @@ public class StorageController {
                 Collections.sort(allItems, new Comparator<Item>() {
                     @Override
                     public int compare(Item o1, Item o2) {
-                        Integer o1Count = o1.getCount();
-                        Integer o2Count = o2.getCount();
-                        if(o1Count == null){
-                            o1Count = 0;
-                        }
-                        if(o2Count == null){
-                            o2Count = 0;
-                        }
-                        return (c == 0) ? o1Count - o2Count : o2Count - o1Count;
+                        return (c == 0) ? compareInts(o1.getCount(), o2.getCount()) :
+                                compareInts(o2.getCount(), o1.getCount());
                     }
                 });
                 break;
@@ -132,13 +125,15 @@ public class StorageController {
         return showStorage(model);
     }
 
+    private int compareInts(Integer o1, Integer o2){
+        int o1Count = (o1 == null) ? 0 : o1;
+        int o2Count = (o2 == null) ? 0 : o2;
+        return o1Count - o2Count;
+    }
+
     private int compareItems(String o1, String o2){
-            if(o1 == null){
-                o1 = "";
-            }
-            if(o2 == null){
-                o2 = "";
-            }
+        o1 = (o1 == null) ? "" : o1;
+        o2 = (o2 == null) ? "" : o2;
             return o1.compareTo(o2);
         }
 }

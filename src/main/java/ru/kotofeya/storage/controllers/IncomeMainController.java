@@ -142,9 +142,9 @@ public class IncomeMainController {
         for(IncomeString incomeString: incomeStrings){
             sum += incomeString.getCount() * incomeString.getPurchasePrice();
             sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
-            incomeMain.setSum(sum);
-            incomeMain.setSumAct(sumAct);
         }
+        incomeMain.setSum(sum);
+        incomeMain.setSumAct(sumAct);
         return incomeMain;
     }
 

@@ -32,11 +32,11 @@ public class ExpandStringController {
     @GetMapping("/add_expand_string")
     public String  addIncome(Model model) {
         List<Item> allItems = itemService.getAllItemsWithCount();
-        List<ExpandString> todayExpandStrings = expandStringService.getTodayExpands(LocalDateTime.now().format(dateTimeFormatter));
+//        List<ExpandString> todayExpandStrings = expandStringService.getTodayExpands(LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("items", allItems);
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("expandStringForm", new ExpandString());
-        model.addAttribute("todayExpandStrings", todayExpandStrings);
+//        model.addAttribute("todayExpandStrings", todayExpandStrings);
         return "storage/add_expand_string";
     }
 
@@ -45,7 +45,7 @@ public class ExpandStringController {
         System.out.println("post add expand: " + expandString);
         expandString.setDate(LocalDateTime.now().format(dateTimeFormatter));
         expandString.setSalePrice((int) (expandString.getSalePriceDouble() * 100d));
-        expandStringService.saveExpand(expandString);
+//        expandStringService.saveExpand(expandString);
         Item item = itemService.getById(expandString.getItem().getId());
         if(item != null) {
             int count = item.getCount() == null? 0 : item.getCount();
