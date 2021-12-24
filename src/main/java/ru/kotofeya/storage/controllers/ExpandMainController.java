@@ -35,6 +35,9 @@ public class ExpandMainController {
     private EditedExpandMainService editedExpandMainService;
     @Autowired
     private DeletedExpandStringService deletedExpandStringService;
+    @Autowired
+    private DeletedExpandMainService deletedExpandMainService;
+
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/expands_main")
@@ -123,6 +126,10 @@ public class ExpandMainController {
                 deletedExpandStringService.saveDeletedExpand(deletedExpand);
                 expandStringService.deleteExpandById(expandString.getId());
             }
+            DeletedExpandMain deletedExpandMain = new DeletedExpandMain(expandMain,
+                    LocalDateTime.now().format(dateTimeFormatter),
+                    deleteUserName);
+            deletedExpandMainService.saveDeletedExpandMain(deletedExpandMain);
             expandMainService.deleteExpandMainById(expandMain.getId());
         }
         return "redirect:/expands_main";

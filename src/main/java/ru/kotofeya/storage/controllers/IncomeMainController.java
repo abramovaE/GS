@@ -34,6 +34,8 @@ public class IncomeMainController {
     private DeletedIncomeStringService deletedIncomeStringService;
     @Autowired
     private EditedIncomeMainService editedIncomeMainService;
+    @Autowired
+    private DeletedIncomeMainService deletedIncomeMainService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
@@ -128,6 +130,9 @@ public class IncomeMainController {
                 deletedIncomeStringService.saveDeletedIncome(deletedIncome);
                 incomeStringService.deleteIncomeById(incomeString.getId());
             }
+            DeletedIncomeMain deletedIncomeMain = new DeletedIncomeMain(incomeMain,
+                    LocalDateTime.now().format(dateTimeFormatter), deleteUserName);
+            deletedIncomeMainService.saveDeletedIncomeMain(deletedIncomeMain);
             incomeMainService.deleteIncomeMainById(incomeMain.getId());
         }
         return "redirect:/incomes_main";
