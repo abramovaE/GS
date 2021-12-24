@@ -13,6 +13,8 @@ public class EditedIncomeMain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "income_main_id")
+    private Long incomeMainId;
     @Column(name = "create_user_name")
     private String createUserName;
     @Column(name = "edit_user_name")
@@ -21,6 +23,8 @@ public class EditedIncomeMain {
     private String createDate;
     @Column(name = "edit_date")
     private String editDate;
+    @Column(name = "new_date")
+    private String newDate;
     @Column(name = "create_store")
     private String createStore;
     @Column(name = "edit_store")
@@ -32,10 +36,12 @@ public class EditedIncomeMain {
     public EditedIncomeMain() {}
     public EditedIncomeMain(IncomeMain incomeMainFromDb, IncomeMain incomeMain,
                             String editedDate, String editUserName, List<IncomeString> incomeStringList){
+        this.incomeMainId = incomeMainFromDb.getId();
         this.setCreateUserName(incomeMainFromDb.getUserName());
         this.setEditUserName(editUserName);
         this.setCreateDate(incomeMainFromDb.getDate());
         this.setEditDate(editedDate);
+        this.newDate = incomeMain.getDate();
         this.setCreateStore(incomeMainFromDb.getStore());
         this.setEditStore(incomeMain.getStore());
         Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
@@ -50,6 +56,8 @@ public class EditedIncomeMain {
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
+    public Long getIncomeMainId() {return incomeMainId;}
+    public void setIncomeMainId(Long incomeMainId) {this.incomeMainId = incomeMainId;}
     public String getCreateUserName() {return createUserName;}
     public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
@@ -60,6 +68,8 @@ public class EditedIncomeMain {
     public void setCreateDate(String createDate) {this.createDate = createDate;}
     public String getEditDate() {return editDate;}
     public void setEditDate(String editDate) {this.editDate = editDate;}
+    public String getNewDate() {return newDate;}
+    public void setNewDate(String newDate) {this.newDate = newDate;}
     public String getCreateStore() {return createStore;}
     public void setCreateStore(String createStore) {this.createStore = createStore;}
     public String getEditStore() {return editStore;}

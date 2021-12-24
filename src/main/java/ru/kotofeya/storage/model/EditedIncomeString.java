@@ -1,7 +1,6 @@
 package ru.kotofeya.storage.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "edited_income_string")
@@ -10,6 +9,8 @@ public class EditedIncomeString {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "income_string_id")
+    private Long incomeStringId;
     @Column(name = "create_user_name")
     private String createUserName;
     @Column(name = "edit_user_name")
@@ -18,6 +19,8 @@ public class EditedIncomeString {
     private String createDate;
     @Column(name = "edit_date")
     private String editDate;
+    @Column(name = "new_date")
+    private String newDate;
     @Column(name = "create_item")
     private Long createItemId;
     @Column(name = "edit_item")
@@ -50,10 +53,12 @@ public class EditedIncomeString {
     public EditedIncomeString() {}
     public EditedIncomeString(IncomeString incomeStringFromDb, IncomeString incomeString,
                               String editedDate, String editUserName){
+        this.incomeStringId = incomeStringFromDb.getId();
         this.setCreateUserName(incomeStringFromDb.getUserName());
         this.setEditUserName(editUserName);
         this.setCreateDate(incomeStringFromDb.getDate());
         this.setEditDate(editedDate);
+        this.newDate = incomeString.getDate();
         this.setCreateItemId(incomeStringFromDb.getItem().getId());
         this.setEditItemId(incomeString.getItem().getId());
         this.setCreateCount(incomeStringFromDb.getCount());
@@ -71,6 +76,8 @@ public class EditedIncomeString {
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
+    public Long getIncomeStringId() {return incomeStringId;}
+    public void setIncomeStringId(Long incomeStringId) {this.incomeStringId = incomeStringId;}
     public String getCreateUserName() {return createUserName;}
     public void setCreateUserName(String createUserName) {this.createUserName = createUserName;}
     public String getEditUserName() {return editUserName;}
@@ -79,6 +86,8 @@ public class EditedIncomeString {
     public void setCreateDate(String createDate) {this.createDate = createDate;}
     public String getEditDate() {return editDate;}
     public void setEditDate(String editDate) {this.editDate = editDate;}
+    public String getNewDate() {return newDate;}
+    public void setNewDate(String newDate) {this.newDate = newDate;}
     public Long getCreateItemId() {return createItemId;}
     public void setCreateItemId(Long createItemId) {this.createItemId = createItemId;}
     public Long getEditItemId() {return editItemId;}

@@ -20,5 +20,4 @@ public class EditIncomeStringService {
     public void saveEditedIncomeString(EditedIncomeString editedIncomeString){
         editedIncomeStringRepo.save(editedIncomeString);
     }
-
 }

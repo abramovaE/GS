@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotofeya.storage.model.ExpandMain;
-import ru.kotofeya.storage.model.IncomeMain;
 import ru.kotofeya.storage.repo.ExpandMainRepo;
 
 import javax.persistence.EntityManager;

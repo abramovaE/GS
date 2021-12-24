@@ -38,43 +38,45 @@
         }
 
         function saveExpandMain() {
-        var isSubmit = true;
+        let isSubmit = 1;
         let expandStrings = new Array();
         const table = document.getElementById('expandStringTable');
-        let index;
-
-        for (index = 1; index < table.rows.length; index++) {
-            var itemId = document.getElementById("item" + index).value;
-
-            if (itemId.length > 0) {
-                const count = document.getElementById("count" + index).value;
-                const price = document.getElementById("price" + index).value;
-                const batchNumber = document.getElementById("batchNumber" + index).value;
-                var itemString = new Object();
-                itemId=itemId.split("::")[2]
-                if (count.length === 0) {
-                    alert("Введите количество");
-                    isSubmit = false;
+        for (let index = 1; index < table.rows.length; index++) {
+            let it = document.getElementById("item" + index);
+            if(it != null) {
+                let itemId = document.getElementById("item" + index).value;
+                if (itemId.length > 0) {
+                    const count = document.getElementById("count" + index).value;
+                    const price = document.getElementById("price" + index).value;
+                    const batchNumber = document.getElementById("batchNumber" + index).value;
+                    let itemString = {};
+                    itemId=itemId.split("::")[2]
+                    if (count.length === 0) {
+                        alert("Введите количество");
+                        isSubmit = 0;
+                    }
+                    else if (price.length === 0) {
+                        alert("Введите цену");
+                        isSubmit = 0;
+                    }
+                    else if (batchNumber.length === 0) {
+                        alert("Введите номер партии");
+                        isSubmit = 0;
+                    }
+                    itemString.itemId = itemId;
+                    itemString.count = count;
+                    itemString.price = price;
+                    itemString.batchNumber = batchNumber;
+                    expandStrings.push(itemString);
                 }
-                else if (price.length === 0) {
-                    alert("Введите цену");
-                    isSubmit = false;
+                else {
+                    continue;
                 }
-                else if (batchNumber.length === 0) {
-                    alert("Введите номер партии");
-                    isSubmit = false;
-                }
-                itemString.itemId = itemId;
-                itemString.count = count;
-                itemString.price = price;
-                itemString.batchNumber = batchNumber;
-                expandStrings.push(itemString);
-            }
-            else {
-                // continue;
+            } else {
+                continue;
             }
         }
-        if (isSubmit) {
+        if (isSubmit == 1) {
             let expandMain = document.getElementById('expandMain');
             const expandJson = document.createElement('input');
             expandJson.name = "expandJson";
@@ -83,7 +85,7 @@
             expandMain.appendChild(expandJson);
             expandMain.submit();
         }
-        return isSubmit;
+        return isSubmit == 1;
     }
         function handlePrice(){
         const id = 'expandStringTable';

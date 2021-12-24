@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.*;
-import ru.kotofeya.storage.service.DeletedExpandService;
-import ru.kotofeya.storage.service.ExpandStringService;
-import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.service.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ExpandStringController {
@@ -27,106 +23,70 @@ public class ExpandStringController {
     private ItemService itemService;
     @Autowired
     private DeletedExpandService deletedExpandService;
+    @Autowired
+    private ExpandMainService expandMainService;
+    @Autowired
+    private EditedExpandMainService editedExpandMainService;
+    @Autowired
+    private EditedExpandStringService editedExpandStringService;
+
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
-//    @GetMapping({"/show_expand_string/{incomeStringId}/{editUserName}",
-//            "show_income_main/{incomeMainId}/show_income_string/{incomeStringId}/{editUserName}"})
-//    public String  showIncomeString(@PathVariable ("incomeStringId") Long incomeStringId,
-//                                    @PathVariable ("editUserName") String editUserName,
-//                                    @PathVariable ("incomeMainId") Long incomeMainId,
-//                                    Model model) {
-//        IncomeString incomeString = incomeStringService.getIncomeById(incomeStringId);
-//        List<Item> allItems = itemService.getAllItems();
-//        model.addAttribute("items", allItems);
-//        incomeString.setPurchasePriceDouble(incomeString.getPurchasePrice()/100d);
-//        incomeString.setPurchasePriceActDouble(incomeString.getPurchasePriceAct()/100d);
-//        model.addAttribute("incomeStringForm", incomeString);
-//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-//        return "storage/incomes/show_income_string";
-//    }
+    @GetMapping({"/delete_expand_string/{expandStringId}/{deleteUserName}",
+            "show_expand_main/{expandMainId}/delete_expand_string/{expandStringId}/{deleteUserName}"})
+    public String deleteExpand(@PathVariable ("expandStringId") Long expandStringId,
+                               @PathVariable ("deleteUserName") String deleteUserName,
+                               @PathVariable ("expandMainId") Long expandMainId,
+                               Model model) {
+        ExpandString expandString = expandStringService.getExpandById(expandStringId);
+        if(expandString != null){
+            DeletedExpandString deletedExpand = new DeletedExpandString(expandString,
+                    LocalDateTime.now().format(dateTimeFormatter),
+                    deleteUserName);
+            ExpandMain expandMain = expandMainService.findById(expandMainId);
+            Set<ExpandString> expandStrings = new HashSet<>(expandMain.getExpandStrings());
+            expandStrings.remove(expandString);
+            EditedExpandMain editedExpandMain = new EditedExpandMain(expandMain, expandMain,
+                    LocalDateTime.now().format(dateTimeFormatter),
+                    deleteUserName, new ArrayList<>(expandStrings));
+            expandMain.getExpandStrings().remove(expandString);
+            editedExpandMainService.saveEditedExpandMain(editedExpandMain);
+            deletedExpandService.saveDeletedExpand(deletedExpand);
+            expandStringService.deleteExpandById(expandString.getId());
+            expandMainService.saveExpandMain(expandMain);
+        }
+        return "redirect:/show_expand_main/" +
+                expandString.getExpandMain().getId() + "/" + deleteUserName;
+    }
 
+     @GetMapping({"/show_expand_string/{expandStringId}/{editUserName}",
+            "show_expand_main/{expandMainId}/show_expand_string/{expandStringId}/{editUserName}"})
+    public String showExpandString(@PathVariable ("expandStringId") Long expandStringId,
+                                    @PathVariable ("editUserName") String editUserName,
+                                    @PathVariable ("expandMainId") Long expandMainId,
+                                    Model model) {
+        ExpandString expandString = expandStringService.getExpandById(expandStringId);
+        List<Item> allItems = itemService.getAllItems();
+        model.addAttribute("items", allItems);
+        expandString.setSalePriceDouble(expandString.getSalePrice()/100d);
+        model.addAttribute("expandStringForm", expandString);
+        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
+        return "storage/expands/show_expand_string";
+    }
 
-//    @GetMapping("/add_expand_string")
-//    public String  addExpand(Model model) {
-//        List<Item> allItems = itemService.getAllItemsWithCount();
-//        model.addAttribute("items", allItems);
-//        model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
-//        model.addAttribute("expandStringForm", new ExpandString());
-//        return "storage/add_expand_string";
-//    }
-
-//    @PostMapping("/add_income_main")
-//    public String  addIncomeString(Model model,
-//                                   @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
-//                                   @ModelAttribute ("incomeJson") String incomeJson) {
-//        incomeMainService.saveIncomeMain(incomeMain);
-//        Set<IncomeString> incomeStrings = createIncomeStringsFromJson(incomeJson, incomeMain.getId());
-//        incomeStrings.stream().forEach(it->incomeStringService.saveIncome(it));
-//        incomeMain.setIncomeStrings(incomeStrings);
-//        incomeMainService.saveIncomeMain(incomeMain);
-//        return "redirect:/incomes_main";
-//    }
-
-
-//    @PostMapping("/add_expand_string")
-//    public String addExpandMain(Model model,
-//                                @ModelAttribute("expandStringForm") ExpandString expandString,
-//                                @ModelAttribute ("expandJson") String expandJson) {
-//        System.out.println("post add expand: " + expandString);
-//        System.out.println("post add json: " + expandJson);
-//
-//        expandString.setDate(LocalDateTime.now().format(dateTimeFormatter));
-//        expandString.setSalePrice((int) (expandString.getSalePriceDouble() * 100d));
-////        expandStringService.saveExpand(expandString);
-//        Item item = itemService.getById(expandString.getItem().getId());
-//        if(item != null) {
-//            int count = item.getCount() == null? 0 : item.getCount();
-//            item.setCount(count - expandString.getCount());
-//            itemService.saveItem(item);
-//        }
-//        return "redirect:/add_expand_string";
-//    }
-
-//    @GetMapping("/delete_expand_string/{expandStringId}/{deleteUserName}")
-//    public String deleteIncome(@PathVariable("expandStringId") Long expandStringId,
-//                               @PathVariable ("deleteUserName") String deleteUserName,
-//                               Model model) {
-//        ExpandString expandString = expandStringService.getExpandById(expandStringId);
-//        if(expandString != null){
-//            Item expandItem = itemService.getById(expandString.getItem().getId());
-//            if(expandItem != null){
-//                expandItem.setCount(expandItem.getCount() + expandString.getCount());
-//                itemService.saveItem(expandItem);
-//            }
-//            DeletedExpandString deletedExpandString = new DeletedExpandString(expandString,
-//                    LocalDateTime.now().format(dateTimeFormatter),
-//                    deleteUserName);
-//            deletedExpandService.saveDeletedExpand(deletedExpandString);
-//            expandStringService.deleteExpandById(expandString.getId());
-//        }
-//        return "redirect:/add_expand_string";
-//    }
-//
-//    @GetMapping("/expand_strings")
-//    public String  showIncomes(Model model) {
-//        List<ExpandString> expandStrings = expandStringService.getAllExpands();
-//        Collections.sort(expandStrings, new Comparator<ExpandString>() {
-//            @Override
-//            public int compare(ExpandString o1, ExpandString o2) {
-//                String date1 = o1.getDate();
-//                String date2 = o2.getDate();
-//                if (date1 == null) {
-//                    date1 = LocalDate.now().format(dateTimeFormatter);
-//                }
-//                if (date2 == null) {
-//                    date2 = LocalDate.now().format(dateTimeFormatter);
-//                }
-//                LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
-//                LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
-//                return localDate2.compareTo(localDate1);
-//            }
-//        });
-//        model.addAttribute("expandStrings", expandStrings);
-//        return "storage/expand_strings";
-//    }
+    @PostMapping({"/show_expand_string/{expandStringId}/{editUserName}",
+            "show_expand_main/{expandMainId}/show_expand_string/{expandStringId}/{editUserName}"})
+    public String showExpandString(@ModelAttribute ("expandStringForm") ExpandString expandString,
+                                    @PathVariable ("expandStringId") Long expandStringId,
+                                    @PathVariable ("editUserName") String editUserName,
+                                    @PathVariable ("expandMainId") Long expandMainId,
+                                    Model model) {
+        ExpandString expandStringFromDb = expandStringService.getExpandById(expandStringId);
+        expandString.setSalePrice((int) (expandString.getSalePriceDouble() * 100));
+        EditedExpandString editedExpandString = new EditedExpandString(expandStringFromDb, expandString,
+                LocalDateTime.now().format(dateTimeFormatter), editUserName);
+        editedExpandStringService.saveEditedExpandString(editedExpandString);
+        expandStringService.saveExpand(expandString);
+        return "redirect:/show_expand_main/" + expandMainId + "/" + editUserName;
+    }
 }

@@ -82,7 +82,6 @@ public class IncomeMainController {
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
 
-        System.out.println(incomeJson);
         IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
         Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
         List<Long> incomeStringIds = new ArrayList<>();
@@ -118,6 +117,7 @@ public class IncomeMainController {
     public String deleteIncome(@PathVariable ("incomeMainId") Long incomeMainId,
                                @PathVariable ("deleteUserName") String deleteUserName,
                                Model model) {
+
         IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
         if(incomeMain != null){
             Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();

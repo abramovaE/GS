@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotofeya.storage.model.*;
-import ru.kotofeya.storage.repo.ExpandMainRepo;
 import ru.kotofeya.storage.repo.ExpandStringRepo;
 import ru.kotofeya.storage.repo.ItemRepo;
 
@@ -49,6 +48,9 @@ public class ExpandStringService {
     }
     @Transactional
     public void deleteExpandById(long id){
+        ExpandString expandString = expandStringRepo.findById(id).orElse(null);
+        Item item = itemRepo.findById(expandString.getItem().getId()).orElse(null);
+        correctItemCount(item, expandString.getCount(), 0);
         expandStringRepo.deleteById(id);
     }
     @Transactional

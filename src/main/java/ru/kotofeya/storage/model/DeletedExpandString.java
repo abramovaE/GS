@@ -9,6 +9,8 @@ public class DeletedExpandString {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "expand_string_id")
+    private Long expandStringId;
     @Column(name = "create_user_name")
     private String createUserName;
     @Column(name = "delete_user_name")
@@ -30,6 +32,7 @@ public class DeletedExpandString {
 
     public DeletedExpandString() {}
     public DeletedExpandString(ExpandString expandString, String deleteDate, String deleteUserName) {
+        this.expandStringId = expandString.getId();
         this.createUserName = expandString.getUserName();
         this.deleteUserName = deleteUserName;
         this.createDate = expandString.getDate();
@@ -46,6 +49,8 @@ public class DeletedExpandString {
     public void setId(Long id) {
         this.id = id;
     }
+    public Long getExpandStringId() {return expandStringId;}
+    public void setExpandStringId(Long expandStringId) {this.expandStringId = expandStringId;}
     public String getCreateUserName() {
         return createUserName;
     }

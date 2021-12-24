@@ -8,6 +8,8 @@ public class DeletedIncomeString {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "income_string_id")
+    private Long incomeStringId;
     @Column(name = "create_user_name")
     private String createUserName;
     @Column(name = "delete_user_name")
@@ -36,6 +38,7 @@ public class DeletedIncomeString {
     public DeletedIncomeString() {}
 
     public DeletedIncomeString(IncomeString incomeString, String deleteDate, String deleteUserName) {
+        this.incomeStringId = incomeString.getId();
         this.createUserName = incomeString.getUserName();
         this.deleteUserName = deleteUserName;
         this.createDate = incomeString.getDate();
@@ -50,6 +53,8 @@ public class DeletedIncomeString {
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
+    public Long getIncomeStringId() {return incomeStringId;}
+    public void setIncomeStringId(Long incomeStringId) {this.incomeStringId = incomeStringId;}
     public String getCreateUserName() {return createUserName;}
     public void setCreateUserName(String createUserName) {this.createUserName = createUserName;}
     public String getDeleteUserName() {return deleteUserName;}

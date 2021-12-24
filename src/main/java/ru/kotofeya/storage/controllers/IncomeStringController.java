@@ -13,6 +13,8 @@ import ru.kotofeya.storage.service.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +26,8 @@ public class IncomeStringController {
     private ItemService itemService;
     @Autowired
     private DeletedIncomeService deletedIncomeService;
+    @Autowired
+    private EditedIncomeMainService editedIncomeMainService;
     @Autowired
     private IncomeMainService incomeMainService;
     @Autowired
@@ -43,9 +47,14 @@ public class IncomeStringController {
                     LocalDateTime.now().format(dateTimeFormatter),
                     deleteUserName);
             IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
-            Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();
+            Set<IncomeString> incomeStrings = new HashSet<>(incomeMain.getIncomeStrings());
             incomeStrings.remove(incomeString);
-            incomeMain.setIncomeStrings(incomeStrings);
+
+            EditedIncomeMain editedIncomeMain = new EditedIncomeMain(incomeMain, incomeMain,
+                    LocalDateTime.now().format(dateTimeFormatter),
+                    deleteUserName, new ArrayList<>(incomeStrings));
+            incomeMain.getIncomeStrings().remove(incomeString);
+            editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
             deletedIncomeService.saveDeletedIncome(deletedIncome);
             incomeStringService.deleteIncomeById(incomeString.getId());
             incomeMainService.saveIncomeMain(incomeMain);
@@ -56,7 +65,7 @@ public class IncomeStringController {
 
     @GetMapping({"/show_income_string/{incomeStringId}/{editUserName}",
             "show_income_main/{incomeMainId}/show_income_string/{incomeStringId}/{editUserName}"})
-    public String  showIncomeString(@PathVariable ("incomeStringId") Long incomeStringId,
+    public String showIncomeString(@PathVariable ("incomeStringId") Long incomeStringId,
                                     @PathVariable ("editUserName") String editUserName,
                                     @PathVariable ("incomeMainId") Long incomeMainId,
                                     Model model) {
