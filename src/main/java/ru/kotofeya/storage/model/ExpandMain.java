@@ -36,4 +36,16 @@ public class ExpandMain {
     }
     public int getSum() {return sum;}
     public void setSum(int sum) {this.sum = sum;}
+
+    @Override
+    public String toString() {
+        return "ExpandMain{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", store='" + store + '\'' +
+//                ", expandStrings=" + expandStrings +
+//                ", sum=" + sum +
+                '}';
+    }
 }

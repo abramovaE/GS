@@ -20,7 +20,6 @@ public class ExpandStringService {
     ExpandStringRepo expandStringRepo;
     @Autowired
     ItemRepo itemRepo;
-
     public void saveExpand(ExpandString expandString){
         ExpandString expandStringFromDb;
         if(expandString.getId() == null){
@@ -32,33 +31,26 @@ public class ExpandStringService {
         correctItemCount(item, expandStringFromDb.getCount(), expandString.getCount());
         expandStringRepo.save(expandString);
     }
-
-    correct
     @Transactional
     public void correctItemCount(Item item, int oldCount, int newCount){
         if(item != null){
             int currentCount = item.getCount() == null? 0 : item.getCount();
-            item.setCount(currentCount - oldCount + newCount);
+            item.setCount(currentCount + oldCount - newCount);
             itemRepo.save(item);
         }
     }
-
     @Transactional
     public List<ExpandString> findByExpandMain(ExpandMain expandMain){
         return expandStringRepo.findExpandStringByExpandMain(expandMain);
     }
-
-
     @Transactional
     public ExpandString getExpandById(long id){
         return expandStringRepo.findById(id).orElse(null);
     }
-
     @Transactional
     public void deleteExpandById(long id){
         expandStringRepo.deleteById(id);
     }
-
     @Transactional
     public List<ExpandString> getAllExpands(){
         return expandStringRepo.findAll();

@@ -54,7 +54,6 @@ public class IncomeStringController {
                 incomeString.getIncomeMain().getId() + "/" + deleteUserName;
     }
 
-
     @GetMapping({"/show_income_string/{incomeStringId}/{editUserName}",
             "show_income_main/{incomeMainId}/show_income_string/{incomeStringId}/{editUserName}"})
     public String  showIncomeString(@PathVariable ("incomeStringId") Long incomeStringId,

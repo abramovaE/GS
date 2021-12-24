@@ -17,7 +17,6 @@
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-
     <script type="text/javascript">
         function handleItem(index){
             let inputItem = document.getElementById('item'+index).value;
@@ -102,7 +101,6 @@
         tr.closest('tr' + rowIndex)
     }
     </script>
-
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
@@ -141,10 +139,6 @@
                 <div class="innerDivLogin">
                     <div class="label">Итог, руб.</div>
                     <div id="ppMainSum" class="addIncomeInput">0.00</div>
-                </div>
-                <div class="innerDivLogin">
-                    <div class="label">Итог факт., руб.</div>
-                    <div id="ppMainSumAct" class="addIncomeInput">0.00</div>
                 </div>
             </div>
         </div>

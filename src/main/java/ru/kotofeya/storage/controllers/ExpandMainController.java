@@ -8,12 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.*;
-import ru.kotofeya.storage.service.ExpandMainService;
-import ru.kotofeya.storage.service.ExpandStringService;
-import ru.kotofeya.storage.service.IncomeMainService;
-import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.service.*;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
@@ -21,6 +19,7 @@ import javax.persistence.Transient;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,6 +34,8 @@ public class ExpandMainController {
     private ExpandStringService expandStringService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private EditedExpandMainService editedExpandMainService;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/expands_main")
@@ -58,11 +59,11 @@ public class ExpandMainController {
         return "storage/expands/add_expand_main";
     }
 
-
     @PostMapping("/add_expand_main")
     public String  addExpandMain(Model model,
                                    @ModelAttribute("expandMainForm") ExpandMain expandMain,
                                    @ModelAttribute ("expandJson") String expandJson) {
+
         expandMainService.saveExpandMain(expandMain);
         Set<ExpandString> expandStrings = createExpandStringsFromJson(expandJson, expandMain.getId());
         expandStrings.stream().forEach(it->expandStringService.saveExpand(it));
@@ -70,6 +71,50 @@ public class ExpandMainController {
         expandMainService.saveExpandMain(expandMain);
         return "redirect:/expands_main";
     }
+
+
+    @GetMapping("/show_expand_main/{expandId}/{editUserName}")
+    public String showExpandMain(Model model,
+                                   @PathVariable("expandId") Long expandId,
+                                   @PathVariable("editUserName") String editUserName) {
+        List<Item> allItems = itemService.getAllItems();
+        ExpandMain expandMain = expandMainService.findById(expandId);
+        expandMain = setSumsForJsp(expandMain);
+        model.addAttribute("expandMain", expandMain);
+        model.addAttribute("items", allItems);
+        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
+        return "storage/expands/show_expand_main";
+    }
+
+
+    @PostMapping("/show_expand_main/{expandId}/{editUserName}")
+    public String  showExpandMain(Model model,
+                                    @ModelAttribute ("expandMain") ExpandMain expandMain,
+                                    @ModelAttribute ("expandJson") String expandJson,
+                                    @PathVariable("editUserName") String editUserName) {
+
+        System.out.println(expandMain);
+        System.out.println(expandJson);
+        ExpandMain expandMainFromDb = expandMainService.findById(expandMain.getId());
+        Set<ExpandString> expandStringsListDb = expandMainFromDb.getExpandStrings();
+        List<Long> expandStringIds = new ArrayList<>();
+        expandStringsListDb.stream().forEach(it->expandStringIds.add(it.getId()));
+        Set<ExpandString> expandStrings = createExpandStringsFromJson(expandJson, expandMain.getId());
+        expandStrings.stream().forEach(it->expandStringService.saveExpand(it));
+        List<ExpandString> expandStringList = expandStringService.findByExpandMain(expandMain);
+
+        EditedExpandMain editedExpandMain = new EditedExpandMain(expandMainFromDb, expandMain,
+                LocalDateTime.now().format(dateTimeFormatter), editUserName, expandStringList);
+        expandMainFromDb.setDate(expandMain.getDate());
+        expandMainFromDb.setStore(expandMain.getStore());
+        expandMainFromDb.setUserName(expandMain.getUserName());
+        expandMainService.saveExpandMain(expandMainFromDb);
+        editedExpandMainService.saveEditedExpandMain(editedExpandMain);
+        return "redirect:/expands_main";
+    }
+
+
+
 
     private Set<ExpandString> createExpandStringsFromJson(String expandJson, Long expandMainId){
         ExpandMain expandMain = expandMainService.findById(expandMainId);
