@@ -39,7 +39,7 @@
         let expandStrings = new Array();
         const table = document.getElementById('expandStringTable');
         let index;
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             var itemId = document.getElementById("item" + index).value;
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
@@ -82,7 +82,7 @@
         const table = document.getElementById(id);
         let index;
         let generalSum = 0;
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
             let ppSum = Math.round(count * price * 100)/100

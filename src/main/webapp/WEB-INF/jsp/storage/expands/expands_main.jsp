@@ -64,7 +64,7 @@
             <a href="show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
           </td>
           <td class="edit" id="delete${expandMain.id}" hidden>
-            <a href="delete_expandMain_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+            <a href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
           </td>
         </tr>
       </c:forEach>

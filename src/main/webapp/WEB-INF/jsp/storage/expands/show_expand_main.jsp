@@ -38,12 +38,12 @@
         }
 
         function saveExpandMain() {
-        var isSubmit = true;
+        let isSubmit = 1;
         let expandStrings = new Array();
         const table = document.getElementById('expandStringTable');
         let index;
 
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             var itemId = document.getElementById("item" + index).value;
 
             if (itemId.length > 0) {
@@ -71,7 +71,7 @@
                 expandStrings.push(itemString);
             }
             else {
-                break;
+                // continue;
             }
         }
         if (isSubmit) {
@@ -90,7 +90,7 @@
         const table = document.getElementById(id);
         let index;
         let generalSum = 0;
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             const count = document.getElementById("count" + index).value;
             if (count.length > 0) {
                 const price = document.getElementById("price" + index).value;
@@ -187,9 +187,9 @@
                         onmouseout="javascript:hideEditPanel(${ind.count})">
                         <td>${expandString.item.name}</td>
                         <td>${expandString.count}</td>
-                        <td>${expandString.price/100}</td>
+                        <td>${expandString.salePrice/100}</td>
                         <td>${expandString.batchNumber}</td>
-                        <td>${expandString.count * expandString.price/100}</td>
+                        <td>${expandString.count * expandString.salePrice/100}</td>
                         <td class="edit" id="edit${ind.count}" hidden>
                             <a href="show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
                         </td>

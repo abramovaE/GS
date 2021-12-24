@@ -37,7 +37,7 @@
         let incomeStrings = new Array();
         const table = document.getElementById('incomeStringTable');
         let index;
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             var itemId = document.getElementById("item" + index).value;
             const count = document.getElementById("count" + index).value;
             const purPrice = document.getElementById("purPrice" + index).value;
@@ -94,7 +94,7 @@
         let generalSum = 0;
         let generalSumAct = 0;
 
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             const count = document.getElementById("count" + index).value;
             const purPrice = document.getElementById("purPrice" + index).value;
             const purPriceAct = document.getElementById("purPriceAct" + index).value;

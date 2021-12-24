@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.*;
 import ru.kotofeya.storage.service.*;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +33,8 @@ public class ExpandMainController {
     private ItemService itemService;
     @Autowired
     private EditedExpandMainService editedExpandMainService;
+    @Autowired
+    private DeletedExpandService deletedExpandService;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/expands_main")
@@ -92,9 +91,6 @@ public class ExpandMainController {
                                     @ModelAttribute ("expandMain") ExpandMain expandMain,
                                     @ModelAttribute ("expandJson") String expandJson,
                                     @PathVariable("editUserName") String editUserName) {
-
-        System.out.println(expandMain);
-        System.out.println(expandJson);
         ExpandMain expandMainFromDb = expandMainService.findById(expandMain.getId());
         Set<ExpandString> expandStringsListDb = expandMainFromDb.getExpandStrings();
         List<Long> expandStringIds = new ArrayList<>();
@@ -102,7 +98,6 @@ public class ExpandMainController {
         Set<ExpandString> expandStrings = createExpandStringsFromJson(expandJson, expandMain.getId());
         expandStrings.stream().forEach(it->expandStringService.saveExpand(it));
         List<ExpandString> expandStringList = expandStringService.findByExpandMain(expandMain);
-
         EditedExpandMain editedExpandMain = new EditedExpandMain(expandMainFromDb, expandMain,
                 LocalDateTime.now().format(dateTimeFormatter), editUserName, expandStringList);
         expandMainFromDb.setDate(expandMain.getDate());
@@ -112,6 +107,31 @@ public class ExpandMainController {
         editedExpandMainService.saveEditedExpandMain(editedExpandMain);
         return "redirect:/expands_main";
     }
+
+
+    @GetMapping("/delete_expand_main/{expandMainId}/{deleteUserName}")
+    public String deleteExpand(@PathVariable ("expandMainId") Long expandMainId,
+                               @PathVariable ("deleteUserName") String deleteUserName,
+                               Model model) {
+        ExpandMain expandMain = expandMainService.findById(expandMainId);
+        if(expandMain != null){
+            Set<ExpandString> expandStrings = expandMain.getExpandStrings();
+            for(ExpandString expandString: expandStrings){
+                DeletedExpandString deletedExpand = new DeletedExpandString(expandString,
+                        LocalDateTime.now().format(dateTimeFormatter),
+                        deleteUserName);
+                deletedExpandService.saveDeletedExpand(deletedExpand);
+                expandStringService.deleteExpandById(expandString.getId());
+            }
+            expandMainService.deleteExpandMainById(expandMain.getId());
+        }
+        return "redirect:/expands_main";
+    }
+
+
+
+
+
 
 
 

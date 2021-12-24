@@ -38,7 +38,7 @@ public class IncomeMainController {
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/add_income_main")
-    public String  addIncomeString(Model model) {
+    public String  addIncomeMain(Model model) {
         List<Item> allItems = itemService.getAllItems();
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
@@ -50,7 +50,7 @@ public class IncomeMainController {
     }
 
     @PostMapping("/add_income_main")
-    public String  addIncomeString(Model model,
+    public String  addIncomeMain(Model model,
                                    @ModelAttribute ("incomeMainForm") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson) {
         incomeMainService.saveIncomeMain(incomeMain);
@@ -62,7 +62,7 @@ public class IncomeMainController {
     }
 
     @GetMapping("/show_income_main/{incomeId}/{editUserName}")
-    public String showIncomeString(Model model,
+    public String showIncomeMain(Model model,
                                     @PathVariable("incomeId") Long incomeId,
                                     @PathVariable("editUserName") String editUserName) {
         List<Item> allItems = itemService.getAllItems();
@@ -77,11 +77,12 @@ public class IncomeMainController {
 
 
     @PostMapping("/show_income_main/{incomeId}/{editUserName}")
-    public String  showIncomeString(Model model,
+    public String  showIncomeMain(Model model,
                                    @ModelAttribute ("incomeMain") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
 
+        System.out.println(incomeJson);
         IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
         Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
         List<Long> incomeStringIds = new ArrayList<>();
@@ -154,18 +155,20 @@ public class IncomeMainController {
         Type listType = new TypeToken<List<IncomeJson>>(){}.getType();
         List<IncomeJson> incomeJsonList = gson.fromJson(incomeJson, listType);
         Set<IncomeString> incomeStrings = new HashSet<>();
-        for(IncomeJson i: incomeJsonList){
-            IncomeString incomeString = new IncomeString();
-            incomeString.setUserName(incomeMain.getUserName());
-            incomeString.setDate(incomeMain.getDate());
-            incomeString.setItem(itemService.getById(i.getItemId()));
-            incomeString.setCount(i.getCount());
-            incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
-            incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
-            incomeString.setStoreArticle(i.getStoreArticle());
-            incomeString.setBatchNumber(i.getBatchNumber());
-            incomeString.setIncomeMain(incomeMain);
-            incomeStrings.add(incomeString);
+        if(incomeJsonList != null) {
+            for (IncomeJson i : incomeJsonList) {
+                IncomeString incomeString = new IncomeString();
+                incomeString.setUserName(incomeMain.getUserName());
+                incomeString.setDate(incomeMain.getDate());
+                incomeString.setItem(itemService.getById(i.getItemId()));
+                incomeString.setCount(i.getCount());
+                incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
+                incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
+                incomeString.setStoreArticle(i.getStoreArticle());
+                incomeString.setBatchNumber(i.getBatchNumber());
+                incomeString.setIncomeMain(incomeMain);
+                incomeStrings.add(incomeString);
+            }
         }
         return incomeStrings;
     }

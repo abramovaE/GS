@@ -36,59 +36,57 @@
             const tr = document.getElementById("tr" + (index +1));
             tr.hidden=false;
         }
-
-        function saveIncomeMain() {
-        var isSubmit = true;
+    function saveIncomeMain() {
+        let isSubmit = 1;
         let incomeStrings = new Array();
         const table = document.getElementById('incomeStringTable');
-        let index;
-
-        for (index = 1; index < table.rows.length; ++index) {
-            var itemId = document.getElementById("item" + index).value;
-
-            if (itemId.length > 0) {
-                const count = document.getElementById("count" + index).value;
-                const purPrice = document.getElementById("purPrice" + index).value;
-                const purPriceAct = document.getElementById("purPriceAct" + index).value;
-                const storeArticle = document.getElementById("storeArticle" + index).value;
-                const batchNumber = document.getElementById("batchNumber" + index).value;
-                var itemString = new Object();
-                itemId=itemId.split("::")[2]
-                if (count.length === 0) {
-                    alert("Введите количество");
-                    isSubmit = false;
+        for (let index = 1; index < table.rows.length; index++) {
+            let it = document.getElementById("item" + index);
+            if(it != null) {
+                let itemId = it.value;
+                if ((itemId != 0) && (itemId.indexOf("::") != -1)) {
+                    const count = document.getElementById("count" + index).value;
+                    const purPrice = document.getElementById("purPrice" + index).value;
+                    const purPriceAct = document.getElementById("purPriceAct" + index).value;
+                    const storeArticle = document.getElementById("storeArticle" + index).value;
+                    const batchNumber = document.getElementById("batchNumber" + index).value;
+                    itemId=itemId.split("::")[2]
+                    if (count.length == 0) {
+                        alert("Введите количество");
+                        isSubmit = 0;
+                    }
+                    else if (purPrice.length == 0) {
+                        alert("Введите цену");
+                        isSubmit = 0;
+                    }
+                    else if (purPriceAct.length == 0) {
+                        alert("Введите фактическую цену");
+                        isSubmit = 0;
+                    }
+                    else if (storeArticle.length == 0) {
+                        alert("Введите артикул товара в магазине покупки");
+                        isSubmit = 0;
+                    }
+                    else if (batchNumber.length == 0) {
+                        alert("Введите номер партии");
+                        isSubmit = 0;
+                    }
+                    let itemString = {};
+                    itemString.itemId = itemId;
+                    itemString.count = count;
+                    itemString.purPrice = purPrice;
+                    itemString.purPriceAct = purPriceAct;
+                    itemString.storeArticle = storeArticle;
+                    itemString.batchNumber = batchNumber;
+                    incomeStrings.push(itemString);
+                } else {
+                    continue;
                 }
-                else if (purPrice.length === 0) {
-                    alert("Введите цену");
-                    isSubmit = false;
-                }
-                else if (purPriceAct.length === 0) {
-                    alert("Введите фактическую цену");
-                    isSubmit = false;
-                }
-                else if (storeArticle.length === 0) {
-                    alert("Введите артикул товара в магазине покупки");
-                    isSubmit = false;
-                }
-                else if (batchNumber.length === 0) {
-                    alert("Введите номер партии");
-                    isSubmit = false;
-                }
-
-                itemString.itemId = itemId;
-                itemString.count = count;
-                itemString.purPrice = purPrice;
-                itemString.purPriceAct = purPriceAct;
-                itemString.storeArticle = storeArticle;
-                itemString.batchNumber = batchNumber;
-                incomeStrings.push(itemString);
-            }
-            else {
-                break;
+            } else {
+                continue;
             }
         }
-
-            if (isSubmit) {
+        if (isSubmit == 1) {
             let incomeMain = document.getElementById('incomeMain');
             const incomeJson = document.createElement('input');
             incomeJson.name = "incomeJson";
@@ -97,7 +95,8 @@
             incomeMain.appendChild(incomeJson);
             incomeMain.submit();
         }
-        return isSubmit;
+
+        return isSubmit == 1;
     }
         function handlePrice(){
         const id = 'incomeStringTable';
@@ -105,7 +104,7 @@
         let index;
         let generalSum = 0;
         let generalSumAct = 0;
-        for (index = 1; index < table.rows.length; ++index) {
+        for (index = 1; index < table.rows.length; index++) {
             const count = document.getElementById("count" + index).value;
             if (count.length > 0) {
                 const purPrice = document.getElementById("purPrice" + index).value;
@@ -124,20 +123,15 @@
 
 
     }
-        function clearPpDouble(){}
-        function clearPpActDouble(){}
-        function handleSelect(elm){}
-
-    function addIncomeString() {
-        const id = 'incomeStringTable';
-        const table = document.getElementById(id);
-        let rowIndex = table.rows.length;
-        const tableHeader = document.getElementById('incomeStringTableHeader');
-        tableHeader.hidden = false;
-        const tr = document.getElementById('tr' + rowIndex);
-        tr.closest('tr' + rowIndex)
-    }
-
+        function addIncomeString() {
+            const id = 'incomeStringTable';
+            const table = document.getElementById(id);
+            let rowIndex = table.rows.length;
+            const tableHeader = document.getElementById('incomeStringTableHeader');
+            tableHeader.hidden = false;
+            const tr = document.getElementById('tr' + rowIndex);
+            tr.closest('tr' + rowIndex)
+        }
         function showEditPanel(id){
             document.getElementById('edit' + id).style.display = 'block'
             document.getElementById('delete' + id).style.display = 'block'
@@ -251,18 +245,17 @@
                                     <td>
                                         <input type="number" required="true" id="count${index.count}"
                                                placeholder="Количество" min = "0"
-                                               onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
+                                               onchange="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена покупки"
                                                id="purPrice${index.count}"
                                                min = "0" step="0.01"
                                                required="true"
-                                               onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/>
+                                               onchange="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="number" id="purPriceAct${index.count}" required="true"
                                                placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                               oninput="javascript:handlePrice()"
-                                               onchange="javascript:clearPpActDouble()"/>
+                                               oninput="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
                                                placeholder="Артикул в магазине" required="true"/></td>
@@ -293,18 +286,17 @@
                                     <td>
                                         <input type="number" required="true" id="count${index.count}"
                                                placeholder="Количество" min = "0"
-                                               onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
+                                               onchange="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена покупки"
                                                id="purPrice${index.count}"
                                                min = "0" step="0.01"
                                                required="true"
-                                               onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/>
+                                               onchange="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="number" id="purPriceAct${index.count}" required="true"
                                                placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                               oninput="javascript:handlePrice()"
-                                               onchange="javascript:clearPpActDouble()"/>
+                                               oninput="javascript:handlePrice()"/>
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
                                                placeholder="Артикул в магазине" required="true"/></td>

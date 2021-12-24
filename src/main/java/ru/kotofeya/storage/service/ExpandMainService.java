@@ -32,4 +32,9 @@ public class ExpandMainService {
     public ExpandMain findById(long id){
         return expandMainRepo.findById(id).orElse(null);
     }
+
+    @Transactional
+    public void deleteExpandMainById(Long id){
+        expandMainRepo.deleteById(id);
+    }
 }
