@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <html>
 <head>
@@ -38,36 +38,36 @@
         }
         function saveIncomeMain() {
         let isSubmit = 1;
-        let incomeStrings = new Array();
+        let incomeStrings = [];
         const table = document.getElementById('incomeStringTable');
         for (let index = 1; index < table.rows.length; index++) {
             let it = document.getElementById("item" + index);
             if(it != null) {
                 let itemId = it.value;
-                if ((itemId != 0) && (itemId.indexOf("::") != -1)) {
+                if ((itemId !== 0) && (itemId.indexOf("::") !== -1)) {
                     const count = document.getElementById("count" + index).value;
                     const purPrice = document.getElementById("purPrice" + index).value;
                     const purPriceAct = document.getElementById("purPriceAct" + index).value;
                     const storeArticle = document.getElementById("storeArticle" + index).value;
                     const batchNumber = document.getElementById("batchNumber" + index).value;
                     itemId=itemId.split("::")[2]
-                    if (count.length == 0) {
+                    if (count.length === 0) {
                         alert("Введите количество");
                         isSubmit = 0;
                     }
-                    else if (purPrice.length == 0) {
+                    else if (purPrice.length === 0) {
                         alert("Введите цену");
                         isSubmit = 0;
                     }
-                    else if (purPriceAct.length == 0) {
+                    else if (purPriceAct.length === 0) {
                         alert("Введите фактическую цену");
                         isSubmit = 0;
                     }
-                    else if (storeArticle.length == 0) {
+                    else if (storeArticle.length === 0) {
                         alert("Введите артикул товара в магазине покупки");
                         isSubmit = 0;
                     }
-                    else if (batchNumber.length == 0) {
+                    else if (batchNumber.length === 0) {
                         alert("Введите номер партии");
                         isSubmit = 0;
                     }
@@ -79,14 +79,10 @@
                     itemString.storeArticle = storeArticle;
                     itemString.batchNumber = batchNumber;
                     incomeStrings.push(itemString);
-                } else {
-                    continue;
                 }
-            } else {
-                continue;
             }
         }
-        if (isSubmit == 1) {
+        if (isSubmit === 1) {
             let incomeMain = document.getElementById('incomeMain');
             const incomeJson = document.createElement('input');
             incomeJson.name = "incomeJson";
@@ -96,7 +92,7 @@
             incomeMain.submit();
         }
 
-        return isSubmit == 1;
+        return isSubmit === 1;
     }
         function handlePrice(s1, s2){
         const id = 'incomeStringTable';
@@ -113,8 +109,8 @@
                     const purPriceAct = document.getElementById("purPriceAct" + index).value;
                     let ppSum = Math.round(count * purPrice * 100) / 100
                     let ppActSum = Math.round(count * purPriceAct * 100) / 100
-                    document.getElementById('ppSum' + index).innerHTML = ppSum
-                    document.getElementById('ppActSum' + index).innerHTML = ppActSum
+                    document.getElementById('ppSum' + index).innerHTML = String(ppSum)
+                    document.getElementById('ppActSum' + index).innerHTML = String(ppActSum)
                     generalSum = generalSum + ppSum
                     generalSumAct = generalSumAct + ppActSum
                 }
@@ -153,7 +149,7 @@
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
         <div class="topPanelLast">
-            <div><a href="/GS">На главную</a></div>
+            <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>
     </div>
 
@@ -213,8 +209,8 @@
             <c:forEach items="${incomeMain.incomeStrings}"
                        var="incomeString" varStatus="ind">
                     <tr id="tr${ind.count}"
-                        onmouseover="javascript:showEditPanel(${ind.count})"
-                        onmouseout="javascript:hideEditPanel(${ind.count})">
+                        onmouseover="showEditPanel(${ind.count})"
+                        onmouseout="hideEditPanel(${ind.count})">
                         <td>${incomeString.item.name}</td>
                         <td>${incomeString.count}</td>
                         <td>${incomeString.purchasePrice/100}</td>
@@ -234,11 +230,11 @@
                         <c:forEach var="rowIndex" begin="1"
                                    end="100" step="1" varStatus="index">
                             <c:if test="${index.count>1}">
-                                <tr id="tr${index.count}" hidden="true" class="showIncome">
+                                <tr id="tr${index.count}" hidden class="showIncome">
                                     <td>
                                         <input autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                                placeholder="Товар" id="item${index.count}" autofocus="true"
-                                                onchange="javascript:handleItem(${index.count})">
+                                                placeholder="Товар" id="item${index.count}" autofocus
+                                                onchange="handleItem(${index.count})">
                                         <datalist id="dataList${index.count}">
                                             <c:forEach var="item" items="${items}">
                                                 <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -246,31 +242,29 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="number" required="true" id="count${index.count}"
+                                        <input type="number" required id="count${index.count}"
                                                placeholder="Количество" min = "0"
                                                onchange="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена покупки"
                                                id="purPrice${index.count}"
                                                min = "0" step="0.01"
-                                               required="true"
+                                               required
                                                onchange="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
-                                    <td><input type="number" id="purPriceAct${index.count}" required="true"
+                                    <td><input type="number" id="purPriceAct${index.count}" required
                                                placeholder="Цена покупки окончательная" min = "0" step="0.01"
                                                oninput="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
-                                               placeholder="Артикул в магазине" required="true"/></td>
-<%--                                    <td><input type="text" id="store${index.count}" required="true"--%>
-<%--                                               placeholder="Магазин покупки"/></td>--%>
-                                    <td><input type="text" id="batchNumber${index.count}" required="true"
-                                               placeholder="Номер партии"  path="batchNumber"/></td>
+                                               placeholder="Артикул в магазине" required/></td>
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии" /></td>
                                     <td id="purPriceSum${index.count}">
-                                        <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                     <td id="purPriceActSum${index.count}">
-                                        <div type="text" id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                 </tr>
                             </c:if>
@@ -278,8 +272,8 @@
                                 <tr id="tr${index.count}" class="showIncome">
                                     <td>
                                         <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                                placeholder="Товар" id="item${index.count}" autofocus="true"
-                                                onchange="javascript:handleItem(${index.count})">
+                                                placeholder="Товар" id="item${index.count}" autofocus
+                                                onchange="handleItem(${index.count})">
                                         <datalist id="dataList${index.count}">
                                             <c:forEach var="item" items="${items}">
                                                 <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -287,31 +281,29 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="number" required="true" id="count${index.count}"
+                                        <input type="number" required id="count${index.count}"
                                                placeholder="Количество" min = "0"
                                                onchange="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена покупки"
                                                id="purPrice${index.count}"
                                                min = "0" step="0.01"
-                                               required="true"
+                                               required
                                                onchange="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
-                                    <td><input type="number" id="purPriceAct${index.count}" required="true"
+                                    <td><input type="number" id="purPriceAct${index.count}" required
                                                placeholder="Цена покупки окончательная" min = "0" step="0.01"
                                                oninput="handlePrice(${incomeMain.sum},${incomeMain.sumAct})"/>
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
-                                               placeholder="Артикул в магазине" required="true"/></td>
-<%--                                    <td><input type="text" id="store${index.count}" required="true"--%>
-<%--                                               placeholder="Магазин покупки"/></td>--%>
-                                    <td><input type="text" id="batchNumber${index.count}" required="true"
-                                               placeholder="Номер партии"  path="batchNumber"/></td>
+                                               placeholder="Артикул в магазине" required/></td>
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии"/></td>
                                     <td id="purPriceSum${index.count}">
-                                        <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                     <td id="purPriceActSum${index.count}">
-                                        <div type="text" id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                 </tr>
                             </c:if>

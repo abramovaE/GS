@@ -11,8 +11,6 @@ public class Application {
 }
 
 
-//при удалении строки в show_income_main записывать также в edited_income_main
-//при редактировании main entities сохраняется только одна строка
 //отредактированная дата не сохраняется add date field to edited entities;
 //check correctItemCount
 //create expand

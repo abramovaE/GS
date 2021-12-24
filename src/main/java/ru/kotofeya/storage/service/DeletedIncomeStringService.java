@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Service
-public class DeletedIncomeService {
+public class DeletedIncomeStringService {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired

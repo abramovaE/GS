@@ -31,7 +31,7 @@ public class IncomeMainController {
     @Autowired
     private IncomeStringService incomeStringService;
     @Autowired
-    private DeletedIncomeService deletedIncomeService;
+    private DeletedIncomeStringService deletedIncomeStringService;
     @Autowired
     private EditedIncomeMainService editedIncomeMainService;
 
@@ -125,7 +125,7 @@ public class IncomeMainController {
                 DeletedIncomeString deletedIncome = new DeletedIncomeString(incomeString,
                         LocalDateTime.now().format(dateTimeFormatter),
                         deleteUserName);
-                deletedIncomeService.saveDeletedIncome(deletedIncome);
+                deletedIncomeStringService.saveDeletedIncome(deletedIncome);
                 incomeStringService.deleteIncomeById(incomeString.getId());
             }
             incomeMainService.deleteIncomeMainById(incomeMain.getId());

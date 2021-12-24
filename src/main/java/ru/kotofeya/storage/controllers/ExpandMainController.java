@@ -34,7 +34,7 @@ public class ExpandMainController {
     @Autowired
     private EditedExpandMainService editedExpandMainService;
     @Autowired
-    private DeletedExpandService deletedExpandService;
+    private DeletedExpandStringService deletedExpandStringService;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     @GetMapping("/expands_main")
@@ -120,7 +120,7 @@ public class ExpandMainController {
                 DeletedExpandString deletedExpand = new DeletedExpandString(expandString,
                         LocalDateTime.now().format(dateTimeFormatter),
                         deleteUserName);
-                deletedExpandService.saveDeletedExpand(deletedExpand);
+                deletedExpandStringService.saveDeletedExpand(deletedExpand);
                 expandStringService.deleteExpandById(expandString.getId());
             }
             expandMainService.deleteExpandMainById(expandMain.getId());

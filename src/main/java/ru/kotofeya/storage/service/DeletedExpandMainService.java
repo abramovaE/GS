@@ -3,21 +3,22 @@ package ru.kotofeya.storage.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kotofeya.storage.model.DeletedExpandMain;
 import ru.kotofeya.storage.model.DeletedExpandString;
-import ru.kotofeya.storage.repo.DeletedExpandStringRepo;
+import ru.kotofeya.storage.repo.DeletedExpandMainRepo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Service
-public class DeletedExpandService {
+public class DeletedExpandMainService {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
-    DeletedExpandStringRepo deletedExpandStringRepo;
+    DeletedExpandMainRepo deletedExpandMainRepo;
 
     @Transactional
-    public void saveDeletedExpand(DeletedExpandString deletedExpandString){
-        deletedExpandStringRepo.save(deletedExpandString);
+    public void saveDeletedExpandMain(DeletedExpandMain deletedExpandMain){
+        deletedExpandMainRepo.save(deletedExpandMain);
     }
 }

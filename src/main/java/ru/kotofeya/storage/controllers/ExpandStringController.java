@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.*;
 import ru.kotofeya.storage.service.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -22,7 +21,7 @@ public class ExpandStringController {
     @Autowired
     private ItemService itemService;
     @Autowired
-    private DeletedExpandService deletedExpandService;
+    private DeletedExpandStringService deletedExpandStringService;
     @Autowired
     private ExpandMainService expandMainService;
     @Autowired
@@ -51,7 +50,7 @@ public class ExpandStringController {
                     deleteUserName, new ArrayList<>(expandStrings));
             expandMain.getExpandStrings().remove(expandString);
             editedExpandMainService.saveEditedExpandMain(editedExpandMain);
-            deletedExpandService.saveDeletedExpand(deletedExpand);
+            deletedExpandStringService.saveDeletedExpand(deletedExpand);
             expandStringService.deleteExpandById(expandString.getId());
             expandMainService.saveExpandMain(expandMain);
         }

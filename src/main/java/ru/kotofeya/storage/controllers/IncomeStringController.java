@@ -25,7 +25,7 @@ public class IncomeStringController {
     @Autowired
     private ItemService itemService;
     @Autowired
-    private DeletedIncomeService deletedIncomeService;
+    private DeletedIncomeStringService deletedIncomeStringService;
     @Autowired
     private EditedIncomeMainService editedIncomeMainService;
     @Autowired
@@ -55,7 +55,7 @@ public class IncomeStringController {
                     deleteUserName, new ArrayList<>(incomeStrings));
             incomeMain.getIncomeStrings().remove(incomeString);
             editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
-            deletedIncomeService.saveDeletedIncome(deletedIncome);
+            deletedIncomeStringService.saveDeletedIncome(deletedIncome);
             incomeStringService.deleteIncomeById(incomeString.getId());
             incomeMainService.saveIncomeMain(incomeMain);
         }
