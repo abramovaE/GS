@@ -20,9 +20,9 @@
 </sec:authorize>
 <script>
     function handlePrice(){
-        var count = document.getElementById('expandStringForm').count.value
-        var ppDouble = document.getElementById('expandStringForm').salePriceDouble.value
-        document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
+        let count = document.getElementById('expandStringForm').count.value
+        let ppDouble = document.getElementById('salePriceDouble').value
+        document.getElementById('ppSum').innerHTML = (Math.round(Number(count) * Number(ppDouble) * 100)/100)
     }
 </script>
 <div class="topPanel">
@@ -55,12 +55,10 @@
         </div>
         <div class="innerDivLogin">
             <form:label path="salePriceDouble">Цена продажи, руб.</form:label>
-            <form:input type="number" min = "0" step="0.01" path="salePriceDouble"
+            <form:input type="number" min = "0" step="0.01" path="salePriceDouble" id="salePriceDouble"
                         onchange="handlePrice()"
                         placeholder="Цена покупки, руб." required="true" class="inputClassLight"/>
         </div>
-
-
         <div class="innerDivLogin">
             <form:label path="batchNumber">Номер партии</form:label>
             <form:input type="text" path="batchNumber" placeholder="Номер партии"
@@ -71,7 +69,6 @@
             <div>Сумма продажи, руб.</div>
             <div id="ppSum">${expandStringForm.count*expandStringForm.salePrice/100}</div>
         </div>
-
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Сохранить</button>
         </div>

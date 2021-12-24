@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <html>
 <head>
@@ -39,7 +39,7 @@
 
         function saveExpandMain() {
         let isSubmit = 1;
-        let expandStrings = new Array();
+        let expandStrings = [];
         const table = document.getElementById('expandStringTable');
         for (let index = 1; index < table.rows.length; index++) {
             let it = document.getElementById("item" + index);
@@ -70,13 +70,13 @@
                     expandStrings.push(itemString);
                 }
                 else {
-                    continue;
+
                 }
             } else {
-                continue;
+
             }
         }
-        if (isSubmit == 1) {
+        if (isSubmit === 1) {
             let expandMain = document.getElementById('expandMain');
             const expandJson = document.createElement('input');
             expandJson.name = "expandJson";
@@ -85,24 +85,27 @@
             expandMain.appendChild(expandJson);
             expandMain.submit();
         }
-        return isSubmit == 1;
+        return isSubmit === 1;
     }
-        function handlePrice(){
-        const id = 'expandStringTable';
-        const table = document.getElementById(id);
-        let index;
-        let generalSum = 0;
-        for (index = 1; index < table.rows.length; index++) {
-            const count = document.getElementById("count" + index).value;
-            if (count.length > 0) {
-                const price = document.getElementById("price" + index).value;
-                let ppSum = Math.round(count * price * 100) / 100
-                document.getElementById('ppSum' + index).innerHTML = ppSum
-                generalSum = generalSum + ppSum
+        function handlePrice(sum){
+            const id = 'expandStringTable';
+            const table = document.getElementById(id);
+            let index;
+            let generalSum = 0;
+            for (index = 1; index < table.rows.length; index++) {
+                let c = document.getElementById("count" + index);
+                if(c != null){
+                    const count = document.getElementById("count" + index).value;
+                    if (count.length > 0) {
+                        const price = document.getElementById("price" + index).value;
+                        let ppSum = Math.round(count * price * 100) / 100
+                        document.getElementById('ppSum' + index).innerHTML = String(ppSum)
+                        generalSum = generalSum + ppSum
+                    }
+                }
             }
+            document.getElementById("ppMainSum").innerHTML =  String(Math.round(generalSum*100 + sum)/100);
         }
-        document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
-    }
 
     function addExpandString() {
         const id = 'expandStringTable';
@@ -132,7 +135,7 @@
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
         <div class="topPanelLast">
-            <div><a href="/GS">На главную</a></div>
+            <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>
     </div>
 
@@ -185,8 +188,8 @@
             <c:forEach items="${expandMain.expandStrings}"
                        var="expandString" varStatus="ind">
                     <tr id="tr${ind.count}"
-                        onmouseover="javascript:showEditPanel(${ind.count})"
-                        onmouseout="javascript:hideEditPanel(${ind.count})">
+                        onmouseover="showEditPanel(${ind.count})"
+                        onmouseout="hideEditPanel(${ind.count})">
                         <td>${expandString.item.name}</td>
                         <td>${expandString.count}</td>
                         <td>${expandString.salePrice/100}</td>
@@ -203,11 +206,12 @@
                         <c:forEach var="rowIndex" begin="1"
                                    end="100" step="1" varStatus="index">
                             <c:if test="${index.count>1}">
-                                <tr id="tr${index.count}" hidden="true" class="showIncome">
+                                <tr id="tr${index.count}" hidden class="showIncome">
                                     <td>
-                                        <input autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                                placeholder="Товар" id="item${index.count}" autofocus="true"
-                                                onchange="javascript:handleItem(${index.count})">
+                                        <input autocomplete="off" autofocus
+                                               name="inputItem" list="dataList${index.count}"
+                                                placeholder="Товар" id="item${index.count}"
+                                                onchange="handleItem(${index.count})">
                                         <datalist id="dataList${index.count}">
                                             <c:forEach var="item" items="${items}">
                                                 <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -215,20 +219,20 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="number" required="true" id="count${index.count}"
+                                        <input type="number" required id="count${index.count}"
                                                placeholder="Количество" min = "0"
-                                               onchange="javascript:handlePrice()"/>
+                                               onchange="handlePrice(${expandMain.sum})"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена продажи"
                                                id="price${index.count}"
                                                min = "0" step="0.01"
-                                               required="true"
-                                               onchange="javascript:handlePrice()"/>
+                                               required
+                                               onchange="handlePrice(${expandMain.sum})"/>
                                     </td>
-                                    <td><input type="text" id="batchNumber${index.count}" required="true"
-                                               placeholder="Номер партии"  path="batchNumber"/></td>
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии"/></td>
                                     <td id="priceSum${index.count}">
-                                        <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                 </tr>
                             </c:if>
@@ -236,8 +240,8 @@
                                 <tr id="tr${index.count}" class="showIncome">
                                     <td>
                                         <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                                placeholder="Товар" id="item${index.count}" autofocus="true"
-                                                onchange="javascript:handleItem(${index.count})">
+                                                placeholder="Товар" id="item${index.count}" autofocus
+                                                onchange="handleItem(${index.count})">
                                         <datalist id="dataList${index.count}">
                                             <c:forEach var="item" items="${items}">
                                                 <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -245,20 +249,20 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="number" required="true" id="count${index.count}"
+                                        <input type="number" required id="count${index.count}"
                                                placeholder="Количество" min = "0"
-                                               onchange="javascript:handlePrice()"/>
+                                               onchange="handlePrice(${expandMain.sum})"/>
                                     </td>
                                     <td><input type="number" placeholder="Цена продажи"
                                                id="price${index.count}"
                                                min = "0" step="0.01"
-                                               required="true"
-                                               onchange="javascript:handlePrice()"/>
+                                               required
+                                               onchange="handlePrice(${expandMain.sum})"/>
                                     </td>
-                                    <td><input type="text" id="batchNumber${index.count}" required="true"
-                                               placeholder="Номер партии"  path="batchNumber"/></td>
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии"/></td>
                                     <td id="priceSum${index.count}">
-                                        <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                                        <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                 </tr>
                             </c:if>
