@@ -31,7 +31,7 @@ public class ExpandStringController {
     @Autowired
     private EditedExpandStringService editedExpandStringService;
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @GetMapping({"/delete_expand_string/{expandStringId}/{deleteUserName}",
             "show_expand_main/{expandMainId}/delete_expand_string/{expandStringId}/{deleteUserName}"})

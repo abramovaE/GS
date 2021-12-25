@@ -13,14 +13,15 @@
         <%@include file="/resources/add_income_main_style.css" %>
         <%@include file="/resources/show_income_main_style.css" %>
     </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
 </head>
 <body  class="bodyClassGreen">
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script type="text/javascript">
         function handleItem(index){
             if(index === 1){
@@ -146,7 +147,7 @@
             document.getElementById('deleteth').style.display = 'none'
         }
         $(function () {
-            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
+            $("#datepicker").datepicker({dateFormat: 'dd.mm.yy'});
         });
 </script>
     <div class="topPanel">
@@ -175,8 +176,10 @@
                         <form:input
                                 autocomplete="false"
                                 id="datepicker"
-                                type="text" path="date"
-                                    placeholder="Дата" class="inputClassLight"/>
+                                type="text"
+                                path="date"
+                                placeholder="Дата"
+                                class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
                         <form:input type="text" path="store"

@@ -32,7 +32,7 @@ public class ItemController {
 
     @PostMapping("/add_item")
     public String addItem(@ModelAttribute("itemForm") Item item, Model model) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         item.setDate(LocalDateTime.now().format(dateTimeFormatter));
         item.setCount(0);
         if(item.getArticle() == null) {

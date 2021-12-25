@@ -39,7 +39,7 @@ public class IncomeMainController {
     @Autowired
     private DeletedIncomeMainService deletedIncomeMainService;
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @GetMapping("/add_income_main")
     public String  addIncomeMain(Model model) {

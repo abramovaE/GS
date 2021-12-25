@@ -40,7 +40,7 @@ public class ExpandMainController {
     @Autowired
     private DeletedExpandMainService deletedExpandMainService;
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @GetMapping("/expands_main")
     public String getAllExpandsMain(Model model){

@@ -35,7 +35,7 @@ public class IncomeStringController {
     @Autowired
     private EditIncomeStringService editIncomeStringService;
 
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @GetMapping({"/delete_income_string/{incomeStringId}/{deleteUserName}",
             "show_income_main/{incomeMainId}/delete_income_string/{incomeStringId}/{deleteUserName}"})
