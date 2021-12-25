@@ -1,5 +1,8 @@
 package ru.kotofeya.storage.model;
 
+import ru.kotofeya.storage.model.expands.ExpandString;
+import ru.kotofeya.storage.model.incomes.IncomeString;
+
 import javax.persistence.*;
 import java.util.Set;
 
