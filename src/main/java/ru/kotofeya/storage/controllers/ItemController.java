@@ -19,17 +19,15 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-
-//    @GetMapping("/all_items")
-//    public String  allItems(Model model) {
-//        model.addAttribute("allItems", itemService.getAllItems());
-//        return "storage/all_items";
-//    }
-
     @GetMapping("/add_item")
     public String  addItem(Model model) {
-        model.addAttribute("itemForm", new Item());
-        return "storage/add_item";
+        Item item = new Item();
+        Item maxIdItem = itemService.findMaxIdItem();
+        long maxItemId = maxIdItem == null? 0 : maxIdItem.getId();
+        maxItemId++;
+        item.setArticle("gs" + String.format("%06d", maxItemId));
+        model.addAttribute("itemForm", item);
+        return "storage/items/add_item";
     }
 
     @PostMapping("/add_item")
@@ -37,6 +35,12 @@ public class ItemController {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yy");
         item.setDate(LocalDateTime.now().format(dateTimeFormatter));
         item.setCount(0);
+        if(item.getArticle() == null) {
+            Item maxIdItem = itemService.findMaxIdItem();
+            long maxItemId = maxIdItem == null ? 0 : maxIdItem.getId();
+            maxItemId++;
+            item.setArticle("gs" + String.format("%06d", maxItemId));
+        }
         itemService.saveItem(item);
         return "redirect:/show_storage";
     }

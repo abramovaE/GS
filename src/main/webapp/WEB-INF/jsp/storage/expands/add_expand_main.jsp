@@ -17,6 +17,9 @@
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
         function handleItem(index){
             let inputItem = document.getElementById('item'+index).value;
@@ -35,8 +38,8 @@
             }
         }
         function addExpandMain() {
-        var isSubmit = true;
-        let expandStrings = new Array();
+        let isSubmit = true;
+        let expandStrings = [];
         const table = document.getElementById('expandStringTable');
         let index;
         for (index = 1; index < table.rows.length; index++) {
@@ -44,7 +47,7 @@
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
-            const expandString = new Object();
+            const expandString = {};
             if (itemId.length > 0) {
                 itemId=itemId.split("::")[2]
                 if (count.length === 0) {
@@ -100,13 +103,17 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
+        $(function () {
+            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
+        });
+
     </script>
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
         <div class="topPanelLast">
-            <div><a href="/GS">На главную</a></div>
+            <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>
     </div>
 
@@ -121,7 +128,12 @@
                     <form:hidden path="expandStrings"/>
 
                     <div class="innerDivLogin">
-                        <form:input type="text" path="date" placeholder="Дата" class="inputClassLight"/>
+                        <form:input
+                                autocomplete="false"
+                                id="datepicker"
+                                path="date"
+                                placeholder="Дата"
+                                class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
                         <form:input type="text" path="store"
@@ -155,7 +167,7 @@
             </tr>
             <c:forEach var="rowIndex" begin="1" end="100" step="1" varStatus="index">
                 <c:if test="${index.count>1}">
-                    <tr id="tr${index.count}" hidden="true">
+                    <tr hidden="true" id="tr${index.count}">
                         <td>
                             <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
                                     placeholder="Товар" id="item${index.count}" autofocus="true"

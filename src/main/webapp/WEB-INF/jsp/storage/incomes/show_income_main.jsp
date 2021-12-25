@@ -18,7 +18,9 @@
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
         function handleItem(index){
             if(index === 1){
@@ -143,6 +145,9 @@
             document.getElementById('editth').style.display = 'none'
             document.getElementById('deleteth').style.display = 'none'
         }
+        $(function () {
+            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
+        });
 </script>
     <div class="topPanel">
         <div class="topPanelFirst">
@@ -167,8 +172,13 @@
                                     class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
-                        <form:input type="text" path="date"
-                                    placeholder="Дата" class="inputClassLight"/>
+                        <form:input
+                                autocomplete="false"
+                                id="datepicker"
+                                type="text"
+                                path="date"
+                                placeholder="Дата"
+                                class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
                         <form:input type="text" path="store"

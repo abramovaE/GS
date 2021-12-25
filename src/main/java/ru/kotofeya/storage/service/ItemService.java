@@ -1,6 +1,7 @@
 package ru.kotofeya.storage.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotofeya.storage.model.Item;
@@ -40,5 +41,10 @@ public class ItemService {
     @Transactional
     public List<Item> getAllItemsWithCount(){
         return itemRepo.findByCountIsNotNull();
+    }
+
+    @Transactional
+    public Item findMaxIdItem(){
+        return itemRepo.findTopByOrderByIdDesc().orElse(null);
     }
 }

@@ -33,7 +33,7 @@ public class StorageController {
         }
         model.addAttribute("count", count);
         model.addAttribute("items", items);
-        return "storage/all_items";
+        return "storage/items/all_items";
     }
 
     @GetMapping("/allItems/sortBy/{sortParam}/{count}")

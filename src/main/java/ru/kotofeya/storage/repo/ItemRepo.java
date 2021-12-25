@@ -10,4 +10,5 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
     List<Item> findByCountIsNotNull();
     @Override
     Optional<Item> findById(Long aLong);
+    Optional<Item> findTopByOrderByIdDesc();
 }

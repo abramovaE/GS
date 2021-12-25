@@ -4,7 +4,9 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/add_income_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/expands/add_expand_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/expands" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/expands/show_expand_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/expands" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/incomes/add_income_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/incomes" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/incomes/show_income_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/incomes" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/show_income_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage/storage_main.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/storage" />
