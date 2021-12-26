@@ -3,6 +3,7 @@ package ru.kotofeya.storage.controllers.incomes;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,18 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kotofeya.features.M11Creator;
 import ru.kotofeya.storage.model.*;
 import ru.kotofeya.storage.model.incomes.*;
 import ru.kotofeya.storage.service.*;
 import ru.kotofeya.storage.service.incomes.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -75,10 +81,53 @@ public class IncomeMainController {
         model.addAttribute("incomeMain", incomeMain);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
+
+//        Logger log = LogManager.getLogger(IncomeMainController.class);
+
+        // TODO: 26.12.2021 removw
+
+            URL resource = getClass().getClassLoader().getResource("M11.xlsx");
+            System.out.println("res: " + resource.toString());
+            if (resource == null) {
+                System.out.println("file: " + resource + " not found");
+                throw new IllegalArgumentException("file not found!");
+            } else {
+                File source = null;
+                try {
+                    String p = "/Users/abramov/" + LocalDateTime.now().toString()+ ".xlsx";
+                    File resultReport = new File(p);
+                    source = new File(resource.toURI());
+                    System.out.println("source: " + source.length());
+
+                    copyFile(source, resultReport);
+                    System.out.println("result: " + resultReport.length());
+
+                    M11Creator m11Creator = new M11Creator(resultReport);
+                } catch (URISyntaxException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
         return "storage/incomes/show_income_main";
     }
 
 
+    public static void copyFile(File source, File dest) throws IOException {
+        if (Files.exists(dest.toPath())) {
+
+            try {
+                Files.delete(dest.toPath());
+                String p = "/Users/abramov/noname.xls";
+                dest = new File(p);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Files.copy(source.toPath(), dest.toPath());
+    }
 
     @PostMapping("/show_income_main/{incomeId}/{editUserName}")
     public String  showIncomeMain(Model model,
