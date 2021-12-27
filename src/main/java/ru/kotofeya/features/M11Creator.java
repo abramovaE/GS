@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.List;
 
 public class M11Creator {
-    private FileInputStream inputStream;
     private Workbook workBook;
     private Sheet sheet0, sheet1;
     private Cell blankNumber, organization, blankCreateDate, operationCode, senderStructOrg,
@@ -22,34 +21,41 @@ public class M11Creator {
     releasedPost, releasedName, receivedPost, receivedName;
     List<IncomeString> incomeStrings;
 
-    public M11Creator(File file, List<IncomeString> incomeStrings){
+    public M11Creator(InputStream inputStream, List<IncomeString> incomeStrings){
         this.incomeStrings = incomeStrings;
-        createNewForm(file);
+        createNewForm(inputStream);
     }
 
-    private void createNewForm(File file){
+    private void createNewForm(InputStream inputStream){
         try {
-            createNewWorkbook(file);
+            createNewWorkbook(inputStream);
             initCells();
             writeItemsToWorkbook();
-
-
-
-            OutputStream outputStream = new FileOutputStream(file);
-            workBook.write(outputStream);
-
-            workBook.close();
-            inputStream.close();
-            outputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void createNewWorkbook(File file) throws IOException {
-        inputStream = new FileInputStream(file.getAbsolutePath());
+    public ByteArrayOutputStream getOutputStream(){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            workBook.write(outputStream);
+            workBook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outputStream;
+    }
+
+    private void createNewWorkbook(InputStream inputStream) throws IOException {
         this.workBook = new XSSFWorkbook(inputStream);
     }
 
@@ -158,295 +164,4 @@ public class M11Creator {
         receivedName = sheet1.getRow(16).getCell(8);
 
     }
-
-    private void exportNewForm(String fileName){
-        try(FileOutputStream fileOutputStream = new FileOutputStream(fileName)){
-            workBook.write(fileOutputStream);
-            workBook.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("FileNotFound exception");
-        } catch (IOException e) {
-            System.out.println("IO exception");
-        }
-    }
 }
-
-
-/*
-private Workbook workBook;
-  private Report report;
-  private User user;
-  private Auto userAuto;
-  private Sheet sheet;
-
-  private Cell driver, post, month,
-          currentNorm, winterNorm, summerNorm,
-          auto, autoNumber, summDistance, poluchenoToplivaTotal,
-          summSumm, rashodFactSumm, rashodNormSumm, rashodPoNormeSumm,
-          countOfWorkingDays, underDriver, buh , buhValue;
-
-  private XSSFCellStyle yellowDateStyle;
-
-  public void fillTheReport(String filename, Report report, Report prevReport,
-                            boolean isDirector, List<Day> days, List<Day> prevReportDays,
-                            MainSettings mainSettings, Auto userAuto){
-    InputStream inputStream = null;
-    OutputStream outputStream = null;
-    User user = report.getUser();
-    this.report = report;
-    this.user = user;
-    this.userAuto = userAuto;
-    try {
-      inputStream = new FileInputStream(filename);
-      workBook = new XSSFWorkbook(inputStream);
-      outputStream = new FileOutputStream(filename);
-
-
-      sheet = workBook.getSheetAt(0);
-      YearMonth yearMonth = YearMonth.of(report.getYear(), report.getMonth());
-      workBook.setSheetName(0, DateVspom.getPeriodFromYearMonth(yearMonth));
-//заливка желтым для даты
-      XSSFCell cellDate = (XSSFCell) sheet.getRow(13).getCell(1);
-      yellowDateStyle = (XSSFCellStyle) cellDate.getCellStyle().clone();
-      yellowDateStyle.setFillPattern(XSSFCellStyle.SOLID_FOREGROUND);
-      yellowDateStyle.setFillForegroundColor(YELLOW);
-      setCell();
-
-      String surnameValue = user.getSurname();
-      String nameValue = user.getName();
-      String patronymicValue = user.getPatronymic();
-      String postValue = user.getPost();
-
-      String surname = surnameValue != null ? surnameValue : "";
-      String name = nameValue != null ? nameValue : "";
-      String patronymic = patronymicValue != null ? patronymicValue : "";
-      String p = postValue != null ? postValue : "";
-
-//    "Сведения о водителе: " +
-      driver.setCellValue(surname + " " + name + " " + patronymic + " " + post);
-      post.setCellValue(p);
-      month.setCellValue(DateVspom.getPeriodFromYearMonth(yearMonth));
-
-//    Выбор текущей нормы насхода бензина
-      int monthNumber = report.getMonth();
-      Double winterNormValue = userAuto.getWinterNorm();
-      Double summerNormValue = userAuto.getSummerNorm();
-      String brandValue = userAuto.getBrand();
-      String autoNumberValue = userAuto.getNumber();
-
-      if(monthNumber > 3 && monthNumber < 11) {
-        currentNorm.setCellValue(summerNormValue != null ? summerNormValue : 0d);
-      } else {
-        currentNorm.setCellValue(winterNormValue != null ? winterNormValue : 0d);
-      }
-      winterNorm.setCellValue(winterNormValue != null ? winterNormValue : 0d);
-      summerNorm.setCellValue(summerNormValue != null ? summerNormValue : 0d);
-      auto.setCellValue(brandValue != null ? brandValue : "");
-      autoNumber.setCellValue(autoNumberValue != null ? autoNumberValue : "");
-
-      int sD = report.getSumKmDistance();
-      summDistance.setCellValue(sD);
-//            УЗНАТЬ КАК СЧИТАЕТСЯ
-      countOfWorkingDays.setCellValue(days.size());
-      Double sumSummValue = report.getSumSumm();
-      summSumm.setCellValue(sumSummValue != null ? sumSummValue : 0d);
-
-      String subName = "";
-      String subPatronymic = "";
-      if(name.length() > 1){
-        subName = name.substring(0,1);
-      }
-      if (patronymic.length() > 1 ){
-        subPatronymic = patronymic.substring(0,1);
-      }
-      underDriver.setCellValue(surname + " " + subName + "." + subPatronymic + ".");
-      int startRow = 13;
-      double pTT = 0;
-      int countsOfDaysInMonth = yearMonth.lengthOfMonth();
-
-      List<Integer> daysNumbers = days.stream()
-              .map(it->Integer.parseInt(it.getDate().split("\\.")[0]))
-              .collect(Collectors.toList());
-      String[] dayMonthYear = days.get(0).getDate().split("\\.");
-
-      for(int i = 1; i < countsOfDaysInMonth + 1; i++){
-        if(!daysNumbers.contains(i)) {
-          Day day = new Day();
-          String date = i + "." + dayMonthYear[1] + "." + dayMonthYear[2];
-          day.setDate( i > 9 ? date : "0" + date);
-          days.add(day);
-       }
-     }
-
-      Collections.sort(days, new Comparator<Day>() {
-        @Override
-        public int compare(Day o1, Day o2) {
-          return o1.getDate().compareTo(o2.getDate());}
-      });
-
-      System.out.println("days: " + days);
-
-      for(int j = 0; j < days.size(); j++){
-        Day day = days.get(j);
-        RouteListForDay routeListForDay = new RouteListForDay(day);
-        LocalDate localDate = LocalDate.of(report.getYear(), report.getMonth(),
-                Integer.parseInt(day.getDate().split("\\.")[0]));
-
-//                    дата
-        Cell date = sheet.getRow(startRow).getCell(1);
-//                   показания спидометра на начало и конец рабочего дня
-        Cell startOfWorkingDay = sheet.getRow(startRow).getCell(2);
-        Cell endOfWorkingDay = sheet.getRow(startRow).getCell(3);
-//                    пробег за день
-        Cell dayDistance = sheet.getRow(startRow).getCell(4);
-//                    маршрут движения
-        Cell route = sheet.getRow(startRow).getCell(6);
-//                    получено топлива
-        Cell poluchenoTopliva = sheet.getRow(startRow).getCell(7);
-//                    цена топлива по чеку за 1 литр
-        Cell costByLiter = sheet.getRow(startRow).getCell(8);
-//                    итого по чеку
-        Cell summ = sheet.getRow(startRow).getCell(9);
-//                    расход фактический
-        Cell rashodFact = sheet.getRow(startRow).getCell(11);
-//                    расход по норме
-        Cell rashodNorm = sheet.getRow(startRow).getCell(12);
-//                    расход топлива по норме
-        Cell rashodToplivaPoNorme = sheet.getRow(startRow).getCell(14);
-
-        List<Point> points = null;
-        if(day.getId() != 0) {
-          points = day.getPoints();
-        }
-
-        int dayDistRound = fillTheRouteListGetDayDistance(points, routeListForDay);
-
-        date.setCellValue(day.getDate());
-        if(day.getDayDistance() == 0) {
-          setHolidayCellStyle(localDate, date);
-        } else {
-          dayDistance.setCellValue(dayDistRound);
-          routeListForDay.sumDistance.setCellValue(dayDistRound);
-//                        установка показаний одометра для директоров
-          if (isDirector) {
-            int st = startRow + 1;
-            startOfWorkingDay.setCellFormula("(D" + startRow + ")");
-            endOfWorkingDay.setCellFormula("(C" + st + "+E" + st + ")");
-          }
-        }
-
-//установка маршрута с выстой строки в зависимости от длины маршрута
-        String r = getRoute(points);
-        route.setCellValue(r);
-        setRowHeight(route, r.length());
-
-// установка стоимости топлива за литр (если не было заправки на первую поездку, смотрим последнюю цену из предыдущего отчета)
-        costByLiter.setCellType(Cell.CELL_TYPE_NUMERIC);
-        if(day.getCostByLiter() != null && day.getSumm() != null) {
-          costByLiter.setCellValue(day.getCostByLiter());
-          summ.setCellValue(day.getSumm());
-          double d = day.getSumm()/day.getCostByLiter();
-          poluchenoTopliva.setCellValue(d);
-          rashodFact.setCellValue(d);
-          pTT = pTT + d;
-        }
-        if(day.getDayDistance() != 0 && day.getSumm() == null){
-          int k = j;
-          while (k > 0 && days.get(k).getCostByLiter() == null){
-            k--;
-          }
-          if (k > 0 || (k == 0 && days.get(k).getCostByLiter() != null)) {
-            costByLiter.setCellValue(days.get(k).getCostByLiter());
-          }
-          if(k == 0 && days.get(k).getCostByLiter() == null) {
-            if(prevReport != null){
-              Collections.sort(prevReportDays, new Comparator<Day>() {
-                @Override
-                public int compare(Day o1, Day o2) {
-                  return o2.getDate().compareTo(o2.getDate());
-                }
-              });
-              double lastCostByLiter;
-              for(int m = 0; m< prevReportDays.size(); m++){
-                if(prevReportDays.get(m).getCostByLiter() != null){
-                  lastCostByLiter = prevReportDays.get(m).getCostByLiter();
-                  costByLiter.setCellValue(lastCostByLiter);
-                  break;
-                }
-              }
-            }
-          }
-        }
-        if(day.getDayDistance() != 0){
-          Double dayKmDistance = day.getDayDistance()/1000d;
-          double poNorme = new BigDecimal(dayKmDistance * currentNorm.getNumericCellValue()/100).setScale(2, RoundingMode.HALF_UP).doubleValue();
-          double rashodPoNorme = new BigDecimal(poNorme*costByLiter.getNumericCellValue()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-          rashodNorm.setCellValue(poNorme);
-          rashodToplivaPoNorme.setCellValue(rashodPoNorme);
-        }
-        startRow++;
-      }
-
-      rashodFactSumm.setCellFormula("SUM(L14:L44)");
-      rashodNormSumm.setCellFormula("SUM(M14:M44)");
-      rashodPoNormeSumm.setCellFormula("SUM(O14:O44)");
-      buh.setCellValue("Бухгалтер");
-      buhValue.setCellValue(mainSettings.getGlavBuh().getShortFullName());
-      if(isDirector) {
-        XSSFCellStyle style = (XSSFCellStyle) countOfWorkingDays.getCellStyle();
-        Set<Cell> forSetStyle = new HashSet<>();
-        for(int i=47; i<70; i++){
-          sheet.createRow(i);
-        }
-        Cell pokazania = sheet.getRow(51).createCell(1);
-        Cell start = sheet.getRow(51).createCell(3);
-        Cell startValue = sheet.getRow(51).getCell(4);
-        Cell end = sheet.getRow(52).createCell(3);
-        Cell endValue = sheet.getRow(52).createCell(4);
-        Cell probeg = sheet.getRow(53).createCell(3);
-        Cell probegValue = sheet.getRow(53).createCell(4);
-        Cell mediumProbeg = sheet.getRow(54).createCell(3);
-        Cell mediumProbegValue = sheet.getRow(54).createCell(4);
-        Cell voditel = sheet.getRow(56).createCell(1);
-        Cell voditelValue = sheet.getRow(56).createCell(4);
-        Cell director = sheet.getRow(58).createCell(1);
-        Cell directorValue = sheet.getRow(58).createCell(4);
-        buh = sheet.getRow(60).createCell(1);
-        buhValue = sheet.getRow(60).createCell(4);
-        for(int i = 47; i < 70; i++){
-          for(int j = 0; j < 10; j++){
-            forSetStyle.add(sheet.getRow(i).getCell(j));
-          }
-        }
-        for(Cell cell: forSetStyle){
-          if(cell != null)
-            cell.setCellStyle(style);
-        }
-        pokazania.setCellValue("показания спидометра");
-        start.setCellValue("начало мес.");
-        end.setCellValue("конец мес.");
-        probeg.setCellValue("пробег");
-        probegValue.setCellValue(summDistance.getNumericCellValue());
-        mediumProbeg.setCellValue("средний пробег");
-        mediumProbegValue.setCellValue(probegValue.getNumericCellValue()/countOfWorkingDays.getNumericCellValue());
-        voditel.setCellValue("Водитель");
-        voditelValue.setCellValue(user.getShortFullName());
-        director.setCellValue("Генеральный директор");
-        directorValue.setCellValue(mainSettings.getGenDir().getShortFullName());
-        buh.setCellValue("Бухгалтер");
-        buhValue.setCellValue(mainSettings.getGlavBuh().getShortFullName());
-        sheet.setColumnHidden(8, true);
-        sheet.setColumnHidden(9, true);
-        sheet.setColumnHidden(14, true);
-      }
-      poluchenoToplivaTotal.setCellValue(pTT);
-      workBook.write(outputStream);
-      workBook.close();
-      inputStream.close();
-      outputStream.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
- */
