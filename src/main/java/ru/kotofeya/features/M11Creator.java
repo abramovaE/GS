@@ -3,6 +3,8 @@ package ru.kotofeya.features;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import ru.kotofeya.storage.model.expands.ExpandMain;
+import ru.kotofeya.storage.model.expands.ExpandString;
 import ru.kotofeya.storage.model.incomes.IncomeString;
 
 import java.io.*;
@@ -20,28 +22,39 @@ public class M11Creator {
             item1_6, item1_7, item1_8, item1_9, item1_10, item1_11,
     releasedPost, releasedName, receivedPost, receivedName;
     List<IncomeString> incomeStrings;
+    List<ExpandString> expandStrings;
 
-    public M11Creator(InputStream inputStream, List<IncomeString> incomeStrings){
-        this.incomeStrings = incomeStrings;
-        createNewForm(inputStream);
-    }
+    XSSFCellStyle commonStyle, _0357_Style, _14610_Style;
 
-    private void createNewForm(InputStream inputStream){
+    public M11Creator(InputStream inputStream){
         try {
-            createNewWorkbook(inputStream);
-            initCells();
-            writeItemsToWorkbook();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            this.workBook = new XSSFWorkbook(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+    }
+
+    public void createNewIncomeBlank(List<IncomeString> incomeStrings){
+        this.incomeStrings = incomeStrings;
+        createNewForm("income");
+    }
+
+    public void createNewExpandBlank(List<ExpandString> expandStrings) {
+        this.expandStrings = expandStrings;
+        createNewForm("expand");
+    }
+
+    private void createNewForm(String tag){
+         initCells();
+         createCellsStyle();
+         switch (tag){
+             case "income":
+                 writeIncomeItemsToWorkbook();
+                 break;
+             case "expand":
+                 writeExpandItemsToWorkbook();
+                 break;
+         }
     }
 
     public ByteArrayOutputStream getOutputStream(){
@@ -55,56 +68,13 @@ public class M11Creator {
         return outputStream;
     }
 
-    private void createNewWorkbook(InputStream inputStream) throws IOException {
-        this.workBook = new XSSFWorkbook(inputStream);
-    }
 
-    private void writeItemsToWorkbook(){
+
+    private void writeIncomeItemsToWorkbook(){
         if(incomeStrings != null) {
-            XSSFCellStyle commonStyle = (XSSFCellStyle) workBook.createCellStyle();
-            commonStyle.setBorderTop(BorderStyle.THIN);
-            commonStyle.setBorderBottom(BorderStyle.THIN);
-            commonStyle.setBorderLeft(BorderStyle.THIN);
-            commonStyle.setBorderRight(BorderStyle.THIN);
-            commonStyle.setAlignment(HorizontalAlignment.CENTER);
-
-            XSSFCellStyle _0357_Style = (XSSFCellStyle) workBook.createCellStyle();
-            _0357_Style.setBorderTop(BorderStyle.THIN);
-            _0357_Style.setBorderBottom(BorderStyle.THIN);
-            _0357_Style.setBorderLeft(BorderStyle.MEDIUM);
-            _0357_Style.setBorderRight(BorderStyle.THIN);
-            _0357_Style.setAlignment(HorizontalAlignment.CENTER);
-
-            XSSFCellStyle _14610_Style = (XSSFCellStyle) workBook.createCellStyle();
-            _14610_Style.setBorderTop(BorderStyle.THIN);
-            _14610_Style.setBorderBottom(BorderStyle.THIN);
-            _14610_Style.setBorderLeft(BorderStyle.THIN);
-            _14610_Style.setBorderRight(BorderStyle.MEDIUM);
-            _14610_Style.setAlignment(HorizontalAlignment.CENTER);
-
+            addItemsCell(incomeStrings.size());
             for (int j = 0; j < incomeStrings.size(); j++) {
-                Row row = sheet1.createRow(6 + j);
-                for(int i = 0; i < 11; i++){
-                    row.createCell(i);
-                    switch (i){
-                        case 0:
-                        case 3:
-                        case 5:
-                        case 7:
-                            row.getCell(i).setCellStyle(_0357_Style);
-                            break;
-                        case 1:
-                        case 4:
-                        case 6:
-                        case 10:
-                            row.getCell(i).setCellStyle(_14610_Style);
-                            break;
-                        default:
-                            row.getCell(i).setCellStyle(commonStyle);
-
-
-                    }
-                }
+                Row row = sheet1.getRow(6 + j);
                 IncomeString incomeString = incomeStrings.get(j);
                 row.getCell(2).setCellValue(incomeString.getItem().getName());
                 row.getCell(5).setCellValue("шт.");
@@ -115,11 +85,24 @@ public class M11Creator {
             }
         }
     }
-
+    private void writeExpandItemsToWorkbook(){
+        if(expandStrings != null) {
+            addItemsCell(expandStrings.size());
+            for (int j = 0; j < expandStrings.size(); j++) {
+                Row row = sheet1.getRow(6 + j);
+                ExpandString expandString = expandStrings.get(j);
+                row.getCell(2).setCellValue(expandString.getItem().getName());
+                row.getCell(5).setCellValue("шт.");
+                row.getCell(6).setCellValue(expandString.getCount());
+                row.getCell(7).setCellValue(expandString.getCount());
+                row.getCell(8).setCellValue(expandString.getSalePrice()/100d);
+                row.getCell(9).setCellValue((expandString.getCount() * expandString.getSalePrice()/100d));
+            }
+        }
+    }
     private void initCells(){
         sheet0 = workBook.getSheetAt(0);
         sheet1 = workBook.getSheetAt(1);
-
         blankNumber = sheet0.getRow(4).getCell(6);
         organization = sheet0.getRow(6).getCell(2);
         blankCreateDate = sheet0.getRow(10).getCell(1);
@@ -145,7 +128,6 @@ public class M11Creator {
         item0_9 = sheet0.getRow(17).getCell(8);
         item0_10 = sheet0.getRow(17).getCell(9);
         item0_11 = sheet0.getRow(17).getCell(10);
-
         item1_1 = sheet1.getRow(5).getCell(0);
         item1_2 = sheet1.getRow(5).getCell(1);
         item1_3 = sheet1.getRow(5).getCell(2);
@@ -157,11 +139,55 @@ public class M11Creator {
         item1_9 = sheet1.getRow(5).getCell(8);
         item1_10 = sheet1.getRow(5).getCell(9);
         item1_11 = sheet1.getRow(5).getCell(10);
-
         releasedPost = sheet1.getRow(14).getCell(2);
         releasedName = sheet1.getRow(14).getCell(8);
         receivedPost = sheet1.getRow(16).getCell(2);
         receivedName = sheet1.getRow(16).getCell(8);
+    }
+    private void createCellsStyle(){
+        commonStyle = (XSSFCellStyle) workBook.createCellStyle();
+        commonStyle.setBorderTop(BorderStyle.THIN);
+        commonStyle.setBorderBottom(BorderStyle.THIN);
+        commonStyle.setBorderLeft(BorderStyle.THIN);
+        commonStyle.setBorderRight(BorderStyle.THIN);
+        commonStyle.setAlignment(HorizontalAlignment.CENTER);
 
+        _0357_Style = (XSSFCellStyle) workBook.createCellStyle();
+        _0357_Style.setBorderTop(BorderStyle.THIN);
+        _0357_Style.setBorderBottom(BorderStyle.THIN);
+        _0357_Style.setBorderLeft(BorderStyle.MEDIUM);
+        _0357_Style.setBorderRight(BorderStyle.THIN);
+        _0357_Style.setAlignment(HorizontalAlignment.CENTER);
+
+        _14610_Style = (XSSFCellStyle) workBook.createCellStyle();
+        _14610_Style.setBorderTop(BorderStyle.THIN);
+        _14610_Style.setBorderBottom(BorderStyle.THIN);
+        _14610_Style.setBorderLeft(BorderStyle.THIN);
+        _14610_Style.setBorderRight(BorderStyle.MEDIUM);
+        _14610_Style.setAlignment(HorizontalAlignment.CENTER);
+    }
+    private void addItemsCell(int k){
+        for (int j = 0; j < k; j++) {
+            Row row = sheet1.createRow(6 + j);
+            for(int i = 0; i < 11; i++){
+                row.createCell(i);
+                switch (i){
+                    case 0:
+                    case 3:
+                    case 5:
+                    case 7:
+                        row.getCell(i).setCellStyle(_0357_Style);
+                        break;
+                    case 1:
+                    case 4:
+                    case 6:
+                    case 10:
+                        row.getCell(i).setCellStyle(_14610_Style);
+                        break;
+                    default:
+                        row.getCell(i).setCellStyle(commonStyle);
+                }
+            }
+        }
     }
 }

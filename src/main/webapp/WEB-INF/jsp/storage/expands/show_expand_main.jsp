@@ -140,6 +140,9 @@
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
+        <div class="topPanelCentral">
+            <div><a href="create_expand_blank">Создать накладную</a></div>
+        </div>
         <div class="topPanelLast">
             <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>
