@@ -63,7 +63,7 @@
           <td>${incomeMain.sum/100}</td>
           <td>${incomeMain.sumAct/100}</td>
           <td class="edit" id="edit${incomeMain.id}" hidden>
-            <a href="show_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
+            <a href="show_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Посмотреть</a>
           </td>
           <td class="edit" id="delete${incomeMain.id}" hidden>
             <a href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>

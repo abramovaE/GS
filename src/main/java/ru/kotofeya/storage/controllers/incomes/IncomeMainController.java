@@ -81,52 +81,7 @@ public class IncomeMainController {
         model.addAttribute("incomeMain", incomeMain);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
-
-//        Logger log = LogManager.getLogger(IncomeMainController.class);
-
-        // TODO: 26.12.2021 removw
-
-            URL resource = getClass().getClassLoader().getResource("M11.xlsx");
-            System.out.println("res: " + resource.toString());
-            if (resource == null) {
-                System.out.println("file: " + resource + " not found");
-                throw new IllegalArgumentException("file not found!");
-            } else {
-                File source = null;
-                try {
-                    String p = "/Users/abramov/" + LocalDateTime.now().toString()+ ".xlsx";
-                    File resultReport = new File(p);
-                    source = new File(resource.toURI());
-                    System.out.println("source: " + source.length());
-
-                    copyFile(source, resultReport);
-                    System.out.println("result: " + resultReport.length());
-
-                    M11Creator m11Creator = new M11Creator(resultReport);
-                } catch (URISyntaxException | IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-
-
         return "storage/incomes/show_income_main";
-    }
-
-
-    public static void copyFile(File source, File dest) throws IOException {
-        if (Files.exists(dest.toPath())) {
-
-            try {
-                Files.delete(dest.toPath());
-                String p = "/Users/abramov/noname.xls";
-                dest = new File(p);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Files.copy(source.toPath(), dest.toPath());
     }
 
     @PostMapping("/show_income_main/{incomeId}/{editUserName}")
@@ -134,7 +89,6 @@ public class IncomeMainController {
                                    @ModelAttribute ("incomeMain") IncomeMain incomeMain,
                                    @ModelAttribute ("incomeJson") String incomeJson,
                                    @PathVariable("editUserName") String editUserName) {
-
         IncomeMain incomeMainFromDb = incomeMainService.findById(incomeMain.getId());
         Set<IncomeString> incomeStringListDb = incomeMainFromDb.getIncomeStrings();
         List<Long> incomeStringIds = new ArrayList<>();
@@ -142,12 +96,9 @@ public class IncomeMainController {
                 it->incomeStringIds.add(it.getId()));
         Set<IncomeString> incomeStrings = createIncomeStringsFromJson(incomeJson, incomeMain.getId());
         incomeStrings.stream().forEach(it->incomeStringService.saveIncome(it));
-
         List<IncomeString> incomeStringList = incomeStringService.findByIncomeMain(incomeMain);
-
         EditedIncomeMain editedIncomeMain = new EditedIncomeMain(incomeMainFromDb,
                 incomeMain,LocalDateTime.now().format(dateTimeFormatter), editUserName, incomeStringList);
-
         incomeMainFromDb.setDate(incomeMain.getDate());
         incomeMainFromDb.setStore(incomeMain.getStore());
         incomeMainFromDb.setUserName(incomeMain.getUserName());
@@ -170,7 +121,6 @@ public class IncomeMainController {
     public String deleteIncome(@PathVariable ("incomeMainId") Long incomeMainId,
                                @PathVariable ("deleteUserName") String deleteUserName,
                                Model model) {
-
         IncomeMain incomeMain = incomeMainService.findById(incomeMainId);
         if(incomeMain != null){
             Set<IncomeString> incomeStrings = incomeMain.getIncomeStrings();

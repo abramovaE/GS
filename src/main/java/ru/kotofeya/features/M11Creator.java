@@ -1,11 +1,12 @@
 package ru.kotofeya.features;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import ru.kotofeya.storage.model.incomes.IncomeString;
 
 import java.io.*;
+import java.util.List;
 
 public class M11Creator {
     private FileInputStream inputStream;
@@ -19,8 +20,10 @@ public class M11Creator {
             item1_1, item1_2, item1_3, item1_4, item1_5,
             item1_6, item1_7, item1_8, item1_9, item1_10, item1_11,
     releasedPost, releasedName, receivedPost, receivedName;
+    List<IncomeString> incomeStrings;
 
-    public M11Creator(File file){
+    public M11Creator(File file, List<IncomeString> incomeStrings){
+        this.incomeStrings = incomeStrings;
         createNewForm(file);
     }
 
@@ -28,6 +31,8 @@ public class M11Creator {
         try {
             createNewWorkbook(file);
             initCells();
+            writeItemsToWorkbook();
+
 
 
             OutputStream outputStream = new FileOutputStream(file);
@@ -46,6 +51,63 @@ public class M11Creator {
     private void createNewWorkbook(File file) throws IOException {
         inputStream = new FileInputStream(file.getAbsolutePath());
         this.workBook = new XSSFWorkbook(inputStream);
+    }
+
+    private void writeItemsToWorkbook(){
+        if(incomeStrings != null) {
+            XSSFCellStyle commonStyle = (XSSFCellStyle) workBook.createCellStyle();
+            commonStyle.setBorderTop(BorderStyle.THIN);
+            commonStyle.setBorderBottom(BorderStyle.THIN);
+            commonStyle.setBorderLeft(BorderStyle.THIN);
+            commonStyle.setBorderRight(BorderStyle.THIN);
+            commonStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            XSSFCellStyle _0357_Style = (XSSFCellStyle) workBook.createCellStyle();
+            _0357_Style.setBorderTop(BorderStyle.THIN);
+            _0357_Style.setBorderBottom(BorderStyle.THIN);
+            _0357_Style.setBorderLeft(BorderStyle.MEDIUM);
+            _0357_Style.setBorderRight(BorderStyle.THIN);
+            _0357_Style.setAlignment(HorizontalAlignment.CENTER);
+
+            XSSFCellStyle _14610_Style = (XSSFCellStyle) workBook.createCellStyle();
+            _14610_Style.setBorderTop(BorderStyle.THIN);
+            _14610_Style.setBorderBottom(BorderStyle.THIN);
+            _14610_Style.setBorderLeft(BorderStyle.THIN);
+            _14610_Style.setBorderRight(BorderStyle.MEDIUM);
+            _14610_Style.setAlignment(HorizontalAlignment.CENTER);
+
+            for (int j = 0; j < incomeStrings.size(); j++) {
+                Row row = sheet1.createRow(6 + j);
+                for(int i = 0; i < 11; i++){
+                    row.createCell(i);
+                    switch (i){
+                        case 0:
+                        case 3:
+                        case 5:
+                        case 7:
+                            row.getCell(i).setCellStyle(_0357_Style);
+                            break;
+                        case 1:
+                        case 4:
+                        case 6:
+                        case 10:
+                            row.getCell(i).setCellStyle(_14610_Style);
+                            break;
+                        default:
+                            row.getCell(i).setCellStyle(commonStyle);
+
+
+                    }
+                }
+                IncomeString incomeString = incomeStrings.get(j);
+                row.getCell(2).setCellValue(incomeString.getItem().getName());
+                row.getCell(5).setCellValue("шт.");
+                row.getCell(6).setCellValue(incomeString.getCount());
+                row.getCell(7).setCellValue(incomeString.getCount());
+                row.getCell(8).setCellValue(incomeString.getPurchasePriceAct()/100d);
+                row.getCell(9).setCellValue((incomeString.getCount() * incomeString.getPurchasePriceAct()/100d));
+            }
+        }
     }
 
     private void initCells(){
@@ -90,7 +152,6 @@ public class M11Creator {
         item1_10 = sheet1.getRow(5).getCell(9);
         item1_11 = sheet1.getRow(5).getCell(10);
 
-
         releasedPost = sheet1.getRow(14).getCell(2);
         releasedName = sheet1.getRow(14).getCell(8);
         receivedPost = sheet1.getRow(16).getCell(2);
@@ -108,8 +169,6 @@ public class M11Creator {
             System.out.println("IO exception");
         }
     }
-
-
 }
 
 

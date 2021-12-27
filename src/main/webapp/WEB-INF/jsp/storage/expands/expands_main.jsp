@@ -61,7 +61,7 @@
           <td>${expandMain.store}</td>
           <td>${expandMain.sum/100}</td>
           <td class="edit" id="edit${expandMain.id}" hidden>
-            <a href="show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
+            <a href="show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Посмотреть</a>
           </td>
           <td class="edit" id="delete${expandMain.id}" hidden>
             <a href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
