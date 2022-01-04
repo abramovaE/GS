@@ -38,6 +38,11 @@ public class EditedItem {
     private String createEan;
     @Column(name = "edit_ean")
     private String editEan;
+    @Column(name = "create_mp_link")
+    private String createMpLink;
+    @Column(name = "edit_mp_link")
+    private String editMpLink;
+
 
     public EditedItem() {}
     public EditedItem(Item oldItem, Item newItem, String editUserName, String editDate){
@@ -56,6 +61,8 @@ public class EditedItem {
         editedItem.setEditMpArt(newItem.getMarketplaceArt());
         editedItem.setCreateEan(oldItem.getEan());
         editedItem.setEditEan(newItem.getEan());
+        editedItem.setCreateMpLink(oldItem.getMpLink());
+        editedItem.setEditMpLink(newItem.getMpLink());
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -87,4 +94,8 @@ public class EditedItem {
     public void setCreateEan(String createEan) {this.createEan = createEan;}
     public String getEditEan() {return editEan;}
     public void setEditEan(String editEan) {this.editEan = editEan;}
+    public String getCreateMpLink() {return createMpLink;}
+    public void setCreateMpLink(String createMpLink) {this.createMpLink = createMpLink;}
+    public String getEditMpLink() {return editMpLink;}
+    public void setEditMpLink(String editMpLink) {this.editMpLink = editMpLink;}
 }

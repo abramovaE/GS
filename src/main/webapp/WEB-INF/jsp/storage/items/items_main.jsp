@@ -31,18 +31,20 @@
 <div class="innerDivTr">
     <h2  class="h2Light">Все товары</h2>
     <table class="addIncome">
-        <th><a href="<c:url value="/allItems/sortBy/article/${count}"/>">Артикул внутренний</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/type/${count}"/>">Артикул на маркетплейсе</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">EAN-номер</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Кто добавил</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/count/${count}"/>">Актуальное количество</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/article/${count}"/>">Артикул внутренний</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/name/${count}"/>">Наименование</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/type/${count}"/>">Артикул на маркетплейсе</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/link/${count}"/>">Ссылка на маркетплейсе</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/ean/${count}"/>">EAN-номер</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/username/${count}"/>">Кто добавил</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/date/${count}"/>">Дата добавления</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <c:forEach items="${items}" var="item">
             <tr onclick="location.href='show_item/${item.id}/${pageContext.request.userPrincipal.name}'">
                 <td>${item.article}</td>
                 <td>${item.name}</td>
                 <td>${item.marketplaceArt}</td>
+                <td>${item.mpLink}</td>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>

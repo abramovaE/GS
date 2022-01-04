@@ -39,8 +39,8 @@
         <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
         <th><a href="<c:url value="/allItems/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <c:forEach items="${items}" var="item">
-            <tr>
-                <td>${item.article}</td>
+            <tr onclick="location.href='show_item/${item.id}/${pageContext.request.userPrincipal.name}'">
+            <td>${item.article}</td>
                 <td>${item.name}</td>
                 <td>${item.marketplaceArt}</td>
                 <td>${item.ean}</td>

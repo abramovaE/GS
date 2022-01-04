@@ -63,6 +63,14 @@
                     class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
+            <form:input
+                    type="text"
+                    path="mpLink"
+                    placeholder="Ссылка на карточку товара"
+                    autofocus="true"
+                    class="inputClassLight"/>
+        </div>
+        <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Добавить</button>
         </div>
     </form:form>

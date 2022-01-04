@@ -12,9 +12,13 @@ import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -54,12 +58,7 @@ public class ItemController {
         return "redirect:/show_storage";
     }
 
-    @GetMapping("/items_main")
-    public String getAllItems(Model model) {
-        List<Item> items = itemService.getAllItems();
-        model.addAttribute("items", items);
-        return "storage/items/items_main";
-    }
+
 
 
 
@@ -85,4 +84,6 @@ public class ItemController {
         model.addAttribute("item", item);
         return "storage/items/show_item";
     }
+
+
 }

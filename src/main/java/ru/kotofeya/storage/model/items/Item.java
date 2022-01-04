@@ -29,6 +29,8 @@ public class Item {
     private String date;
     @Column(name = "count")
     private Integer count;
+    @Column(name = "mp_link")
+    private String mpLink;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<IncomeString> incomeStrings;
@@ -52,6 +54,8 @@ public class Item {
     public void setDate(String date) {this.date = date;}
     public Integer getCount() {return count;}
     public void setCount(Integer count) {this.count = count;}
+    public String getMpLink() {return mpLink;}
+    public void setMpLink(String mpLink) {this.mpLink = mpLink;}
 
     @Override
     public String toString() {
