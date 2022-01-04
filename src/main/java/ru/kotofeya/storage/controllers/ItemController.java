@@ -82,7 +82,7 @@ public class ItemController {
         editItemService.save(editedItem);
         itemService.saveItem(item);
         model.addAttribute("item", item);
-        return "storage/items/show_item";
+        return "redirect:/items_main";
     }
 
 

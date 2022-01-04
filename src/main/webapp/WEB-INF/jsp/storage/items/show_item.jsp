@@ -32,6 +32,8 @@
         <h2 class="h2Light">Редактировать товар</h2>
         <form:hidden path="id"/>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
+        <form:hidden path="count"/>
+        <form:hidden path="date"/>
 
         <div class="innerDivLogin">
             <form:input

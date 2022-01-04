@@ -73,105 +73,158 @@ public class StorageController {
         return getAllItems(model);
     }
 
+//    private void sortItems(List<Item> allItems, String sortParam, int c){
+//        switch (sortParam){
+//            case "article":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getArticle(), o2.getArticle()):
+//                                compareItems(o2.getArticle(), o1.getArticle());
+//                    }
+//                });
+//                break;
+//            case "name":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getName(), o2.getName()):
+//                                compareItems(o2.getName(), o1.getName());
+//                    }
+//                });
+//                break;
+//            case "type":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getMarketplaceArt(), o2.getMarketplaceArt()):
+//                                compareItems(o2.getMarketplaceArt(), o1.getMarketplaceArt());
+//                    }
+//                });
+//                break;
+//            case "link":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getMpLink(), o2.getMpLink()):
+//                                compareItems(o2.getMpLink(), o1.getMpLink());
+//                    }
+//                });
+//                break;
+//            case "ean":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getEan(), o2.getEan()):
+//                                compareItems(o2.getEan(), o1.getEan());
+//                    }
+//                });
+//                break;
+//            case "username":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareItems(o1.getUserName(), o2.getUserName()):
+//                                compareItems(o2.getUserName(), o1.getUserName());
+//                    }
+//                });
+//                break;
+//            case "date":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+//                        String date1 = o1.getDate();
+//                        String date2 = o2.getDate();
+//                        if(date1.split("\\.")[2].length() == 2){
+//                            date1 = date1.split("\\.")[0] + "." +
+//                                    date1.split("\\.")[1] + ".20" +
+//                                    date1.split("\\.")[2];
+//                        }
+//                        if(date2.split("\\.")[2].length() == 2){
+//                            date2 = date2.split("\\.")[0] + "." +
+//                                    date2.split("\\.")[1] + ".20" +
+//                                    date2.split("\\.")[2];
+//                        }
+//                        if (date1 == null) {
+//                            date1 = LocalDate.now().format(formatter);
+//                        }
+//                        if (date2 == null) {
+//                            date2 = LocalDate.now().format(formatter);
+//                        }
+//                        LocalDate localDate1 = LocalDate.parse(date1, formatter);
+//                        LocalDate localDate2 = LocalDate.parse(date2, formatter);
+//                        return (c == 0) ? localDate1.compareTo(localDate2)
+//                                : localDate2.compareTo(localDate1);
+//                    }
+//                });
+//                break;
+//            case "count":
+//                Collections.sort(allItems, new Comparator<Item>() {
+//                    @Override
+//                    public int compare(Item o1, Item o2) {
+//                        return (c == 0) ? compareInts(o1.getCount(), o2.getCount()) :
+//                                compareInts(o2.getCount(), o1.getCount());
+//                    }
+//                });
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     private void sortItems(List<Item> allItems, String sortParam, int c){
-        switch (sortParam){
-            case "article":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
-                        return (c == 0) ? compareItems(o1.getArticle(), o2.getArticle()):
+        Collections.sort(allItems, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                switch (sortParam) {
+                    case "article":
+                        return (c == 0) ? compareItems(o1.getArticle(), o2.getArticle()) :
                                 compareItems(o2.getArticle(), o1.getArticle());
-                    }
-                });
-                break;
-            case "name":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "name":
                         return (c == 0) ? compareItems(o1.getName(), o2.getName()):
                                 compareItems(o2.getName(), o1.getName());
-                    }
-                });
-                break;
-            case "type":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "type":
                         return (c == 0) ? compareItems(o1.getMarketplaceArt(), o2.getMarketplaceArt()):
                                 compareItems(o2.getMarketplaceArt(), o1.getMarketplaceArt());
-                    }
-                });
-                break;
-            case "link":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "link":
                         return (c == 0) ? compareItems(o1.getMpLink(), o2.getMpLink()):
                                 compareItems(o2.getMpLink(), o1.getMpLink());
-                    }
-                });
-                break;
-            case "ean":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "ean":
                         return (c == 0) ? compareItems(o1.getEan(), o2.getEan()):
                                 compareItems(o2.getEan(), o1.getEan());
-                    }
-                });
-                break;
-            case "username":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "username":
                         return (c == 0) ? compareItems(o1.getUserName(), o2.getUserName()):
                                 compareItems(o2.getUserName(), o1.getUserName());
-                    }
-                });
-                break;
-            case "date":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "date":
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                        String date1 = o1.getDate();
-                        String date2 = o2.getDate();
-                        if(date1.split("\\.")[2].length() == 2){
-                            date1 = date1.split("\\.")[0] + "." +
-                                    date1.split("\\.")[1] + ".20" +
-                                    date1.split("\\.")[2];
-                        }
-                        if(date2.split("\\.")[2].length() == 2){
-                            date2 = date2.split("\\.")[0] + "." +
-                                    date2.split("\\.")[1] + ".20" +
-                                    date2.split("\\.")[2];
-                        }
-                        if (date1 == null) {
-                            date1 = LocalDate.now().format(formatter);
-                        }
-                        if (date2 == null) {
-                            date2 = LocalDate.now().format(formatter);
-                        }
-                        LocalDate localDate1 = LocalDate.parse(date1, formatter);
-                        LocalDate localDate2 = LocalDate.parse(date2, formatter);
+                        LocalDate localDate1 = LocalDate.parse(validateDate(o1.getDate()), formatter);
+                        LocalDate localDate2 = LocalDate.parse(validateDate(o2.getDate()), formatter);
                         return (c == 0) ? localDate1.compareTo(localDate2)
                                 : localDate2.compareTo(localDate1);
-                    }
-                });
-                break;
-            case "count":
-                Collections.sort(allItems, new Comparator<Item>() {
-                    @Override
-                    public int compare(Item o1, Item o2) {
+                    case "count":
                         return (c == 0) ? compareInts(o1.getCount(), o2.getCount()) :
                                 compareInts(o2.getCount(), o1.getCount());
-                    }
-                });
-                break;
-            default:
-                break;
+                    default:
+                        return o1.getId().compareTo(o2.getId());
+                }
+            }
+        });
+    }
+
+
+
+    private String validateDate(String date1){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        if(date1 != null && date1.split("\\.")[2].length() == 2){
+            date1 = date1.split("\\.")[0] + "." +
+                    date1.split("\\.")[1] + ".20" +
+                    date1.split("\\.")[2];
         }
+        if (date1 == null) {
+            date1 = LocalDate.now().format(formatter);
+        }
+        return  date1;
     }
 
     private int compareInts(Integer o1, Integer o2){

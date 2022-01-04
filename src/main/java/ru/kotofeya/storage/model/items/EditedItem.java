@@ -46,23 +46,22 @@ public class EditedItem {
 
     public EditedItem() {}
     public EditedItem(Item oldItem, Item newItem, String editUserName, String editDate){
-        EditedItem editedItem = new EditedItem();
-        editedItem.setItemId(oldItem.getId());
-        editedItem.setCreateUserName(oldItem.getUserName());
-        editedItem.setEditUserName(editUserName);
-        editedItem.setCreateDate(oldItem.getDate());
-        editedItem.setEditDate(editDate);
-        editedItem.setNewDate(newItem.getDate());
-        editedItem.setCreateArticle(oldItem.getArticle());
-        editedItem.setEditArticle(newItem.getArticle());
-        editedItem.setCreateName(oldItem.getName());
-        editedItem.setEditName(newItem.getName());
-        editedItem.setCreateMpArt(oldItem.getMarketplaceArt());
-        editedItem.setEditMpArt(newItem.getMarketplaceArt());
-        editedItem.setCreateEan(oldItem.getEan());
-        editedItem.setEditEan(newItem.getEan());
-        editedItem.setCreateMpLink(oldItem.getMpLink());
-        editedItem.setEditMpLink(newItem.getMpLink());
+        setItemId(oldItem.getId());
+        setCreateUserName(oldItem.getUserName());
+        setEditUserName(editUserName);
+        setCreateDate(oldItem.getDate());
+        setEditDate(editDate);
+        setNewDate(newItem.getDate());
+        setCreateArticle(oldItem.getArticle());
+        setEditArticle(newItem.getArticle());
+        setCreateName(oldItem.getName());
+        setEditName(newItem.getName());
+        setCreateMpArt(oldItem.getMarketplaceArt());
+        setEditMpArt(newItem.getMarketplaceArt());
+        setCreateEan(oldItem.getEan());
+        setEditEan(newItem.getEan());
+        setCreateMpLink(oldItem.getMpLink());
+        setEditMpLink(newItem.getMpLink());
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
