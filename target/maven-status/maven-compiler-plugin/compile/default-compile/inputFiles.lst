@@ -5,6 +5,7 @@
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/expands/DeletedExpandString.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/expands/EditedExpandStringService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/incomes/EditedIncomeMainService.java
+/Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/EditItemService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/incomes/IncomeStringRepo.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/expands/ExpandMainRepo.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/incomes/EditedIncomeMain.java
@@ -18,7 +19,6 @@
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/controllers/expands/ExpandMainController.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/config/WebInitializer.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/controllers/ItemController.java
-/Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/Item.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/expands/DeletedExpandStringRepo.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/incomes/IncomeString.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/auth/model/User.java
@@ -26,6 +26,7 @@
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/incomes/DeletedIncomeMainService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/incomes/IncomeMainService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/expands/ExpandStringService.java
+/Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/items/Item.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/incomes/EditIncomeStringService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/incomes/EditedIncomeMainRepo.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/incomes/DeletedIncomeMain.java
@@ -33,12 +34,14 @@
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/incomes/IncomeMain.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/controllers/BlankController.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/incomes/IncomeStringService.java
+/Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/items/EditedItem.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/expands/DeletedExpandStringService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/config/WebSecurityConfig.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/auth/controllers/RegistrationController.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/expands/EditedExpandString.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/expands/DeletedExpandMainService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/model/expands/DeletedExpandMain.java
+/Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/EditItemRepo.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/controllers/expands/ExpandStringController.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/service/ItemService.java
 /Users/abramov/Downloads/GS/src/main/java/ru/kotofeya/storage/repo/expands/DeletedExpandMainRepo.java

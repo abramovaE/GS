@@ -76,7 +76,7 @@ public class ExpandMainController {
             for(ExpandString expandString: expands){
                 cost = cost - expandString.getSalePrice() * expandString.getCount();
             }
-            item.setMiddlePrice(cost);
+            item.setMiddlePrice(cost/item.getCount());
         }
         return "storage/expands/add_expand_main";
     }
