@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kotofeya.storage.model.items.EditedItem;
 import ru.kotofeya.storage.model.items.Item;
+import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 
 import java.time.LocalDateTime;
@@ -20,6 +22,11 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private EditItemService editItemService;
+
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
 
     @GetMapping("/add_item")
     public String  addItem(Model model) {
@@ -60,14 +67,22 @@ public class ItemController {
     public String showItem(Model model,
                                  @PathVariable("itemId") Long itemId,
                                  @PathVariable("editUserName") String editUserName) {
-//        List<Item> allItems = itemService.getAllItems();
-//        IncomeMain incomeMain = incomeMainService.findById(incomeId);
-//        incomeMain = setSumsForJsp(incomeMain);
         Item item = itemService.getById(itemId);
         model.addAttribute("item", item);
-//        model.addAttribute("items", allItems);
-//        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         return "storage/items/show_item";
     }
 
+    @PostMapping("/show_item/{itemId}/{editUserName}")
+    public String showItem(Model model,
+                           @ModelAttribute("item") Item item,
+                           @PathVariable("itemId") Long itemId,
+                           @PathVariable("editUserName") String editUserName) {
+        Item itemFromDb = itemService.getById(itemId);
+        EditedItem editedItem = new EditedItem(itemFromDb, item, editUserName,
+                LocalDateTime.now().format(dateTimeFormatter));
+        editItemService.save(editedItem);
+        itemService.saveItem(item);
+        model.addAttribute("item", item);
+        return "storage/items/show_item";
+    }
 }

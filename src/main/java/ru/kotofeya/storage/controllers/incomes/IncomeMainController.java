@@ -90,7 +90,7 @@ public class IncomeMainController {
         incomeStrings.stream().forEach(it->incomeStringService.saveIncome(it));
         List<IncomeString> incomeStringList = incomeStringService.findByIncomeMain(incomeMain);
         EditedIncomeMain editedIncomeMain = new EditedIncomeMain(incomeMainFromDb,
-                incomeMain,LocalDateTime.now().format(dateTimeFormatter), editUserName, incomeStringList);
+                incomeMain, LocalDateTime.now().format(dateTimeFormatter), editUserName, incomeStringList);
         incomeMainFromDb.setDate(incomeMain.getDate());
         incomeMainFromDb.setStore(incomeMain.getStore());
         incomeMainFromDb.setUserName(incomeMain.getUserName());

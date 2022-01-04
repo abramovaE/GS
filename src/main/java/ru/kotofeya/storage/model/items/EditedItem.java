@@ -38,8 +38,25 @@ public class EditedItem {
     private String createEan;
     @Column(name = "edit_ean")
     private String editEan;
-    
+
     public EditedItem() {}
+    public EditedItem(Item oldItem, Item newItem, String editUserName, String editDate){
+        EditedItem editedItem = new EditedItem();
+        editedItem.setItemId(oldItem.getId());
+        editedItem.setCreateUserName(oldItem.getUserName());
+        editedItem.setEditUserName(editUserName);
+        editedItem.setCreateDate(oldItem.getDate());
+        editedItem.setEditDate(editDate);
+        editedItem.setNewDate(newItem.getDate());
+        editedItem.setCreateArticle(oldItem.getArticle());
+        editedItem.setEditArticle(newItem.getArticle());
+        editedItem.setCreateName(oldItem.getName());
+        editedItem.setEditName(newItem.getName());
+        editedItem.setCreateMpArt(oldItem.getMarketplaceArt());
+        editedItem.setEditMpArt(newItem.getMarketplaceArt());
+        editedItem.setCreateEan(oldItem.getEan());
+        editedItem.setEditEan(newItem.getEan());
+    }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
     public Long getItemId() {return itemId;}
