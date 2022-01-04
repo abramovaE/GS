@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.kotofeya.storage.model.Item;
+import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.ItemService;
 
 import java.time.LocalDate;
@@ -64,8 +64,8 @@ public class StorageController {
                 Collections.sort(allItems, new Comparator<Item>() {
                     @Override
                     public int compare(Item o1, Item o2) {
-                        return (c == 0) ? compareItems(o1.getType(), o2.getType()):
-                                compareItems(o2.getType(), o1.getType());
+                        return (c == 0) ? compareItems(o1.getMarketplaceArt(), o2.getMarketplaceArt()):
+                                compareItems(o2.getMarketplaceArt(), o1.getMarketplaceArt());
                     }
                 });
                 break;

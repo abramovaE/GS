@@ -68,12 +68,19 @@
     width: 100%;
 }
 
+
+.todayIncomeStrings tr{
+    cursor: pointer;
+}
+
 .todayIncomeStrings tr td{
     border: none;
     border-radius: 7px;
     background-color: mediumseagreen;
     font-size: 12pt;
     font-family: Helvetica;
+
+
     /*padding: 2px;*/
 }
 

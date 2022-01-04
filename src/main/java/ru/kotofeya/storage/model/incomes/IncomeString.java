@@ -1,7 +1,7 @@
 package ru.kotofeya.storage.model.incomes;
 
 
-import ru.kotofeya.storage.model.Item;
+import ru.kotofeya.storage.model.items.Item;
 
 import javax.persistence.*;
 

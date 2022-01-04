@@ -120,15 +120,15 @@
     }
 
         function showEditPanel(id){
-            document.getElementById('edit' + id).style.display = 'block'
+            // document.getElementById('edit' + id).style.display = 'block'
             document.getElementById('delete' + id).style.display = 'block'
-            document.getElementById('editth').style.display = 'block'
+            // document.getElementById('editth').style.display = 'block'
             document.getElementById('deleteth').style.display = 'block'
         }
         function hideEditPanel(id){
-            document.getElementById('edit' + id).style.display = 'none'
+            // document.getElementById('edit' + id).style.display = 'none'
             document.getElementById('delete' + id).style.display = 'none'
-            document.getElementById('editth').style.display = 'none'
+            // document.getElementById('editth').style.display = 'none'
             document.getElementById('deleteth').style.display = 'none'
         }
 
@@ -202,15 +202,16 @@
                        var="expandString" varStatus="ind">
                     <tr id="tr${ind.count}"
                         onmouseover="showEditPanel(${ind.count})"
-                        onmouseout="hideEditPanel(${ind.count})">
+                        onmouseout="hideEditPanel(${ind.count})"
+                        onclick="location.href='show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}'">
                         <td>${expandString.item.name}</td>
                         <td>${expandString.count}</td>
                         <td>${expandString.salePrice/100}</td>
                         <td>${expandString.batchNumber}</td>
                         <td>${expandString.count * expandString.salePrice/100}</td>
-                        <td class="edit" id="edit${ind.count}" hidden>
-                            <a href="show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
-                        </td>
+<%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
+<%--                            <a href="show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>--%>
+<%--                        </td>--%>
                         <td class="edit" id="delete${ind.count}" hidden>
                             <a href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>

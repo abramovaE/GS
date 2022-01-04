@@ -1,10 +1,9 @@
 package ru.kotofeya.storage.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotofeya.storage.model.Item;
+import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.repo.ItemRepo;
 
 import javax.persistence.EntityManager;

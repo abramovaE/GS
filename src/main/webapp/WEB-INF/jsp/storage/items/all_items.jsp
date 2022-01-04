@@ -33,7 +33,7 @@
     <table class="addIncome">
         <th><a href="<c:url value="/allItems/sortBy/article/${count}"/>">Артикул внутренний</a></th>
         <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/type/${count}"/>">Тип</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/type/${count}"/>">Артикул на маркетплейсе</a></th>
         <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">EAN-номер</a></th>
         <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Кто добавил</a></th>
         <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
@@ -42,7 +42,7 @@
             <tr>
                 <td>${item.article}</td>
                 <td>${item.name}</td>
-                <td>${item.type}</td>
+                <td>${item.marketplaceArt}</td>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>

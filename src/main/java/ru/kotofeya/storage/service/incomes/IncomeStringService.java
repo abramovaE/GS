@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotofeya.storage.model.incomes.IncomeMain;
 import ru.kotofeya.storage.model.incomes.IncomeString;
-import ru.kotofeya.storage.model.Item;
+import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.repo.incomes.IncomeStringRepo;
 import ru.kotofeya.storage.repo.ItemRepo;
 

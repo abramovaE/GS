@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.kotofeya.storage.model.*;
 import ru.kotofeya.storage.model.expands.*;
+import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.*;
 import ru.kotofeya.storage.service.expands.*;
 

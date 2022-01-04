@@ -135,15 +135,15 @@
             tr.closest('tr' + rowIndex)
         }
         function showEditPanel(id){
-            document.getElementById('edit' + id).style.display = 'block'
+            // document.getElementById('edit' + id).style.display = 'block'
             document.getElementById('delete' + id).style.display = 'block'
-            document.getElementById('editth').style.display = 'block'
+            // document.getElementById('editth').style.display = 'block'
             document.getElementById('deleteth').style.display = 'block'
         }
         function hideEditPanel(id){
-            document.getElementById('edit' + id).style.display = 'none'
+            // document.getElementById('edit' + id).style.display = 'none'
             document.getElementById('delete' + id).style.display = 'none'
-            document.getElementById('editth').style.display = 'none'
+            // document.getElementById('editth').style.display = 'none'
             document.getElementById('deleteth').style.display = 'none'
         }
         $(function () {
@@ -224,7 +224,8 @@
                        var="incomeString" varStatus="ind">
                     <tr id="tr${ind.count}"
                         onmouseover="showEditPanel(${ind.count})"
-                        onmouseout="hideEditPanel(${ind.count})">
+                        onmouseout="hideEditPanel(${ind.count})"
+                        onclick="location.href='show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}'">
                         <td>${incomeString.item.name}</td>
                         <td>${incomeString.count}</td>
                         <td>${incomeString.purchasePrice/100}</td>
@@ -233,9 +234,9 @@
                         <td>${incomeString.batchNumber}</td>
                         <td>${incomeString.count * incomeString.purchasePrice/100}</td>
                         <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>
-                        <td class="edit" id="edit${ind.count}" hidden>
-                            <a href="show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>
-                        </td>
+<%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
+<%--                            <a href="show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>--%>
+<%--                        </td>--%>
                         <td class="edit" id="delete${ind.count}" hidden>
                             <a href="delete_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>

@@ -3,7 +3,6 @@ package ru.kotofeya.features;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ru.kotofeya.storage.model.expands.ExpandMain;
 import ru.kotofeya.storage.model.expands.ExpandString;
 import ru.kotofeya.storage.model.incomes.IncomeString;
 

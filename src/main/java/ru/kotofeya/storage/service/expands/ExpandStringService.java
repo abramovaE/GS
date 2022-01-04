@@ -3,9 +3,9 @@ package ru.kotofeya.storage.service.expands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kotofeya.storage.model.*;
 import ru.kotofeya.storage.model.expands.ExpandMain;
 import ru.kotofeya.storage.model.expands.ExpandString;
+import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.repo.expands.ExpandStringRepo;
 import ru.kotofeya.storage.repo.ItemRepo;
 
