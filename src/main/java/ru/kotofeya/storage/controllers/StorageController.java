@@ -25,7 +25,7 @@ public class StorageController {
     public String  showStorage(Model model) {
         model.addAttribute("count", getCount(model));
         model.addAttribute("items", getItems(model)
-                .stream().filter(it->it.getCount() > 0)
+                .stream().filter(it->(it.getCount() != null && it.getCount() > 0))
                 .collect(Collectors.toList()));
         return "storage/items/all_items";
     }
@@ -239,3 +239,4 @@ public class StorageController {
             return o1.compareTo(o2);
         }
 }
+

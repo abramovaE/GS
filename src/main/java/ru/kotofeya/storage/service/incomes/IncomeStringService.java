@@ -68,4 +68,9 @@ public class IncomeStringService {
         return incomeStringRepo.findAll();
     }
 
+    @Transactional
+    public List<IncomeString> getAllItemIncomes(Item item){
+        return incomeStringRepo.findIncomeStringByItem(item);
+    }
+
 }

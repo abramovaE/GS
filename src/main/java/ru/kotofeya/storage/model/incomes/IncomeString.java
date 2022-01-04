@@ -27,7 +27,7 @@ public class IncomeString {
     @Column(name = "store_article")
     private String storeArticle;
     @Column(name = "batch_number")
-    private int batchNumber;
+    private String batchNumber;
     @Transient
     private double purchasePriceDouble;
     @Transient
@@ -60,8 +60,8 @@ public class IncomeString {
     }
 //    public String getStore() {return store;}
 //    public void setStore(String store) {this.store = store;}
-    public int getBatchNumber() {return batchNumber;}
-    public void setBatchNumber(int batchNumber) {
+    public String getBatchNumber() {return batchNumber;}
+    public void setBatchNumber(String batchNumber) {
         this.batchNumber = batchNumber;
     }
     public double getPurchasePriceDouble() {return purchasePriceDouble;}

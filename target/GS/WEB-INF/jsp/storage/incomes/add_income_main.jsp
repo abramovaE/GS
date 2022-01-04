@@ -23,16 +23,33 @@
     <script type="text/javascript">
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
+            const table = document.getElementById('incomeStringTable');
+            var c = 0;
+
             if(inputItem.indexOf("::") === -1){
                 if('${eans}'.indexOf(inputItem) === -1){
                     const answer = window.confirm("Такого товара нет в базе. Создать?");
                     if (answer) {
                         window.location = "add_item";
                     }
+                } else {
+                    for(var j = 1; j < table.rows.length; j++){
+                        var itemId = document.getElementById("item" + j).value;
+                        if(itemId === inputItem){
+                            var countCell = document.getElementById("count" + j);
+                            countCell.value = Number(countCell.value) + 1
+                            if(countCell.value > 1) {
+                                document.getElementById('item' + index).value = "";
+                                c = 1;
+                            }
+                        }
+                    }
                 }
             }
-            const tr = document.getElementById("tr" + (index +1));
-            tr.hidden=false;
+            if(c == 0) {
+                const tr = document.getElementById("tr" + (index + 1));
+                tr.hidden = false;
+            }
         }
         function addIncomeMain() {
         var isSubmit = true;
@@ -182,12 +199,13 @@
     <div class="innerDivTr">
         <table class="addIncome" id="incomeStringTable">
             <tr id="incomeStringTableHeader">
+                <th>Номер партии</th>
                 <th>Товар</th>
                 <th>Количество</th>
                 <th>Цена покупки, руб.</th>
                 <th>Цена покупки окончательная, руб.</th>
                 <th>Артикул в магазине</th>
-                <th>Номер партии</th>
+
                 <th>Сумма покупки, руб.</th>
                 <th>Сумма покупки окончательная, руб.</th>
             </tr>
@@ -195,6 +213,8 @@
             <c:forEach var="rowIndex" begin="1" end="100" step="1" varStatus="index">
                 <c:if test="${index.count>1}">
                     <tr id="tr${index.count}" hidden="true">
+                        <td><input type="text" id="batchNumber${index.count}" required="true"
+                                   placeholder="Номер партии"  path="batchNumber"/></td>
                         <td>
                             <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
                                     placeholder="Товар" id="item${index.count}" autofocus="true"
@@ -223,8 +243,7 @@
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
                                    placeholder="Артикул в магазине" required="true"/></td>
-                        <td><input type="text" id="batchNumber${index.count}" required="true"
-                                   placeholder="Номер партии"  path="batchNumber"/></td>
+
                         <td id="purPriceSum${index.count}">
                             <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
@@ -235,6 +254,8 @@
                 </c:if>
                 <c:if test="${index.count==1}">
                     <tr id="tr${index.count}">
+                        <td><input type="text" id="batchNumber${index.count}" required="true"
+                                   placeholder="Номер партии"  path="batchNumber"/></td>
                     <td>
                         <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
                                 placeholder="Товар" id="item${index.count}" autofocus="true"
@@ -263,8 +284,7 @@
                     </td>
                     <td><input type="text" id="storeArticle${index.count}"
                                placeholder="Артикул в магазине" required="true"/></td>
-                    <td><input type="text" id="batchNumber${index.count}" required="true"
-                               placeholder="Номер партии"  path="batchNumber"/></td>
+
                     <td id="purPriceSum${index.count}">
                         <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                     </td>

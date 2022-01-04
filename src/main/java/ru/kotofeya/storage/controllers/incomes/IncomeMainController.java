@@ -184,7 +184,7 @@ class IncomeJson{
     @Expose
     private String storeArticle;
     @Expose
-    private int batchNumber;
+    private String batchNumber;
 
     public IncomeJson() {}
     public int getItemId() {
@@ -217,10 +217,8 @@ class IncomeJson{
     public void setStoreArticle(String storeArticle) {
         this.storeArticle = storeArticle;
     }
-    public int getBatchNumber() {
-        return batchNumber;
-    }
-    public void setBatchNumber(int batchNumber) {
+    public String getBatchNumber() {return batchNumber;}
+    public void setBatchNumber(String batchNumber) {
         this.batchNumber = batchNumber;
     }
 

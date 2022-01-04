@@ -23,20 +23,63 @@
     <script type="text/javascript">
         function handleItem(index){
             let inputItem = document.getElementById('item'+index).value;
+            const table = document.getElementById('expandStringTable');
+            var c = 0;
             if(inputItem.indexOf("::") === -1){
                 if('${eans}'.indexOf(inputItem) === -1){
                     window.alert("Такого товара нет в базе");
                     document.getElementById('item'+index).value = "";
                 }
                 else {
-                    const tr = document.getElementById("tr" + (index +1));
-                    tr.hidden=false;
+                    const ean = Number(inputItem.split("::")[3])
+                    for(var j = 1; j < table.rows.length; j++){
+                        var itemId = document.getElementById("item" + j).value;
+                        if(itemId === inputItem){
+                            var countCell = document.getElementById("count" + j);
+                            countCell.value = Number(countCell.value) + 1
+                            if(countCell.value > 1) {
+                                document.getElementById('item' + index).value = "";
+                                c = 1;
+                            }
+                        }
+                    }
+                    for(var i = 0; i < '${items.size()}'; i++){
+                        if(Number('${items.get(i).ean}') == ean){
+                            var priceCell = document.getElementById("price" + index);
+                            priceCell.value = ${items.get(i).middlePrice/100}
+                        }
+                    }
+                    if(c == 0) {
+                        const tr = document.getElementById("tr" + (index + 1));
+                        tr.hidden = false;
+                    }
                 }
             } else {
-                const tr = document.getElementById("tr" + (index +1));
-                tr.hidden=false;
+                const ean = Number(inputItem.split("::")[3])
+                for(var j = 1; j < table.rows.length; j++){
+                    var itemId = document.getElementById("item" + j).value;
+                    if(itemId === inputItem){
+                        var countCell = document.getElementById("count" + j);
+                        countCell.value = Number(countCell.value) + 1
+                        if(countCell.value > 1) {
+                            document.getElementById('item' + index).value = "";
+                            c = 1;
+                        }
+                    }
+                }
+                for(var i = 0; i < '${items.size()}'; i++){
+                    if(Number('${items.get(i).ean}') == ean){
+                        var priceCell = document.getElementById("price" + index);
+                        priceCell.value = ${items.get(i).middlePrice/100}
+                    }
+                }
+                if(c == 0) {
+                    const tr = document.getElementById("tr" + (index + 1));
+                    tr.hidden = false;
+                }
             }
         }
+
         function addExpandMain() {
         let isSubmit = true;
         let expandStrings = [];
@@ -169,9 +212,9 @@
                 <c:if test="${index.count>1}">
                     <tr hidden="true" id="tr${index.count}">
                         <td>
-                            <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                    placeholder="Товар" id="item${index.count}" autofocus="true"
-                                    onchange="javascript:handleItem(${index.count})">
+                            <input autocomplete="off" name="inputItem" list="dataList${index.count}"
+                                   placeholder="Товар" id="item${index.count}" autofocus="true"
+                                   onchange="javascript:handleItem(${index.count})">
                             <datalist id="dataList${index.count}">
                                 <c:forEach var="item" items="${items}">
                                     <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>

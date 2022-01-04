@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.storage.model.expands.*;
+import ru.kotofeya.storage.model.incomes.IncomeString;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.*;
 import ru.kotofeya.storage.service.expands.*;
+import ru.kotofeya.storage.service.incomes.IncomeStringService;
 
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
@@ -39,6 +41,9 @@ public class ExpandMainController {
     private DeletedExpandStringService deletedExpandStringService;
     @Autowired
     private DeletedExpandMainService deletedExpandMainService;
+    @Autowired
+    private IncomeStringService incomeStringService;
+
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
@@ -54,12 +59,25 @@ public class ExpandMainController {
 
     @GetMapping("/add_expand_main")
     public String  addExpandMain(Model model) {
-        List<Item> allItems = itemService.getAllItems().stream().filter(it->it.getCount()>0).collect(Collectors.toList());
+        List<Item> allItems = itemService.getAllItems().stream().filter(it->(it.getCount() != null && it.getCount()>0))
+                .collect(Collectors.toList());
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("expandMainForm", new ExpandMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("expandString", new ExpandString());
+        for(Item item: allItems){
+            List<IncomeString> incomes = incomeStringService.getAllItemIncomes(item);
+            List<ExpandString> expands = expandStringService.getAllItemExpands(item);
+            int cost = 0;
+            for(IncomeString incomeString: incomes){
+                cost = cost + incomeString.getPurchasePriceAct() * incomeString.getCount();
+            }
+            for(ExpandString expandString: expands){
+                cost = cost - expandString.getSalePrice() * expandString.getCount();
+            }
+            item.setMiddlePrice(cost);
+        }
         return "storage/expands/add_expand_main";
     }
 

@@ -37,6 +37,9 @@ public class Item {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<ExpandString> expandStrings;
 
+    @Transient
+    private int middlePrice;
+
     public Item() {}
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -56,6 +59,8 @@ public class Item {
     public void setCount(Integer count) {this.count = count;}
     public String getMpLink() {return mpLink;}
     public void setMpLink(String mpLink) {this.mpLink = mpLink;}
+    public int getMiddlePrice() {return middlePrice;}
+    public void setMiddlePrice(int middlePrice) {this.middlePrice = middlePrice;}
 
     @Override
     public String toString() {
@@ -73,3 +78,15 @@ public class Item {
                 '}';
     }
 }
+//
+//купили
+//10 шт по 100р
+//15 шт по 90р
+//20 шт по 80р
+//средняя = 3950/45 = 87,7
+//продали по 87,7 * 45 = 3950 ,
+//        на складе теперь 0
+//
+//купили 10шт по 50р
+//средняя 4450/55 = 80,9р
+//продали по 80,9 * 10шт = 809

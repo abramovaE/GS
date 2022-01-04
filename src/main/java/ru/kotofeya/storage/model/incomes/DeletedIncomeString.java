@@ -29,7 +29,7 @@ public class DeletedIncomeString {
     @Column(name = "store_article")
     private String storeArticle;
     @Column(name = "batch_number")
-    private int batchNumber;
+    private String batchNumber;
     @Column(name = "income_main_id")
     private long incomeMainId;
 
@@ -79,8 +79,8 @@ public class DeletedIncomeString {
     }
 //    public String getStore() {return store;}
 //    public void setStore(String store) {this.store = store;}
-    public int getBatchNumber() {return batchNumber;}
-    public void setBatchNumber(int batchNumber) {
+    public String getBatchNumber() {return batchNumber;}
+    public void setBatchNumber(String batchNumber) {
         this.batchNumber = batchNumber;
     }
     public long getIncomeMainId() {return incomeMainId;}

@@ -23,6 +23,41 @@
     </sec:authorize>
 
     <script type="text/javascript">
+
+        <%--function handleItem(index){--%>
+        <%--    if(index === 1){--%>
+        <%--        index = index + ${incomeMain.incomeStrings.size()}--%>
+        <%--    }--%>
+        <%--    const inputItem = document.getElementById('item'+index).value;--%>
+        <%--    const table = document.getElementById('incomeStringTable');--%>
+        <%--    var c = 0;--%>
+
+        <%--    if(inputItem.indexOf("::") === -1){--%>
+        <%--        if('${eans}'.indexOf(inputItem) === -1){--%>
+        <%--            const answer = window.confirm("Такого товара нет в базе. Создать?");--%>
+        <%--            if (answer) {--%>
+        <%--                window.location = "add_item";--%>
+        <%--            }--%>
+        <%--        } else {--%>
+        <%--            for(var j = 1; j < table.rows.length; j++){--%>
+        <%--                var itemId = document.getElementById("item" + j).value;--%>
+        <%--                if(itemId === inputItem){--%>
+        <%--                    var countCell = document.getElementById("count" + j);--%>
+        <%--                    countCell.value = Number(countCell.value) + 1--%>
+        <%--                    if(countCell.value > 1) {--%>
+        <%--                        document.getElementById('item' + index).value = "";--%>
+        <%--                        // c = 1;--%>
+        <%--                    }--%>
+        <%--                }--%>
+        <%--            }--%>
+        <%--        }--%>
+        <%--    }--%>
+        <%--    if(c == 0) {--%>
+        <%--        const tr = document.getElementById("tr" + (index + 1));--%>
+        <%--        tr.hidden = false;--%>
+        <%--    }--%>
+        <%--}--%>
+
         function handleItem(index){
             if(index === 1){
                 index = index + ${incomeMain.incomeStrings.size()}
@@ -39,6 +74,7 @@
             const tr = document.getElementById("tr" + (index +1));
             tr.hidden=false;
         }
+
         function saveIncomeMain() {
         let isSubmit = 1;
         let incomeStrings = [];
@@ -211,12 +247,13 @@
     <div class="innerDivTr">
         <table class="todayIncomeStrings" id="incomeStringTable">
             <tr id="incomeStringTableHeader">
+                <th>Номер партии</th>
+
                 <th>Товар</th>
                 <th>Количество</th>
                 <th>Цена покупки, руб.</th>
                 <th>Цена покупки окончательная, руб.</th>
                 <th>Артикул в магазине</th>
-                <th>Номер партии</th>
                 <th>Сумма покупки, руб.</th>
                 <th>Сумма покупки окончательная, руб.</th>
             </tr>
@@ -226,12 +263,13 @@
                         onmouseover="showEditPanel(${ind.count})"
                         onmouseout="hideEditPanel(${ind.count})"
                         onclick="location.href='show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}'">
+                        <td>${incomeString.batchNumber}</td>
+
                         <td>${incomeString.item.name}</td>
                         <td>${incomeString.count}</td>
                         <td>${incomeString.purchasePrice/100}</td>
                         <td>${incomeString.purchasePriceAct/100}</td>
                         <td>${incomeString.storeArticle}</td>
-                        <td>${incomeString.batchNumber}</td>
                         <td>${incomeString.count * incomeString.purchasePrice/100}</td>
                         <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>
 <%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
@@ -246,6 +284,10 @@
                                    end="100" step="1" varStatus="index">
                             <c:if test="${index.count>1}">
                                 <tr id="tr${index.count}" hidden class="showIncome">
+
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии" /></td>
+
                                     <td>
                                         <input autocomplete="off" name="inputItem" list="dataList${index.count}"
                                                 placeholder="Товар" id="item${index.count}" autofocus
@@ -273,8 +315,7 @@
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
                                                placeholder="Артикул в магазине" required/></td>
-                                    <td><input type="text" id="batchNumber${index.count}" required
-                                               placeholder="Номер партии" /></td>
+
                                     <td id="purPriceSum${index.count}">
                                         <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
@@ -285,6 +326,9 @@
                             </c:if>
                             <c:if test="${index.count==1}">
                                 <tr id="tr${index.count}" class="showIncome">
+
+                                    <td><input type="text" id="batchNumber${index.count}" required
+                                               placeholder="Номер партии"/></td>
                                     <td>
                                         <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
                                                 placeholder="Товар" id="item${index.count}" autofocus
@@ -312,8 +356,7 @@
                                     </td>
                                     <td><input type="text" id="storeArticle${index.count}"
                                                placeholder="Артикул в магазине" required/></td>
-                                    <td><input type="text" id="batchNumber${index.count}" required
-                                               placeholder="Номер партии"/></td>
+
                                     <td id="purPriceSum${index.count}">
                                         <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>

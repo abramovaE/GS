@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kotofeya.storage.model.expands.ExpandMain;
 import ru.kotofeya.storage.model.expands.ExpandString;
+import ru.kotofeya.storage.model.incomes.IncomeString;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.repo.expands.ExpandStringRepo;
 import ru.kotofeya.storage.repo.ItemRepo;
@@ -58,5 +59,10 @@ public class ExpandStringService {
     @Transactional
     public List<ExpandString> getAllExpands(){
         return expandStringRepo.findAll();
+    }
+
+    @Transactional
+    public List<ExpandString> getAllItemExpands(Item item){
+        return expandStringRepo.findExpandStringByItem(item);
     }
 }

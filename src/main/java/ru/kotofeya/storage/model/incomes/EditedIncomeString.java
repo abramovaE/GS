@@ -42,9 +42,9 @@ public class EditedIncomeString {
     @Column(name = "edit_store_article")
     private String editStoreArticle;
     @Column(name = "create_batch_number")
-    private int createBatchNumber;
+    private String createBatchNumber;
     @Column(name = "edit_batch_number")
-    private int editBatchNumber;
+    private String editBatchNumber;
     @Column(name = "create_income_main")
     private Long createIncomeMainId;
     @Column(name = "edit_income_main")
@@ -108,10 +108,10 @@ public class EditedIncomeString {
     public void setCreateStoreArticle(String createStoreArticle) {this.createStoreArticle = createStoreArticle;}
     public String getEditStoreArticle() {return editStoreArticle;}
     public void setEditStoreArticle(String editStoreArticle) {this.editStoreArticle = editStoreArticle;}
-    public int getCreateBatchNumber() {return createBatchNumber;}
-    public void setCreateBatchNumber(int createBatchNumber) {this.createBatchNumber = createBatchNumber;}
-    public int getEditBatchNumber() {return editBatchNumber;}
-    public void setEditBatchNumber(int editBatchNumber) {this.editBatchNumber = editBatchNumber;}
+    public String getCreateBatchNumber() {return createBatchNumber;}
+    public void setCreateBatchNumber(String createBatchNumber) {this.createBatchNumber = createBatchNumber;}
+    public String getEditBatchNumber() {return editBatchNumber;}
+    public void setEditBatchNumber(String editBatchNumber) {this.editBatchNumber = editBatchNumber;}
     public Long getCreateIncomeMainId() {return createIncomeMainId;}
     public void setCreateIncomeMainId(Long createIncomeMainId) {this.createIncomeMainId = createIncomeMainId;}
     public Long getEditIncomeMainId() {return editIncomeMainId;}
