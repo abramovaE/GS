@@ -40,13 +40,27 @@
                     class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
-            <form:input type="text" path="name" placeholder="Наименование" required="true" class="inputClassLight"/>
+            <form:input
+                    type="text"
+                    path="name"
+                    placeholder="Наименование"
+                    required="true"
+                    class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
-            <form:input type="text" path="type" placeholder="Тип" class="inputClassLight"/>
+            <form:input
+                    type="text"
+                    path="marketplaceArt"
+                    placeholder="Артикул на маркетплейсе"
+                    class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
-            <form:input type="text" path="ean" placeholder="Штрих-код" autofocus="true" class="inputClassLight"/>
+            <form:input
+                    type="text"
+                    path="ean"
+                    placeholder="Штрих-код"
+                    autofocus="true"
+                    class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Добавить</button>

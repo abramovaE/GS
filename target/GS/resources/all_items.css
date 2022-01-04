@@ -34,6 +34,10 @@
     color: white;
 }
 
+.addIncome tr{
+    cursor: pointer;
+}
+
 .addIncome tr td{
     border: none;
     border-radius: 3px;

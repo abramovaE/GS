@@ -29,7 +29,7 @@
 
 
 <div class="innerDivTr">
-    <h2  class="h2Light">Все товары</h2>
+    <h2  class="h2Light">Остатки</h2>
     <table class="addIncome">
         <th><a href="<c:url value="/allItems/sortBy/article/${count}"/>">Артикул внутренний</a></th>
         <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>

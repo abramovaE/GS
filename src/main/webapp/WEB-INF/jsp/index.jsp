@@ -39,26 +39,29 @@
             <div class="label">Склад</div>
             <div class="storageMainPanel">
                 <div class="squareImgDiv"><a href="incomes_main">
-                    <div>+</div>
+                    <div></div>
                     <div>Приходы</div>
                 </a></div>
                 <div class="squareImgDiv"><a href="expands_main">
-                    <div>-</div>
+                    <div></div>
                     <div>Расходы</div>
                 </a></div>
-                <div class="squareImgDiv"><a href="show_storage">
-                    <div>=</div>
-                    <div>Посмотреть остатки</div>
+                <div class="squareImgDiv"><a href="items_main">
+                    <div></div>
+                    <div>Товары</div>
                 </a></div>
-                <div class="storageMainPanel">
-                    <div class="squareImgDiv">
-                        <a href="items_main">
-                            <div>Товары</div>
-                        </a>
-                    </div>
-                </div>
-
-                </div>
+                <div class="squareImgDiv"><a href="show_storage">
+                    <div></div>
+                    <div>Остатки</div>
+                </a></div>
+            </div>
+<%--            <div class="storageMainPanel">--%>
+<%--                <div class="squareImgDiv">--%>
+<%--                    <a href="items_main">--%>
+<%--                        <div>Товары</div>--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
     </sec:authorize>
 

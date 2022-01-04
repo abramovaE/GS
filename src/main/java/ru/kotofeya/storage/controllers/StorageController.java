@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class StorageController {
@@ -25,6 +26,7 @@ public class StorageController {
     public String  showStorage(Model model) {
         Integer count = (Integer) model.asMap().get("count");
         List<Item> items = (List<Item>) model.asMap().get("items");
+
         if(count == null){
             count = 0;
         }
@@ -32,7 +34,8 @@ public class StorageController {
             items = itemService.getAllItems();
         }
         model.addAttribute("count", count);
-        model.addAttribute("items", items);
+        model.addAttribute("items", items.stream().filter(it->it.getCount() > 0)
+                .collect(Collectors.toList()));
         return "storage/items/all_items";
     }
 
@@ -40,7 +43,8 @@ public class StorageController {
     public String  showStorage(Model model, @PathVariable ("sortParam") String sortParam,
                                @PathVariable("count") Integer count) {
         final int c = count%2;
-        List<Item> allItems = itemService.getAllItems();
+        List<Item> allItems = itemService.getAllItems().stream().filter(it->it.getCount() > 0)
+                .collect(Collectors.toList());
         switch (sortParam){
             case "article":
                 Collections.sort(allItems, new Comparator<Item>() {
@@ -94,6 +98,16 @@ public class StorageController {
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
                             String date1 = o1.getDate();
                             String date2 = o2.getDate();
+                            if(date1.split("\\.")[2].length() == 2){
+                                date1 = date1.split("\\.")[0] + "." +
+                                        date1.split("\\.")[1] + ".20" +
+                                        date1.split("\\.")[2];
+                            }
+                            if(date2.split("\\.")[2].length() == 2){
+                                date2 = date2.split("\\.")[0] + "." +
+                                        date2.split("\\.")[1] + ".20" +
+                                        date2.split("\\.")[2];
+                            }
                             if (date1 == null) {
                                 date1 = LocalDate.now().format(formatter);
                             }
