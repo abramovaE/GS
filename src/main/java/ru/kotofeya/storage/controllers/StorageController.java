@@ -5,8 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import ru.kotofeya.storage.model.expands.ExpandString;
+import ru.kotofeya.storage.model.incomes.IncomeString;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.ItemService;
+import ru.kotofeya.storage.service.expands.ExpandStringService;
+import ru.kotofeya.storage.service.incomes.IncomeStringService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -20,14 +24,42 @@ public class StorageController {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private IncomeStringService incomeStringService;
+    @Autowired
+    private ExpandStringService expandStringService;
 
     @GetMapping("/show_storage")
     public String  showStorage(Model model) {
         model.addAttribute("count", getCount(model));
-        model.addAttribute("items", getItems(model)
+        List<Item> items = getItems(model)
                 .stream().filter(it->(it.getCount() != null && it.getCount() > 0))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        setMiddlePrice(items);
+        model.addAttribute("items", items);
+
         return "storage/items/all_items";
+    }
+
+    private void setMiddlePrice(List<Item> items){
+        for(Item item: items){
+            List<IncomeString> incomes = incomeStringService.getAllItemIncomes(item);
+            List<ExpandString> expands = expandStringService.getAllItemExpands(item);
+            int cost = 0;
+            for(IncomeString incomeString: incomes){
+                cost = cost + incomeString.getPurchasePriceAct() * incomeString.getCount();
+            }
+            for(ExpandString expandString: expands){
+                cost = cost - expandString.getSalePrice() * expandString.getCount();
+            }
+            if(item.getCount() != null && item.getCount() > 0) {
+                item.setMiddlePrice(cost / item.getCount());
+            }
+            else {
+                item.setMiddlePrice(0);
+            }
+        }
     }
 
     private int getCount(Model model){
@@ -54,6 +86,7 @@ public class StorageController {
         List<Item> allItems = itemService.getAllItems()
                 .stream().filter(it->it.getCount() != null && it.getCount() > 0)
                 .collect(Collectors.toList());
+        setMiddlePrice(allItems);
         sortItems(allItems, sortParam, c);
         model.addAttribute("items", allItems);
         count++;
@@ -66,112 +99,13 @@ public class StorageController {
                              @PathVariable("count") Integer count) {
         final int c = count%2;
         List<Item> allItems = itemService.getAllItems();
+        setMiddlePrice(allItems);
         sortItems(allItems, sortParam, c);
         model.addAttribute("items", allItems);
         count++;
         model.addAttribute("count", count);
         return getAllItems(model);
     }
-
-//    private void sortItems(List<Item> allItems, String sortParam, int c){
-//        switch (sortParam){
-//            case "article":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getArticle(), o2.getArticle()):
-//                                compareItems(o2.getArticle(), o1.getArticle());
-//                    }
-//                });
-//                break;
-//            case "name":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getName(), o2.getName()):
-//                                compareItems(o2.getName(), o1.getName());
-//                    }
-//                });
-//                break;
-//            case "type":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getMarketplaceArt(), o2.getMarketplaceArt()):
-//                                compareItems(o2.getMarketplaceArt(), o1.getMarketplaceArt());
-//                    }
-//                });
-//                break;
-//            case "link":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getMpLink(), o2.getMpLink()):
-//                                compareItems(o2.getMpLink(), o1.getMpLink());
-//                    }
-//                });
-//                break;
-//            case "ean":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getEan(), o2.getEan()):
-//                                compareItems(o2.getEan(), o1.getEan());
-//                    }
-//                });
-//                break;
-//            case "username":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareItems(o1.getUserName(), o2.getUserName()):
-//                                compareItems(o2.getUserName(), o1.getUserName());
-//                    }
-//                });
-//                break;
-//            case "date":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//                        String date1 = o1.getDate();
-//                        String date2 = o2.getDate();
-//                        if(date1.split("\\.")[2].length() == 2){
-//                            date1 = date1.split("\\.")[0] + "." +
-//                                    date1.split("\\.")[1] + ".20" +
-//                                    date1.split("\\.")[2];
-//                        }
-//                        if(date2.split("\\.")[2].length() == 2){
-//                            date2 = date2.split("\\.")[0] + "." +
-//                                    date2.split("\\.")[1] + ".20" +
-//                                    date2.split("\\.")[2];
-//                        }
-//                        if (date1 == null) {
-//                            date1 = LocalDate.now().format(formatter);
-//                        }
-//                        if (date2 == null) {
-//                            date2 = LocalDate.now().format(formatter);
-//                        }
-//                        LocalDate localDate1 = LocalDate.parse(date1, formatter);
-//                        LocalDate localDate2 = LocalDate.parse(date2, formatter);
-//                        return (c == 0) ? localDate1.compareTo(localDate2)
-//                                : localDate2.compareTo(localDate1);
-//                    }
-//                });
-//                break;
-//            case "count":
-//                Collections.sort(allItems, new Comparator<Item>() {
-//                    @Override
-//                    public int compare(Item o1, Item o2) {
-//                        return (c == 0) ? compareInts(o1.getCount(), o2.getCount()) :
-//                                compareInts(o2.getCount(), o1.getCount());
-//                    }
-//                });
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
     private void sortItems(List<Item> allItems, String sortParam, int c){
         Collections.sort(allItems, new Comparator<Item>() {
@@ -211,6 +145,12 @@ public class StorageController {
                     case "count":
                         return (c == 0) ? compareInts(o1.getCount(), o2.getCount()) :
                                 compareInts(o2.getCount(), o1.getCount());
+                    case "middlePrice":
+                        return (c == 0) ? compareInts(o1.getMiddlePrice(), o2.getMiddlePrice()) :
+                                compareInts(o2.getMiddlePrice(), o1.getMiddlePrice());
+                    case "sum":
+                        return (c == 0) ? compareInts(o1.getMiddlePrice() * o1.getCount(), o2.getMiddlePrice() * o2.getCount()) :
+                                compareInts(o2.getMiddlePrice() * o2.getCount(), o1.getMiddlePrice() * o1.getCount());
                     default:
                         return o1.getId().compareTo(o2.getId());
                 }
@@ -222,12 +162,15 @@ public class StorageController {
 
     private String validateDate(String date1){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        if(date1 != null && date1.split("\\.")[2].length() == 2){
+        System.out.println(date1);
+
+
+        if(date1 != null && !date1.isEmpty() && date1.split("\\.")[2].length() == 2){
             date1 = date1.split("\\.")[0] + "." +
                     date1.split("\\.")[1] + ".20" +
                     date1.split("\\.")[2];
         }
-        if (date1 == null) {
+        if (date1 == null || date1.isEmpty()) {
             date1 = LocalDate.now().format(formatter);
         }
         return  date1;

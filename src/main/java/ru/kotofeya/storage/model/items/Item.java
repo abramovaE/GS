@@ -70,6 +70,22 @@ public class Item {
     public int getMiddlePrice() {return middlePrice;}
     public void setMiddlePrice(int middlePrice) {this.middlePrice = middlePrice;}
 
+    public Set<IncomeString> getIncomeStrings() {
+        return incomeStrings;
+    }
+
+    public void setIncomeStrings(Set<IncomeString> incomeStrings) {
+        this.incomeStrings = incomeStrings;
+    }
+
+    public Set<ExpandString> getExpandStrings() {
+        return expandStrings;
+    }
+
+    public void setExpandStrings(Set<ExpandString> expandStrings) {
+        this.expandStrings = expandStrings;
+    }
+
     @Override
     public String toString() {
         return "Item{" +

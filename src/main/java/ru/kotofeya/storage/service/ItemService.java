@@ -3,6 +3,8 @@ package ru.kotofeya.storage.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kotofeya.storage.model.expands.ExpandString;
+import ru.kotofeya.storage.model.incomes.IncomeString;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.repo.ItemRepo;
 
@@ -46,4 +48,5 @@ public class ItemService {
     public Item findMaxIdItem(){
         return itemRepo.findTopByOrderByIdDesc().orElse(null);
     }
+
 }

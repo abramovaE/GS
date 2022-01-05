@@ -64,12 +64,22 @@ public class ExpandMainController {
         if(allItems == null || allItems.isEmpty()){
             return "redirect:/";
         }
+
+        setMiddlePrice(allItems);
+
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("expandMainForm", new ExpandMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("expandString", new ExpandString());
-        for(Item item: allItems){
+
+
+//        System.out.println(allItems);
+        return "storage/expands/add_expand_main";
+    }
+
+    private void setMiddlePrice(List<Item> items){
+        for(Item item: items){
             List<IncomeString> incomes = incomeStringService.getAllItemIncomes(item);
             List<ExpandString> expands = expandStringService.getAllItemExpands(item);
             int cost = 0;
@@ -81,9 +91,6 @@ public class ExpandMainController {
             }
             item.setMiddlePrice(cost/item.getCount());
         }
-
-//        System.out.println(allItems);
-        return "storage/expands/add_expand_main";
     }
 
     @PostMapping("/add_expand_main")

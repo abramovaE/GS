@@ -12,14 +12,17 @@
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/add_income_main_style.css" %>
     </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
 </head>
 <body  class="bodyClassGreen">
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script type="text/javascript">
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
@@ -139,9 +142,6 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
-        $(function () {
-            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
-        });
 </script>
     <div class="topPanel">
         <div class="topPanelFirst">

@@ -11,6 +11,7 @@
     <%@include file="/resources/add_income_style.css" %>
     <%@include file="/resources/index_style.css" %>
   </style>
+
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
 </head>

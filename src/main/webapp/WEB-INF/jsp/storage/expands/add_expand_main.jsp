@@ -12,17 +12,18 @@
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/add_income_main_style.css" %>
     </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
 </head>
 <body  class="bodyClassGreen">
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript">
 
-    $(document).ready(
+    <script type="text/javascript">
         function handleItem(index){
             let priceCell;
             let inputItem = document.getElementById('item'+index).value;
@@ -42,21 +43,19 @@
                             countCell.value = Number(countCell.value) + 1
                             if(countCell.value > 1) {
                                 document.getElementById('item' + index).value = "";
+                                // document.getElementById('price' + index).value = "";
+
                                 c = 1;
                             }
                         }
                     }
-                    <%--alert(${items.size()})--%>
-
-                    if(${items} != null && ${items.size() > 0}){
                     for(let i = 0; i < ${items.size()}; i++){
-
-                        if(ean != null && Number(${items.get(i).ean}) == ean){
+                        if('${items.get(i).ean}' == ean){
                             priceCell = document.getElementById("price" + index);
                             priceCell.value = ${items.get(i).middlePrice/100}
                         }
                     }
-                }
+
                     if(c == 0) {
                         const tr = document.getElementById("tr" + (index + 1));
                         tr.hidden = false;
@@ -71,26 +70,25 @@
                         countCell.value = Number(countCell.value) + 1
                         if(countCell.value > 1) {
                             document.getElementById('item' + index).value = "";
+                            // document.getElementById('price' + index).value = "";
                             c = 1;
                         }
                     }
                 }
 
-            alert(${items.size()})
-                if(${items.size() > 0}){
-                    for(var i = 0; i < ${items.size()}; i++){
-                    if(Number(${items.get(i).ean}) == ean){
+                for(let i = 0; i < ${items.size()}; i++){
+                    if('${items.get(i).ean}' == ean){
                         priceCell = document.getElementById("price" + index);
                         priceCell.value = ${items.get(i).middlePrice/100}
                     }
-                    }
                 }
+
                 if(c == 0) {
                     const tr = document.getElementById("tr" + (index + 1));
                     tr.hidden = false;
                 }
             }
-        });
+        }
 
 
         function addExpandMain() {
@@ -159,10 +157,6 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
-        $(function () {
-            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
-        });
-
     </script>
     <div class="topPanel">
         <div class="topPanelFirst">

@@ -12,15 +12,18 @@
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/show_income_string_style.css" %>
     </style>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
 </head>
 
 <body class="bodyClassGreen">
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
     function handlePrice(){
         var count = document.getElementById('incomeStringForm').count.value
@@ -29,9 +32,7 @@
         document.getElementById('ppSum').innerHTML = Math.round(count * ppDouble * 100)/100
         document.getElementById('ppActSum').innerHTML = Math.round(count * ppActDouble * 100)/100
     }
-    $(function () {
-        $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
-    });
+
 </script>
 <div class="topPanel">
     <div class="topPanelFirst">
