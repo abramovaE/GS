@@ -184,7 +184,7 @@
 
 
         $(function () {
-            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
+            $("#datepicker").datepicker({dateFormat: "dd.mm.yyyy"});
         });
 </script>
     <div class="topPanel">
@@ -260,12 +260,9 @@
                         <td>${expandString.salePrice/100}</td>
                         <td>${expandString.batchNumber}</td>
                         <td>${expandString.count * expandString.salePrice/100}</td>
-<%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
-<%--                            <a href="show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>--%>
-<%--                        </td>--%>
                         <td class="edit" id="deleteTd${ind.count}"  >
                             <a id="delete${ind.count}" hidden
-                                    href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                               href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>
                     </tr>
             </c:forEach>

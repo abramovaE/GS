@@ -53,8 +53,15 @@
         <div class="innerDivLogin">
             <form:input
                     type="text"
-                    path="marketplaceArt"
-                    placeholder="Артикул на маркетплейсе"
+                    path="yandexArt"
+                    placeholder="Артикул на Яндексе"
+                    class="inputClassLight"/>
+        </div>
+        <div class="innerDivLogin">
+            <form:input
+                    type="text"
+                    path="sberArt"
+                    placeholder="Артикул на Сбермаркете"
                     class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
@@ -68,8 +75,16 @@
         <div class="innerDivLogin">
             <form:input
                     type="text"
-                    path="mpLink"
-                    placeholder="Ссылка на карточку товара"
+                    path="mpLinkYandex"
+                    placeholder="Ссылка на карточку товара (Яндекс)"
+                    autofocus="true"
+                    class="inputClassLight"/>
+        </div>
+        <div class="innerDivLogin">
+            <form:input
+                    type="text"
+                    path="mpLinkSber"
+                    placeholder="Ссылка на карточку товара (Сбермаркет)"
                     autofocus="true"
                     class="inputClassLight"/>
         </div>

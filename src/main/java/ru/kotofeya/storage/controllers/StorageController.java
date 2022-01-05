@@ -52,7 +52,7 @@ public class StorageController {
                                @PathVariable("count") Integer count) {
         final int c = count%2;
         List<Item> allItems = itemService.getAllItems()
-                .stream().filter(it->it.getCount() > 0)
+                .stream().filter(it->it.getCount() != null && it.getCount() > 0)
                 .collect(Collectors.toList());
         sortItems(allItems, sortParam, c);
         model.addAttribute("items", allItems);
@@ -184,12 +184,18 @@ public class StorageController {
                     case "name":
                         return (c == 0) ? compareItems(o1.getName(), o2.getName()):
                                 compareItems(o2.getName(), o1.getName());
-                    case "type":
-                        return (c == 0) ? compareItems(o1.getMarketplaceArt(), o2.getMarketplaceArt()):
-                                compareItems(o2.getMarketplaceArt(), o1.getMarketplaceArt());
-                    case "link":
-                        return (c == 0) ? compareItems(o1.getMpLink(), o2.getMpLink()):
-                                compareItems(o2.getMpLink(), o1.getMpLink());
+                    case "artYandex":
+                        return (c == 0) ? compareItems(o1.getYandexArt(), o2.getYandexArt()):
+                                compareItems(o2.getYandexArt(), o1.getYandexArt());
+                    case "artSber":
+                        return (c == 0) ? compareItems(o1.getSberArt(), o2.getSberArt()):
+                                compareItems(o2.getSberArt(), o1.getSberArt());
+                    case "linkYandex":
+                        return (c == 0) ? compareItems(o1.getMpLinkYandex(), o2.getMpLinkYandex()):
+                                compareItems(o2.getMpLinkYandex(), o1.getMpLinkYandex());
+                    case "linkSber":
+                        return (c == 0) ? compareItems(o1.getMpLinkSber(), o2.getMpLinkSber()):
+                                compareItems(o2.getMpLinkSber(), o1.getMpLinkSber());
                     case "ean":
                         return (c == 0) ? compareItems(o1.getEan(), o2.getEan()):
                                 compareItems(o2.getEan(), o1.getEan());

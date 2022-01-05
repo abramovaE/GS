@@ -33,8 +33,11 @@
     <table class="addIncome">
         <th><a href="<c:url value="/items_main/sortBy/article/${count}"/>">Артикул внутренний</a></th>
         <th><a href="<c:url value="/items_main/sortBy/name/${count}"/>">Наименование</a></th>
-        <th><a href="<c:url value="/items_main/sortBy/type/${count}"/>">Артикул на маркетплейсе</a></th>
-        <th><a href="<c:url value="/items_main/sortBy/link/${count}"/>">Ссылка на маркетплейсе</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/artYandex/${count}"/>">Артикул на Яндексе</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/artSber/${count}"/>">Артикул на Сбермаркете</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/linkYandex/${count}"/>">Ссылка на Яндексе</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/linkSber/${count}"/>">Ссылка на Сбермаркете</a></th>
+
         <th><a href="<c:url value="/items_main/sortBy/ean/${count}"/>">EAN-номер</a></th>
         <th><a href="<c:url value="/items_main/sortBy/username/${count}"/>">Кто добавил</a></th>
         <th><a href="<c:url value="/items_main/sortBy/date/${count}"/>">Дата добавления</a></th>
@@ -43,8 +46,10 @@
             <tr onclick="location.href='show_item/${item.id}/${pageContext.request.userPrincipal.name}'">
                 <td>${item.article}</td>
                 <td>${item.name}</td>
-                <td>${item.marketplaceArt}</td>
-                <td>${item.mpLink}</td>
+                <td>${item.yandexArt}</td>
+                <td>${item.sberArt}</td>
+                <td>${item.mpLinkYandex}</td>
+                <td>${item.mpLinkSber}</td>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>

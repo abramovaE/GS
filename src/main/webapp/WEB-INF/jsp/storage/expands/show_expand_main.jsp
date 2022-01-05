@@ -184,7 +184,7 @@
 
 
         $(function () {
-            $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
+            $("#datepicker").datepicker({dateFormat: "dd.mm.yyyy"});
         });
 </script>
     <div class="topPanel">

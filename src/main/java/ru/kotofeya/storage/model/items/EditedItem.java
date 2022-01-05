@@ -30,19 +30,26 @@ public class EditedItem {
     private String createName;
     @Column(name = "edit_name")
     private String editName;
-    @Column(name = "create_mp_article")
-    private String createMpArt;
-    @Column(name = "edit_mp_article")
-    private String editMpArt;
+    @Column(name = "create_yandex_article")
+    private String createYandexArt;
+    @Column(name = "edit_yandex_article")
+    private String editYandexArt;
+    @Column(name = "create_sber_article")
+    private String createSberArt;
+    @Column(name = "edit_sber_article")
+    private String editSberArt;
     @Column(name = "create_ean")
     private String createEan;
     @Column(name = "edit_ean")
     private String editEan;
-    @Column(name = "create_mp_link")
-    private String createMpLink;
-    @Column(name = "edit_mp_link")
-    private String editMpLink;
-
+    @Column(name = "create_mp_link_yandex")
+    private String createMpLinkYandex;
+    @Column(name = "edit_mp_link_yandex")
+    private String editMpLinkYandex;
+    @Column(name = "create_mp_link_sber")
+    private String createMpLinkSber;
+    @Column(name = "edit_mp_link_sber")
+    private String editMpLinkSber;
 
     public EditedItem() {}
     public EditedItem(Item oldItem, Item newItem, String editUserName, String editDate){
@@ -56,12 +63,16 @@ public class EditedItem {
         setEditArticle(newItem.getArticle());
         setCreateName(oldItem.getName());
         setEditName(newItem.getName());
-        setCreateMpArt(oldItem.getMarketplaceArt());
-        setEditMpArt(newItem.getMarketplaceArt());
+        setCreateYandexArt(oldItem.getYandexArt());
+        setEditYandexArt(newItem.getYandexArt());
+        setCreateSberArt(oldItem.getSberArt());
+        setEditSberArt(newItem.getSberArt());
         setCreateEan(oldItem.getEan());
         setEditEan(newItem.getEan());
-        setCreateMpLink(oldItem.getMpLink());
-        setEditMpLink(newItem.getMpLink());
+        setCreateMpLinkYandex(oldItem.getMpLinkYandex());
+        setCreateMpLinkSber(oldItem.getMpLinkSber());
+        setEditMpLinkYandex(oldItem.getMpLinkSber());
+        setEditMpLinkSber(newItem.getMpLinkSber());
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -85,16 +96,24 @@ public class EditedItem {
     public void setCreateName(String createName) {this.createName = createName;}
     public String getEditName() {return editName;}
     public void setEditName(String editName) {this.editName = editName;}
-    public String getCreateMpArt() {return createMpArt;}
-    public void setCreateMpArt(String createMpArt) {this.createMpArt = createMpArt;}
-    public String getEditMpArt() {return editMpArt;}
-    public void setEditMpArt(String editMpArt) {this.editMpArt = editMpArt;}
+    public String getCreateYandexArt() {return createYandexArt;}
+    public void setCreateYandexArt(String createYandexArt) {this.createYandexArt = createYandexArt;}
+    public String getEditYandexArt() {return editYandexArt;}
+    public void setEditYandexArt(String editYandexArt) {this.editYandexArt = editYandexArt;}
+    public String getCreateSberArt() {return createSberArt;}
+    public void setCreateSberArt(String createSberArt) {this.createSberArt = createSberArt;}
+    public String getEditSberArt() {return editSberArt;}
+    public void setEditSberArt(String editSberArt) {this.editSberArt = editSberArt;}
     public String getCreateEan() {return createEan;}
     public void setCreateEan(String createEan) {this.createEan = createEan;}
     public String getEditEan() {return editEan;}
     public void setEditEan(String editEan) {this.editEan = editEan;}
-    public String getCreateMpLink() {return createMpLink;}
-    public void setCreateMpLink(String createMpLink) {this.createMpLink = createMpLink;}
-    public String getEditMpLink() {return editMpLink;}
-    public void setEditMpLink(String editMpLink) {this.editMpLink = editMpLink;}
+    public String getCreateMpLinkYandex() {return createMpLinkYandex;}
+    public void setCreateMpLinkYandex(String createMpLinkYandex) {this.createMpLinkYandex = createMpLinkYandex;}
+    public String getEditMpLinkYandex() {return editMpLinkYandex;}
+    public void setEditMpLinkYandex(String editMpLinkYandex) {this.editMpLinkYandex = editMpLinkYandex;}
+    public String getCreateMpLinkSber() {return createMpLinkSber;}
+    public void setCreateMpLinkSber(String createMpLinkSber) {this.createMpLinkSber = createMpLinkSber;}
+    public String getEditMpLinkSber() {return editMpLinkSber;}
+    public void setEditMpLinkSber(String editMpLinkSber) {this.editMpLinkSber = editMpLinkSber;}
 }
