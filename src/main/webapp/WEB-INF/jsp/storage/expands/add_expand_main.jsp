@@ -21,7 +21,10 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
+
+    $(document).ready(
         function handleItem(index){
+            let priceCell;
             let inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('expandStringTable');
             var c = 0;
@@ -43,12 +46,17 @@
                             }
                         }
                     }
-                    for(var i = 0; i < '${items.size()}'; i++){
-                        if(Number('${items.get(i).ean}') == ean){
-                            var priceCell = document.getElementById("price" + index);
+                    <%--alert(${items.size()})--%>
+
+                    if(${items} != null && ${items.size() > 0}){
+                    for(let i = 0; i < ${items.size()}; i++){
+
+                        if(ean != null && Number(${items.get(i).ean}) == ean){
+                            priceCell = document.getElementById("price" + index);
                             priceCell.value = ${items.get(i).middlePrice/100}
                         }
                     }
+                }
                     if(c == 0) {
                         const tr = document.getElementById("tr" + (index + 1));
                         tr.hidden = false;
@@ -67,10 +75,14 @@
                         }
                     }
                 }
-                for(var i = 0; i < '${items.size()}'; i++){
-                    if(Number('${items.get(i).ean}') == ean){
-                        var priceCell = document.getElementById("price" + index);
+
+            alert(${items.size()})
+                if(${items.size() > 0}){
+                    for(var i = 0; i < ${items.size()}; i++){
+                    if(Number(${items.get(i).ean}) == ean){
+                        priceCell = document.getElementById("price" + index);
                         priceCell.value = ${items.get(i).middlePrice/100}
+                    }
                     }
                 }
                 if(c == 0) {
@@ -78,7 +90,8 @@
                     tr.hidden = false;
                 }
             }
-        }
+        });
+
 
         function addExpandMain() {
         let isSubmit = true;
@@ -179,8 +192,9 @@
                                 class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
-                        <form:input type="text" path="store"
-                                    placeholder="Магазин"
+                        <form:input type="text"
+                                    path="store"
+                                    placeholder="Контрагент"
                                     id="expandMainStore" class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
@@ -224,7 +238,7 @@
                         <td>
                             <input type="number" required="true" id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
+                                   onchange="javascript:handlePrice()"/>
                         </td>
                         <td><input type="number" placeholder="Цена продажи"
                                    id="price${index.count}"
@@ -244,7 +258,7 @@
                         <td>
                             <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
                                     placeholder="Товар" id="item${index.count}" autofocus="true"
-                                    onchange="javascript:handleItem(${index.count})">
+                                    onchange="handleItem(${index.count})">
                             <datalist id="dataList${index.count}">
                                 <c:forEach var="item" items="${items}">
                                     <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -254,13 +268,13 @@
                         <td>
                             <input type="number" required="true" id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
+                                   onchange="handlePrice()"/>
                         </td>
                         <td><input type="number" placeholder="Цена продажи"
                                    id="price${index.count}"
                                    min = "0" step="0.01"
                                    required="true"
-                                   onchange="javascript:handlePrice()"/>
+                                   onchange="handlePrice()"/>
                         </td>
                         <td><input type="text" id="batchNumber${index.count}" required="true"
                                    placeholder="Номер партии"  path="batchNumber"/></td>

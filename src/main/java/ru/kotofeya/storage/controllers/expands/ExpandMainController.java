@@ -59,8 +59,11 @@ public class ExpandMainController {
 
     @GetMapping("/add_expand_main")
     public String  addExpandMain(Model model) {
-        List<Item> allItems = itemService.getAllItems().stream().filter(it->(it.getCount() != null && it.getCount()>0))
+        List<Item> allItems = itemService.getAllItems().stream().filter(it->(it.getCount() != null && it.getCount() > 0))
                 .collect(Collectors.toList());
+        if(allItems == null || allItems.isEmpty()){
+            return "redirect:/";
+        }
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("expandMainForm", new ExpandMain());
@@ -78,6 +81,8 @@ public class ExpandMainController {
             }
             item.setMiddlePrice(cost/item.getCount());
         }
+
+//        System.out.println(allItems);
         return "storage/expands/add_expand_main";
     }
 

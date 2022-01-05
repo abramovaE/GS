@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <html>
 <head>
@@ -11,22 +11,11 @@
     <%@include file="/resources/add_income_style.css" %>
     <%@include file="/resources/index_style.css" %>
   </style>
+  <script type="text/javascript"
+          src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
 </head>
 <body class="bodyClassGreen">
-<script>
-  function showEditPanel(id){
-    // document.getElementById('edit' + id).style.display = 'block'
-    document.getElementById('delete' + id).style.display = 'block'
-    // document.getElementById('editth').style.display = 'block'
-    document.getElementById('deleteth').style.display = 'block'
-  }
-  function hideEditPanel(id){
-    // document.getElementById('edit' + id).style.display = 'none'
-    document.getElementById('delete' + id).style.display = 'none'
-    // document.getElementById('editth').style.display = 'none'
-    document.getElementById('deleteth').style.display = 'none'
-  }
-</script>
+
 <sec:authorize access="!isAuthenticated()">
   <% response.sendRedirect("/"); %>
 </sec:authorize>
@@ -38,35 +27,31 @@
     <div><a href="add_expand_main">Создать расход</a></div>
   </div>
   <div class="topPanelLast">
-    <div><a href="/GS">На главную</a></div>
+    <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
   </div>
 </div>
-
 
 <div class="outerDivTr">
   <div class="innerDivTr">
     <h2 class="h2Light">Расходы</h2>
     <table class="todayIncomeStrings">
       <tr>
-        <th>Создал</th>
         <th>Дата</th>
-        <th>Магазин</th>
+        <th>Создал</th>
+        <th>Контрагент</th>
         <th>Сумма продажи, руб.</th>
       </tr>
       <c:forEach items="${expandsMain}" var="expandMain">
-        <tr onmouseover="javascript:showEditPanel(${expandMain.id})"
-            onmouseout="javascript:hideEditPanel(${expandMain.id})"
+        <tr onmouseover="showEditPanel(${expandMain.id})"
+            onmouseout="hideEditPanel(${expandMain.id})"
             onclick="location.href='show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}'">
-
-          <td>${expandMain.userName}</td>
           <td>${expandMain.date}</td>
+          <td>${expandMain.userName}</td>
           <td>${expandMain.store}</td>
           <td>${expandMain.sum/100}</td>
-<%--          <td class="edit" id="edit${expandMain.id}" hidden>--%>
-<%--            <a href="show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Посмотреть</a>--%>
-<%--          </td>--%>
-          <td class="edit" id="delete${expandMain.id}" hidden>
-            <a href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+          <td id="deleteTd${expandMain.id}">
+            <a id="delete${expandMain.id}" hidden
+               href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
           </td>
         </tr>
       </c:forEach>

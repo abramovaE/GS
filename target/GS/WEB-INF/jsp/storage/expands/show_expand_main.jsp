@@ -13,6 +13,8 @@
         <%@include file="/resources/add_income_main_style.css" %>
         <%@include file="/resources/show_income_main_style.css" %>
     </style>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
 </head>
 <body  class="bodyClassGreen">
     <sec:authorize access="!isAuthenticated()">
@@ -180,18 +182,6 @@
         tr.closest('tr' + rowIndex)
     }
 
-        function showEditPanel(id){
-            // document.getElementById('edit' + id).style.display = 'block'
-            document.getElementById('delete' + id).style.display = 'block'
-            // document.getElementById('editth').style.display = 'block'
-            document.getElementById('deleteth').style.display = 'block'
-        }
-        function hideEditPanel(id){
-            // document.getElementById('edit' + id).style.display = 'none'
-            document.getElementById('delete' + id).style.display = 'none'
-            // document.getElementById('editth').style.display = 'none'
-            document.getElementById('deleteth').style.display = 'none'
-        }
 
         $(function () {
             $("#datepicker").datepicker({dateFormat: "dd.mm.yy"});
@@ -232,7 +222,7 @@
                     </div>
                 <div class="innerDivLogin">
                     <form:input type="text" path="store"
-                                placeholder="Магазин продажи"
+                                placeholder="Контрагент"
                                 id="expandMainStore" class="inputClassLight"/>
                 </div>
                     <div class="innerDivLogin">
@@ -273,8 +263,9 @@
 <%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
 <%--                            <a href="show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>--%>
 <%--                        </td>--%>
-                        <td class="edit" id="delete${ind.count}" hidden>
-                            <a href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                        <td class="edit" id="deleteTd${ind.count}"  >
+                            <a id="delete${ind.count}" hidden
+                                    href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>
                     </tr>
             </c:forEach>

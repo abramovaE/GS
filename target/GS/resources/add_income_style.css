@@ -68,7 +68,6 @@
     width: 100%;
 }
 
-
 .todayIncomeStrings tr{
     cursor: pointer;
 }
@@ -79,9 +78,6 @@
     background-color: mediumseagreen;
     font-size: 12pt;
     font-family: Helvetica;
-
-
-    /*padding: 2px;*/
 }
 
 .todayIncomeStrings{
@@ -103,7 +99,7 @@
     font-size: 12pt;
     font-family: Helvetica;
     box-sizing: border-box;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 #ppSum, #ppActSum{
@@ -117,6 +113,11 @@
     width: 100%;
 }
 
-.edit{
-    margin: 2px;
+.todayIncomeStrings tr td:first-of-type{
+    width: 100px;
+}
+
+.todayIncomeStrings tr td:last-of-type{
+    width: 100px;
+    background-color: #8fc7a0;
 }

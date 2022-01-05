@@ -73,6 +73,8 @@ public class Item {
                 ", userName='" + userName + '\'' +
                 ", date='" + date + '\'' +
                 ", count=" + count +
+                ", middlePrice=" + middlePrice +
+
 //                ", incomeStrings=" + incomeStrings +
 //                ", expandStrings=" + expandStrings +
                 '}';

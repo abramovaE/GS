@@ -12,7 +12,11 @@
         <%@include file="/resources/index_style.css" %>
         <%@include file="/resources/add_income_main_style.css" %>
         <%@include file="/resources/show_income_main_style.css" %>
+
     </style>
+
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
@@ -170,20 +174,8 @@
             const tr = document.getElementById('tr' + rowIndex);
             tr.closest('tr' + rowIndex)
         }
-        function showEditPanel(id){
-            // document.getElementById('edit' + id).style.display = 'block'
-            document.getElementById('delete' + id).style.display = 'block'
-            // document.getElementById('editth').style.display = 'block'
-            document.getElementById('deleteth').style.display = 'block'
-        }
-        function hideEditPanel(id){
-            // document.getElementById('edit' + id).style.display = 'none'
-            document.getElementById('delete' + id).style.display = 'none'
-            // document.getElementById('editth').style.display = 'none'
-            document.getElementById('deleteth').style.display = 'none'
-        }
         $(function () {
-            $("#datepicker").datepicker({dateFormat: 'dd.mm.yy'});
+            $("#datepicker").datepicker({dateFormat: 'dd.mm.yyyy'});
         });
 </script>
     <div class="topPanel">
@@ -264,7 +256,6 @@
                         onmouseout="hideEditPanel(${ind.count})"
                         onclick="location.href='show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}'">
                         <td>${incomeString.batchNumber}</td>
-
                         <td>${incomeString.item.name}</td>
                         <td>${incomeString.count}</td>
                         <td>${incomeString.purchasePrice/100}</td>
@@ -272,11 +263,9 @@
                         <td>${incomeString.storeArticle}</td>
                         <td>${incomeString.count * incomeString.purchasePrice/100}</td>
                         <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>
-<%--                        <td class="edit" id="edit${ind.count}" hidden>--%>
-<%--                            <a href="show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Редактировать</a>--%>
-<%--                        </td>--%>
-                        <td class="edit" id="delete${ind.count}" hidden>
-                            <a href="delete_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                        <td class="edit" id="deleteTd${ind.count}">
+                            <a id="delete${ind.count}" hidden
+                               href="delete_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
                         </td>
                     </tr>
             </c:forEach>
