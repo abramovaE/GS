@@ -121,6 +121,7 @@ public class IncomeMainController {
                         LocalDateTime.now().format(dateTimeFormatter),
                         deleteUserName);
                 deletedIncomeStringService.saveDeletedIncome(deletedIncome);
+                System.out.println("incomestring: " + incomeString);
                 incomeStringService.deleteIncomeById(incomeString.getId());
             }
             DeletedIncomeMain deletedIncomeMain = new DeletedIncomeMain(incomeMain,
