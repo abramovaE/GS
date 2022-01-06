@@ -12,25 +12,16 @@ import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Controller
 public class ItemController {
-
     @Autowired
     private ItemService itemService;
     @Autowired
     private EditItemService editItemService;
-
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
 
     @GetMapping("/add_item")
     public String  addItem(Model model) {
@@ -58,11 +49,9 @@ public class ItemController {
         return "redirect:/show_storage";
     }
 
-
-
-
-
-    @GetMapping("/show_item/{itemId}/{editUserName}")
+    @GetMapping({"/show_item/{itemId}/{editUserName}",
+            "items_main/sortBy/{sortParam}/show_item/{itemId}/{editUserName}",
+            "allItems/sortBy/{sortParam}/show_item/{itemId}/{editUserName}"})
     public String showItem(Model model,
                                  @PathVariable("itemId") Long itemId,
                                  @PathVariable("editUserName") String editUserName) {
@@ -84,6 +73,4 @@ public class ItemController {
         model.addAttribute("item", item);
         return "redirect:/items_main";
     }
-
-
 }

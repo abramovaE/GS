@@ -9,3 +9,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 }
+
+
+//в товарах после сортировки не работают ссылки
