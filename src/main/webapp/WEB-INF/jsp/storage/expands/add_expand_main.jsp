@@ -201,7 +201,7 @@
                 <th>Номер партии</th>
                 <th>EAN</th>
                 <th>Товар</th>
-                <th>Id</th>
+                <th hidden>Id</th>
                 <th>Количество</th>
                 <th>Цена продажи, руб.</th>
                 <th>Сумма продажи, руб.</th>
@@ -237,7 +237,7 @@
                                    id="name${index.count}"
                                    placeholder="Наименование"/>
                         </td>
-                        <td>
+                        <td hidden>
                             <input
                                    id="itemId${index.count}"/>
                         </td>

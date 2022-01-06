@@ -59,14 +59,16 @@ public class ExpandMainController {
 
     @GetMapping("/add_expand_main")
     public String  addExpandMain(Model model) {
-        List<Item> allItems = itemService.getAllItems().stream().filter(it->(it.getCount() != null && it.getCount() > 0))
+        List<Item> allItems = itemService.getAllItems().stream()
+                .filter(it->(it.getCount() != null && it.getCount() > 0))
                 .collect(Collectors.toList());
         if(allItems == null || allItems.isEmpty()){
             return "redirect:/";
         }
         setMiddlePrice(allItems);
         model.addAttribute("items", allItems);
-        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
+        model.addAttribute("eans", allItems.stream()
+                .map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("expandMainForm", new ExpandMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("expandString", new ExpandString());
@@ -84,7 +86,13 @@ public class ExpandMainController {
             for(ExpandString expandString: expands){
                 cost = cost - expandString.getSalePrice() * expandString.getCount();
             }
-            item.setMiddlePrice(cost/item.getCount());
+
+            if(item.getCount() != null && item.getCount() > 0) {
+                item.setMiddlePrice(cost / item.getCount());
+            }
+            else {
+                item.setMiddlePrice(0);
+            }
         }
     }
 
@@ -105,9 +113,13 @@ public class ExpandMainController {
     public String showExpandMain(Model model,
                                    @PathVariable("expandId") Long expandId,
                                    @PathVariable("editUserName") String editUserName) {
-        List<Item> allItems = itemService.getAllItems();
+        List<Item> allItems = itemService.getAllItems().stream()
+                .filter(it->(it.getCount() != null && it.getCount() > 0))
+                .collect(Collectors.toList());
+//        List<Item> allItems = itemService.getAllItems();
         ExpandMain expandMain = expandMainService.findById(expandId);
         expandMain = setSumsForJsp(expandMain);
+        setMiddlePrice(allItems);
         model.addAttribute("expandMain", expandMain);
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
