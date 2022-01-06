@@ -24,72 +24,66 @@
     </sec:authorize>
 
     <script type="text/javascript">
+
+        $(document).ready(function() {
+            handleItem(index);
+        });
+
         function handleItem(index){
-            let priceCell;
             let inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('expandStringTable');
-            var c = 0;
+            let c = 0;
+
             if(inputItem.indexOf("::") === -1){
                 if('${eans}'.indexOf(inputItem) === -1){
                     window.alert("Такого товара нет в базе");
                     document.getElementById('item'+index).value = "";
                 }
                 else {
-                    const ean = Number(inputItem.split("::")[3])
-                    for(var j = 1; j < table.rows.length; j++){
-                        var itemId = document.getElementById("item" + j).value;
-                        if(itemId === inputItem){
-                            var countCell = document.getElementById("count" + j);
-                            countCell.value = Number(countCell.value) + 1
-                            if(countCell.value > 1) {
-                                document.getElementById('item' + index).value = "";
-                                // document.getElementById('price' + index).value = "";
-
-                                c = 1;
-                            }
-                        }
-                    }
-                    for(let i = 0; i < ${items.size()}; i++){
-                        if('${items.get(i).ean}' == ean){
-                            priceCell = document.getElementById("price" + index);
-                            priceCell.value = ${items.get(i).middlePrice/100}
-                        }
-                    }
-
+                    const ean = inputItem.split("::")[3]
+                    c = incrementCount(table, inputItem, index)
+                    setMiddlePrice(ean, index)
                     if(c == 0) {
                         const tr = document.getElementById("tr" + (index + 1));
                         tr.hidden = false;
                     }
                 }
             } else {
-                const ean = Number(inputItem.split("::")[3])
-                for(var j = 1; j < table.rows.length; j++){
-                    var itemId = document.getElementById("item" + j).value;
-                    if(itemId === inputItem){
-                        var countCell = document.getElementById("count" + j);
-                        countCell.value = Number(countCell.value) + 1
-                        if(countCell.value > 1) {
-                            document.getElementById('item' + index).value = "";
-                            // document.getElementById('price' + index).value = "";
-                            c = 1;
-                        }
-                    }
-                }
-
-                for(let i = 0; i < ${items.size()}; i++){
-                    if('${items.get(i).ean}' == ean){
-                        priceCell = document.getElementById("price" + index);
-                        priceCell.value = ${items.get(i).middlePrice/100}
-                    }
-                }
-
+                const ean = inputItem.split("::")[3]
+                setMiddlePrice(ean, index)
+                c = incrementCount(table, inputItem, index)
                 if(c == 0) {
                     const tr = document.getElementById("tr" + (index + 1));
                     tr.hidden = false;
                 }
             }
+            handlePrice()
         }
 
+        function incrementCount(table, inputItem, index){
+            for(let j = 1; j < table.rows.length; j++){
+                let itemId = document.getElementById("item" + j).value;
+                if(itemId === inputItem){
+                    let countCell = document.getElementById("count" + j);
+                    countCell.value = Number(countCell.value) + 1
+                    if(countCell.value > 1) {
+                        document.getElementById('item' + index).value = "";
+                        document.getElementById('price' + index).value = "";
+                        return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        function setMiddlePrice(ean, index){
+            <c:forEach var="model" items="${items}">
+            if("${model.ean}" == ean){
+                let priceCell = document.getElementById("price" + index);
+                priceCell.value = ${model.middlePrice/100}
+            }
+            </c:forEach>
+        }
 
         function addExpandMain() {
         let isSubmit = true;
@@ -97,7 +91,7 @@
         const table = document.getElementById('expandStringTable');
         let index;
         for (index = 1; index < table.rows.length; index++) {
-            var itemId = document.getElementById("item" + index).value;
+            let itemId = document.getElementById("item" + index).value;
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
@@ -210,49 +204,25 @@
     <div class="innerDivTr">
         <table class="addIncome" id="expandStringTable">
             <tr id="expandStringTableHeader">
+                <th>Номер партии</th>
                 <th>Товар</th>
                 <th>Количество</th>
                 <th>Цена продажи, руб.</th>
-                <th>Номер партии</th>
                 <th>Сумма продажи, руб.</th>
             </tr>
             <c:forEach var="rowIndex" begin="1" end="100" step="1" varStatus="index">
-                <c:if test="${index.count>1}">
-                    <tr hidden="true" id="tr${index.count}">
+                    <tr <c:if test="${index.count>1}">
+                                hidden
+                            </c:if>
+                        id="tr${index.count}">
+                        <td>
+                            <input type="text" id="batchNumber${index.count}" required="true"
+                                   placeholder="Номер партии"  path="batchNumber"/>
+                        </td>
                         <td>
                             <input autocomplete="off" name="inputItem" list="dataList${index.count}"
                                    placeholder="Товар" id="item${index.count}" autofocus="true"
-                                   onchange="javascript:handleItem(${index.count})">
-                            <datalist id="dataList${index.count}">
-                                <c:forEach var="item" items="${items}">
-                                    <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
-                                </c:forEach>
-                            </datalist>
-                        </td>
-                        <td>
-                            <input type="number" required="true" id="count${index.count}"
-                                   placeholder="Количество" min = "0"
-                                   onchange="javascript:handlePrice()"/>
-                        </td>
-                        <td><input type="number" placeholder="Цена продажи"
-                                   id="price${index.count}"
-                                   min = "0" step="0.01"
-                                   required="true"
-                                   onchange="javascript:handlePrice()"/>
-                        </td>
-                        <td><input type="text" id="batchNumber${index.count}" required="true"
-                                   placeholder="Номер партии"  path="batchNumber"/></td>
-                        <td id="priceSum${index.count}">
-                            <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
-                        </td>
-                    </tr>
-                </c:if>
-                <c:if test="${index.count==1}">
-                    <tr id="tr${index.count}">
-                        <td>
-                            <input  autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                    placeholder="Товар" id="item${index.count}" autofocus="true"
-                                    onchange="handleItem(${index.count})">
+                                   onchange="handleItem(${index.count})">
                             <datalist id="dataList${index.count}">
                                 <c:forEach var="item" items="${items}">
                                     <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
@@ -270,13 +240,10 @@
                                    required="true"
                                    onchange="handlePrice()"/>
                         </td>
-                        <td><input type="text" id="batchNumber${index.count}" required="true"
-                                   placeholder="Номер партии"  path="batchNumber"/></td>
                         <td id="priceSum${index.count}">
                             <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
                     </tr>
-                </c:if>
             </c:forEach>
         </table>
     </div>

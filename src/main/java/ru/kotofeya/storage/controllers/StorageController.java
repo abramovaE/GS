@@ -162,9 +162,6 @@ public class StorageController {
 
     private String validateDate(String date1){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        System.out.println(date1);
-
-
         if(date1 != null && !date1.isEmpty() && date1.split("\\.")[2].length() == 2){
             date1 = date1.split("\\.")[0] + "." +
                     date1.split("\\.")[1] + ".20" +

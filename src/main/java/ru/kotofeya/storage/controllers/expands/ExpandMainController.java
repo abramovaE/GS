@@ -64,17 +64,12 @@ public class ExpandMainController {
         if(allItems == null || allItems.isEmpty()){
             return "redirect:/";
         }
-
         setMiddlePrice(allItems);
-
         model.addAttribute("items", allItems);
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         model.addAttribute("expandMainForm", new ExpandMain());
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("expandString", new ExpandString());
-
-
-//        System.out.println(allItems);
         return "storage/expands/add_expand_main";
     }
 
