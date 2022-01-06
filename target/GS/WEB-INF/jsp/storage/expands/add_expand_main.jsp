@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <html>
 <head>
@@ -33,31 +33,19 @@
             let inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('expandStringTable');
             let c = 0;
-
-            if(inputItem.indexOf("::") === -1){
                 if('${eans}'.indexOf(inputItem) === -1){
                     window.alert("Такого товара нет в базе");
                     document.getElementById('item'+index).value = "";
                 }
                 else {
-                    const ean = inputItem.split("::")[3]
+                    setMiddlePrice(inputItem, index)
                     c = incrementCount(table, inputItem, index)
-                    setMiddlePrice(ean, index)
                     if(c == 0) {
                         const tr = document.getElementById("tr" + (index + 1));
                         tr.hidden = false;
                     }
                 }
-            } else {
-                const ean = inputItem.split("::")[3]
-                setMiddlePrice(ean, index)
-                c = incrementCount(table, inputItem, index)
-                if(c == 0) {
-                    const tr = document.getElementById("tr" + (index + 1));
-                    tr.hidden = false;
-                }
-            }
-            handlePrice()
+            handlePrice();
         }
 
         function incrementCount(table, inputItem, index){
@@ -67,8 +55,10 @@
                     let countCell = document.getElementById("count" + j);
                     countCell.value = Number(countCell.value) + 1
                     if(countCell.value > 1) {
-                        document.getElementById('item' + index).value = "";
-                        document.getElementById('price' + index).value = "";
+                        document.getElementById('item' + index).value = '';
+                        document.getElementById('price' + index).value = '';
+                        document.getElementById('itemId' + index).value = '';
+                        document.getElementById('name' + index).value = '';
                         return 1;
                     }
                 }
@@ -79,8 +69,12 @@
         function setMiddlePrice(ean, index){
             <c:forEach var="model" items="${items}">
             if("${model.ean}" == ean){
-                let priceCell = document.getElementById("price" + index);
-                priceCell.value = ${model.middlePrice/100}
+                let priceCell = document.getElementById('price' + index);
+                priceCell.value = ${model.middlePrice/100};
+                let itemIdCell = document.getElementById('itemId' + index);
+                itemIdCell.value = ${model.id};
+                let itemNameCell = document.getElementById('name' + index);
+                itemNameCell.value = '${model.name}';
             }
             </c:forEach>
         }
@@ -91,13 +85,13 @@
         const table = document.getElementById('expandStringTable');
         let index;
         for (index = 1; index < table.rows.length; index++) {
-            let itemId = document.getElementById("item" + index).value;
+            let itemId = document.getElementById("itemId" + index).value;
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
             const batchNumber = document.getElementById("batchNumber" + index).value;
             const expandString = {};
             if (itemId.length > 0) {
-                itemId=itemId.split("::")[2]
+                // itemId=itemId.split("::")[2]
                 if (count.length === 0) {
                     alert("Введите количество");
                     isSubmit = false;
@@ -205,79 +199,68 @@
         <table class="addIncome" id="expandStringTable">
             <tr id="expandStringTableHeader">
                 <th>Номер партии</th>
+                <th>EAN</th>
                 <th>Товар</th>
+                <th>Id</th>
                 <th>Количество</th>
                 <th>Цена продажи, руб.</th>
                 <th>Сумма продажи, руб.</th>
             </tr>
             <c:forEach var="rowIndex" begin="1" end="100" step="1" varStatus="index">
-<%--                <c:if test="${index.count>1}">--%>
                     <tr <c:if test="${index.count>1}">
                                 hidden
                             </c:if>
                         id="tr${index.count}">
                         <td>
-                            <input type="text" id="batchNumber${index.count}" required="true"
-                                   placeholder="Номер партии"  path="batchNumber"/>
+                            <input type="text"
+                                   id="batchNumber${index.count}"
+                                   required
+                                   placeholder="Номер партии"/>
                         </td>
                         <td>
-                            <input autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                   placeholder="Товар" id="item${index.count}" autofocus="true"
-                                   onchange="handleItem(${index.count})">
+                            <input autocomplete="off"
+                                   autofocus
+                                   id="item${index.count}"
+                                   list="dataList${index.count}"
+                                   name="inputItem"
+                                   onchange="handleItem(${index.count})"
+                                   placeholder="Товар"/>
                             <datalist id="dataList${index.count}">
                                 <c:forEach var="item" items="${items}">
-                                    <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>
+                                    <option value="${item.ean}" ></option>
                                 </c:forEach>
                             </datalist>
                         </td>
                         <td>
-                            <input type="number" required="true" id="count${index.count}"
-                                   placeholder="Количество" min = "0"
+                            <input required
+                                   type="text"
+                                   id="name${index.count}"
+                                   placeholder="Наименование"/>
+                        </td>
+                        <td>
+                            <input
+                                   id="itemId${index.count}"/>
+                        </td>
+                        <td>
+                            <input type="number"
+                                   required
+                                   id="count${index.count}"
+                                   placeholder="Количество"
+                                   min = "0"
                                    onchange="handlePrice()"/>
                         </td>
-                        <td><input type="number" placeholder="Цена продажи"
+                        <td><input type="number"
+                                   placeholder="Цена продажи"
                                    id="price${index.count}"
-                                   min = "0" step="0.01"
-                                   required="true"
+                                   min = "0"
+                                   step="0.01"
+                                   required
                                    onchange="handlePrice()"/>
                         </td>
-
                         <td id="priceSum${index.count}">
-                            <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                            <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
                     </tr>
-<%--                </c:if>--%>
-<%--                <c:if test="${index.count==1}">--%>
-<%--                    <tr id="tr${index.count}">--%>
-<%--                        <td><input type="text" id="batchNumber${index.count}" required="true"--%>
-<%--                                   placeholder="Номер партии"  path="batchNumber"/></td>--%>
-<%--                        <td>--%>
-<%--                            <input  autocomplete="off" name="inputItem" list="dataList${index.count}"--%>
-<%--                                    placeholder="Товар" id="item${index.count}" autofocus="true"--%>
-<%--                                    onchange="handleItem(${index.count})">--%>
-<%--                            <datalist id="dataList${index.count}">--%>
-<%--                                <c:forEach var="item" items="${items}">--%>
-<%--                                    <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>--%>
-<%--                                </c:forEach>--%>
-<%--                            </datalist>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <input type="number" required="true" id="count${index.count}"--%>
-<%--                                   placeholder="Количество" min = "0"--%>
-<%--                                   onchange="handlePrice()"/>--%>
-<%--                        </td>--%>
-<%--                        <td><input type="number" placeholder="Цена продажи"--%>
-<%--                                   id="price${index.count}"--%>
-<%--                                   min = "0" step="0.01"--%>
-<%--                                   required="true"--%>
-<%--                                   onchange="handlePrice()"/>--%>
-<%--                        </td>--%>
-
-<%--                        <td id="priceSum${index.count}">--%>
-<%--                            <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                </c:if>--%>
             </c:forEach>
         </table>
     </div>
