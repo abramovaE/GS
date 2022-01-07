@@ -3,7 +3,7 @@ Created-By: IntelliJ IDEA
 Built-By: abramov
 Build-Jdk: 14.0.2
 Implementation-Title: GS
-Implementation-Version: 1.4
+Implementation-Version: 1.6
 Implementation-Vendor-Id: ru.kotofeya
 Main-Class: ru.kotofeya.Application
 

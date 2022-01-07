@@ -35,21 +35,29 @@
         <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>
 <%--        <th><a href="<c:url value="/allItems/sortBy/artYandex/${count}"/>">Артикул на Яндексе</a></th>--%>
 <%--        <th><a href="<c:url value="/allItems/sortBy/artSber/${count}"/>">Артикул на Сбермаркете</a></th>--%>
-        <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">EAN-номер</a></th>
-        <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Кто добавил</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">Штрих-код</a></th>
+        <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Создал</a></th>
+
+
+
         <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
         <th><a href="<c:url value="/allItems/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <th><a href="<c:url value="/allItems/sortBy/middlePrice/${count}"/>">Средняя стоимость</a></th>
         <th><a href="<c:url value="/allItems/sortBy/sum/${count}"/>">Сумма</a></th>
 
         <c:forEach items="${items}" var="item">
-            <tr onclick="location.href='show_item/${item.id}/${pageContext.request.userPrincipal.name}'">
+            <tr onclick="window.open('show_item/${item.id}/${pageContext.request.userPrincipal.name}')">
             <td>${item.article}</td>
                 <td>${item.name}</td>
 <%--                <td>${item.yandexArt}</td>--%>
 <%--                <td>${item.sberArt}</td>--%>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
+
+
+
+
+
                 <td>${item.date}</td>
                 <td>${item.count}</td>
                 <td>${item.middlePrice/100}</td>

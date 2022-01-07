@@ -3,6 +3,7 @@ package ru.kotofeya.storage.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +47,7 @@ public class ItemController {
             item.setArticle("gs" + String.format("%06d", maxItemId));
         }
         itemService.saveItem(item);
-        return "redirect:/show_storage";
+        return "redirect:/close";
     }
 
     @GetMapping({"/show_item/{itemId}/{editUserName}",
@@ -60,7 +61,9 @@ public class ItemController {
         return "storage/items/show_item";
     }
 
-    @PostMapping("/show_item/{itemId}/{editUserName}")
+    @PostMapping({"/show_item/{itemId}/{editUserName}",
+            "items_main/sortBy/{sortParam}/show_item/{itemId}/{editUserName}",
+            "allItems/sortBy/{sortParam}/show_item/{itemId}/{editUserName}"})
     public String showItem(Model model,
                            @ModelAttribute("item") Item item,
                            @PathVariable("itemId") Long itemId,
@@ -71,6 +74,6 @@ public class ItemController {
         editItemService.save(editedItem);
         itemService.saveItem(item);
         model.addAttribute("item", item);
-        return "redirect:/items_main";
+        return "redirect:/close";
     }
 }

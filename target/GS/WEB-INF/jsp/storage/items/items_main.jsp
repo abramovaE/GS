@@ -22,11 +22,13 @@
     <div class="topPanelFirst">
         <div class="username">${pageContext.request.userPrincipal.name}</div>
     </div>
+    <div class="topPanelCentral">
+        <div><a href="add_item" target="_blank">Создать товар</a></div>
+    </div>
     <div class="topPanelLast">
             <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
     </div>
 </div>
-
 
 <div class="innerDivTr">
     <h2  class="h2Light">Все товары</h2>
@@ -38,12 +40,16 @@
         <th><a href="<c:url value="/items_main/sortBy/linkYandex/${count}"/>">Ссылка на Яндексе</a></th>
         <th><a href="<c:url value="/items_main/sortBy/linkSber/${count}"/>">Ссылка на Сбермаркете</a></th>
 
-        <th><a href="<c:url value="/items_main/sortBy/ean/${count}"/>">EAN-номер</a></th>
-        <th><a href="<c:url value="/items_main/sortBy/username/${count}"/>">Кто добавил</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/ean/${count}"/>">Штрих-код</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/username/${count}"/>">Создал</a></th>
         <th><a href="<c:url value="/items_main/sortBy/date/${count}"/>">Дата добавления</a></th>
+
+        <th><a href="<c:url value="/items_main/sortBy/editUserName/${count}"/>">Редактировал</a></th>
+        <th><a href="<c:url value="/items_main/sortBy/editDate/${count}"/>">Дата редактирования</a></th>
+
         <th><a href="<c:url value="/items_main/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <c:forEach items="${items}" var="item">
-            <tr onclick="location.href='show_item/${item.id}/${pageContext.request.userPrincipal.name}'">
+            <tr onclick="window.open('show_item/${item.id}/${pageContext.request.userPrincipal.name}')">
                 <td>${item.article}</td>
                 <td>${item.name}</td>
                 <td>${item.yandexArt}</td>
@@ -53,6 +59,10 @@
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>
+
+                <td>${item.lastEditedItem.editUserName}</td>
+                <td>${item.lastEditedItem.editDate}</td>
+
                 <td>${item.count}</td>
             </tr>
         </c:forEach>

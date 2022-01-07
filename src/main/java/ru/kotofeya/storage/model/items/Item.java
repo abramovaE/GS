@@ -44,6 +44,10 @@ public class Item {
     @Transient
     private int middlePrice;
 
+    @Transient
+    private EditedItem lastEditedItem;
+
+
     public Item() {}
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -84,6 +88,14 @@ public class Item {
 
     public void setExpandStrings(Set<ExpandString> expandStrings) {
         this.expandStrings = expandStrings;
+    }
+
+    public EditedItem getLastEditedItem() {
+        return lastEditedItem;
+    }
+
+    public void setLastEditedItem(EditedItem lastEditedItem) {
+        this.lastEditedItem = lastEditedItem;
     }
 
     @Override

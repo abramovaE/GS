@@ -11,23 +11,32 @@
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/index_style.css" %>
-
     </style>
+
 </head>
 
 <body class="bodyClassGreen">
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<div class="topPanel">
-    <div class="topPanelFirst">
-        <div class="username">${pageContext.request.userPrincipal.name}</div>
+<%--<script type="text/javascript">--%>
+<%--    // function addItem() {--%>
+<%--    //     document.forms['itemForm'].submit();--%>
+<%--    //     // let form = document.getElementById('itemForm');--%>
+<%--    //     // form.submit();--%>
+<%--    //     window.close();--%>
+<%--    }--%>
+<%--</script>--%>
+
+    <div class="topPanel">
+        <div class="topPanelFirst">
+            <div class="username">${pageContext.request.userPrincipal.name}</div>
+        </div>
+        <div class="topPanelLast">
+            <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
+        </div>
     </div>
-    <div class="topPanelLast">
-        <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
-    </div>
-</div>
-<div class="outerDivLogin">
+    <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="itemForm">
         <h2 class="h2Light">Добавить товар</h2>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
@@ -86,7 +95,7 @@
                     class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">
-            <button type="submit" class="inputClassLight">Добавить</button>
+            <button type="submit" class="inputClassLight" >Добавить</button>
         </div>
     </form:form>
 </div>

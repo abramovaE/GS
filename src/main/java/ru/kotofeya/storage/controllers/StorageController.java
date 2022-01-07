@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.kotofeya.storage.model.expands.ExpandString;
 import ru.kotofeya.storage.model.incomes.IncomeString;
+import ru.kotofeya.storage.model.items.EditedItem;
 import ru.kotofeya.storage.model.items.Item;
+import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 import ru.kotofeya.storage.service.expands.ExpandStringService;
 import ru.kotofeya.storage.service.incomes.IncomeStringService;
@@ -25,6 +27,8 @@ public class StorageController {
     @Autowired
     private ItemService itemService;
     @Autowired
+    private EditItemService editItemService;
+    @Autowired
     private IncomeStringService incomeStringService;
     @Autowired
     private ExpandStringService expandStringService;
@@ -38,9 +42,13 @@ public class StorageController {
 
         setMiddlePrice(items);
         model.addAttribute("items", items);
-
         return "storage/items/all_items";
     }
+
+//    @GetMapping("/close")
+//    public String  close() {
+//        return "close";
+//    }
 
     private void setMiddlePrice(List<Item> items){
         for(Item item: items){
@@ -74,8 +82,23 @@ public class StorageController {
 
     @GetMapping("/items_main")
     public String getAllItems(Model model) {
+        List<Item> allItems = getItems(model);
+        List<EditedItem> editedItems = editItemService.findAll();
+        for(Item item: allItems){
+            List<EditedItem> editedItemsList = editedItems.stream().filter(it -> it != null
+                    && it.getItemId() != null
+                    && it.getItemId().equals(item.getId())).collect(Collectors.toList());
+            if(editedItemsList != null && !editedItemsList.isEmpty()){
+                item.setLastEditedItem(editedItemsList.get(0));
+            } else {
+                EditedItem editedItem = new EditedItem();
+                editedItem.setEditUserName("");
+                editedItem.setEditDate("");
+                item.setLastEditedItem(editedItem);
+            }
+        }
         model.addAttribute("count", getCount(model));
-        model.addAttribute("items", getItems(model));
+        model.addAttribute("items", allItems);
         return "storage/items/items_main";
     }
 
@@ -99,15 +122,38 @@ public class StorageController {
                              @PathVariable("count") Integer count) {
         final int c = count%2;
         List<Item> allItems = itemService.getAllItems();
+        List<EditedItem> editedItems = editItemService.findAll();
+        for(Item item: allItems){
+            List<EditedItem> editedItemsList = editedItems.stream().filter(it -> it != null
+                    && it.getItemId() != null
+                    && it.getItemId().equals(item.getId())).collect(Collectors.toList());
+            if(editedItemsList != null && !editedItemsList.isEmpty()){
+                item.setLastEditedItem(editedItemsList.get(0));
+            } else {
+                EditedItem editedItem = new EditedItem();
+                editedItem.setEditUserName("");
+                editedItem.setEditDate("");
+                item.setLastEditedItem(editedItem);
+            }
+        }
+//        List<EditedItem> editedItems = editItemService.findAll();
+//        for(Item item: allItems){
+//            item.setLastEditedItem(editedItems.stream().filter(it ->
+//                    it.getItemId().equals(item.getId())).collect(Collectors.toList()).get(0));
+//        }
+
         setMiddlePrice(allItems);
         sortItems(allItems, sortParam, c);
         model.addAttribute("items", allItems);
         count++;
         model.addAttribute("count", count);
+//        model.addAttribute("redirectTo", "storage/items/items_main");
         return getAllItems(model);
     }
 
     private void sortItems(List<Item> allItems, String sortParam, int c){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
         Collections.sort(allItems, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
@@ -137,7 +183,6 @@ public class StorageController {
                         return (c == 0) ? compareItems(o1.getUserName(), o2.getUserName()):
                                 compareItems(o2.getUserName(), o1.getUserName());
                     case "date":
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
                         LocalDate localDate1 = LocalDate.parse(validateDate(o1.getDate()), formatter);
                         LocalDate localDate2 = LocalDate.parse(validateDate(o2.getDate()), formatter);
                         return (c == 0) ? localDate1.compareTo(localDate2)
@@ -151,6 +196,29 @@ public class StorageController {
                     case "sum":
                         return (c == 0) ? compareInts(o1.getMiddlePrice() * o1.getCount(), o2.getMiddlePrice() * o2.getCount()) :
                                 compareInts(o2.getMiddlePrice() * o2.getCount(), o1.getMiddlePrice() * o1.getCount());
+
+                    case "editUserName":
+                        String s1 = (o1.getLastEditedItem() == null) ? "" : o1.getLastEditedItem().getEditUserName();
+                        String s2 = (o2.getLastEditedItem() == null) ? "" : o2.getLastEditedItem().getEditUserName();
+                        return (c == 0) ? compareItems(s1, s2) : compareItems(s2, s1);
+
+                    case "editDate":
+                        LocalDate editDate1;
+                        LocalDate editDate2;
+                        if(o1.getLastEditedItem() == null){
+                            editDate1 = LocalDate.parse(validateDate(null), formatter);
+                        } else {
+                            editDate1 = LocalDate.parse(validateDate(o1.getLastEditedItem().getEditDate()), formatter);
+                        }
+                        if(o2.getLastEditedItem() == null){
+                            editDate2 = LocalDate.parse(validateDate(null), formatter);
+                        } else {
+                            editDate2 = LocalDate.parse(validateDate(o2.getLastEditedItem().getEditDate()), formatter);
+                        }
+
+                        return (c == 0) ? editDate1.compareTo(editDate2)
+                                : editDate2.compareTo(editDate1);
+
                     default:
                         return o1.getId().compareTo(o2.getId());
                 }

@@ -227,7 +227,7 @@
         <table class="todayIncomeStrings" id="expandStringTable">
             <tr id="expandStringTableHeader">
                 <th>Номер партии</th>
-                <th>EAN</th>
+                <th>Штрих-код</th>
                 <th>Товар</th>
                 <th hidden>Id</th>
                 <th>Количество</th>
@@ -266,7 +266,7 @@
                                     <td>
                                         <input autocomplete="off" autofocus
                                                name="inputItem" list="dataList${index.count}"
-                                                placeholder="EAN" id="item${index.count}"
+                                                placeholder="Штрих-код" id="item${index.count}"
                                                 onchange="handleItem(${index.count})">
                                         <datalist id="dataList${index.count}">
                                             <c:forEach var="item" items="${items}">

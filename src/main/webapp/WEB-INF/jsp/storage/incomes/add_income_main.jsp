@@ -31,7 +31,7 @@
             if('${eans}'.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
                 if (answer) {
-                    window.location = "add_item";
+                    window.open("add_item");
                 }
             } else {
                 setMiddlePrice(inputItem, index)
@@ -147,9 +147,7 @@
         document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
     }
-    function clearPpDouble(){}
-    function clearPpActDouble(){}
-    function handleSelect(elm){}
+
     function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -217,7 +215,7 @@
         <table class="addIncome" id="incomeStringTable">
             <tr id="incomeStringTableHeader">
                 <th>Номер партии</th>
-                <th>EAN</th>
+                <th>Штрих-код</th>
 
                 <th>Товар</th>
                 <th hidden>Id</th>
@@ -274,12 +272,11 @@
                                    id="purPrice${index.count}"
                                    min = "0" step="0.01"
                                    required="true"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/>
+                                   onchange="javascript:handlePrice()"/>
                         </td>
                         <td><input type="number" id="purPriceAct${index.count}" required="true"
                                    placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                   oninput="javascript:handlePrice()"
-                                   onchange="javascript:clearPpActDouble()"/>
+                                   oninput="javascript:handlePrice()"/>
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
                                    placeholder="Артикул в магазине" required="true"/></td>
@@ -290,50 +287,7 @@
                         <td id="purPriceActSum${index.count}">
                             <div type="text" id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
-                    </tr
-                            >
-<%--                </c:if>--%>
-<%--                <c:if test="${index.count==1}">--%>
-<%--                    <tr id="tr${index.count}">--%>
-<%--                        <td><input type="text" id="batchNumber${index.count}" required="true"--%>
-<%--                                   placeholder="Номер партии"  path="batchNumber"/></td>--%>
-<%--                    <td>--%>
-<%--                        <input  autocomplete="off" name="inputItem" list="dataList${index.count}"--%>
-<%--                                placeholder="Товар" id="item${index.count}" autofocus="true"--%>
-<%--                                onchange="javascript:handleItem(${index.count})">--%>
-<%--                        <datalist id="dataList${index.count}">--%>
-<%--                            <c:forEach var="item" items="${items}">--%>
-<%--                                <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>--%>
-<%--                            </c:forEach>--%>
-<%--                        </datalist>--%>
-<%--                    </td>--%>
-<%--                    <td>--%>
-<%--                        <input type="number" required="true" id="count${index.count}"--%>
-<%--                               placeholder="Количество" min = "0"--%>
-<%--                               onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>--%>
-<%--                    </td>--%>
-<%--                    <td><input type="number" placeholder="Цена покупки"--%>
-<%--                               id="purPrice${index.count}"--%>
-<%--                               min = "0" step="0.01"--%>
-<%--                               required="true"--%>
-<%--                               onchange="javascript:handlePrice()" onfocus="javascript:clearPpDouble()"/>--%>
-<%--                    </td>--%>
-<%--                    <td><input type="number" id="purPriceAct${index.count}" required="true"--%>
-<%--                               placeholder="Цена покупки окончательная" min = "0" step="0.01"--%>
-<%--                               oninput="javascript:handlePrice()"--%>
-<%--                               onchange="javascript:clearPpActDouble()"/>--%>
-<%--                    </td>--%>
-<%--                    <td><input type="text" id="storeArticle${index.count}"--%>
-<%--                               placeholder="Артикул в магазине" required="true"/></td>--%>
-
-<%--                    <td id="purPriceSum${index.count}">--%>
-<%--                        <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>--%>
-<%--                    </td>--%>
-<%--                    <td id="purPriceActSum${index.count}">--%>
-<%--                        <div type="text" id="ppActSum${index.count}" class="addIncomeInput">0.00</div>--%>
-<%--                    </td>--%>
-<%--                </tr>--%>
-<%--                </c:if>--%>
+                    </tr>
             </c:forEach>
         </table>
     </div>

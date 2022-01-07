@@ -9,6 +9,7 @@ import ru.kotofeya.storage.repo.EditItemRepo;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Service
 public class EditItemService {
@@ -21,4 +22,8 @@ public class EditItemService {
     public void save(EditedItem editedItem){
         editItemRepo.save(editedItem);
     }
+
+    @Transactional
+    public List<EditedItem> findAll (){ return editItemRepo.findAll();}
+
 }

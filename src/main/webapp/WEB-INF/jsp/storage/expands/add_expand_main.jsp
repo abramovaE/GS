@@ -199,7 +199,7 @@
         <table class="addIncome" id="expandStringTable">
             <tr id="expandStringTableHeader">
                 <th>Номер партии</th>
-                <th>EAN</th>
+                <th>Штрих-код</th>
                 <th>Товар</th>
                 <th hidden>Id</th>
                 <th>Количество</th>
