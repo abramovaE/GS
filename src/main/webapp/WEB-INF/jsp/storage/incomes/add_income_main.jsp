@@ -1,7 +1,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <html>
 <head>
@@ -24,15 +24,33 @@
     </sec:authorize>
 
     <script type="text/javascript">
-        let globalScopeItems = new Array();
+        let globalEans = new Array();
+        let globalItems = new Array();
+
+        $(document).ready(function() {
+            let itemObj;
+            <c:forEach var="ean" items="${eans}">
+                globalEans.push(${ean});
+            </c:forEach>
+            <c:forEach var="item" items="${items}">
+                itemObj = new Object();
+                itemObj.id = ${item.id};
+                itemObj.name = "${item.name}";
+                itemObj.ean = "${item.ean}";
+                globalItems.push(itemObj);
+            </c:forEach>
+        });
 
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('incomeStringTable');
             let c = 0;
-            if('${eans}'.indexOf(inputItem) === -1){
+            if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
                 if (answer) {
+                    document.getElementById('item' + index).value = '';
+                    document.getElementById('itemId' + index).value = '';
+                    document.getElementById('name' + index).value = '';
                     window.open("add_item");
                 }
             } else {
@@ -46,14 +64,23 @@
         }
 
         function setMiddlePrice(ean, index){
-            <c:forEach var="model" items="${items}">
-            if("${model.ean}" == ean){
-                let itemIdCell = document.getElementById('itemId' + index);
-                itemIdCell.value = ${model.id};
-                let itemNameCell = document.getElementById('name' + index);
-                itemNameCell.value = '${model.name}';
-            }
-            </c:forEach>
+            globalItems.forEach(function(item, i, arr){
+                if(item.ean == ean){
+                    let itemIdCell = document.getElementById('itemId' + index);
+                    itemIdCell.value = item.id;
+                    let itemNameCell = document.getElementById('name' + index);
+                    itemNameCell.value = item.name;
+                }
+            });
+
+<%--            <c:forEach var="model" items="${items}">--%>
+<%--            if("${model.ean}" == ean){--%>
+<%--                let itemIdCell = document.getElementById('itemId' + index);--%>
+<%--                itemIdCell.value = ${model.id};--%>
+<%--                let itemNameCell = document.getElementById('name' + index);--%>
+<%--                itemNameCell.value = '${model.name}';--%>
+<%--            }--%>
+<%--            </c:forEach>--%>
         }
 
         function incrementCount(table, inputItem, index){
@@ -129,7 +156,7 @@
         return isSubmit;
     }
 
-    function handlePrice(){
+        function handlePrice(){
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
         let index;
@@ -151,7 +178,7 @@
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
     }
 
-    function addIncomeString() {
+        function addIncomeString() {
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
         let rowIndex = table.rows.length;
@@ -161,53 +188,27 @@
         tr.closest('tr' + rowIndex)
     }
 
-<%--    function getEans(){--%>
-<%--        let xhr = new XMLHttpRequest();--%>
-<%--        xhr.overrideMimeType("application/json");--%>
-<%--        xhr.open('GET', 'update', true);--%>
-<%--        xhr.onload = function() {--%>
-<%--            let arr = JSON.parse(xhr.response);--%>
-<%--            arr.forEach(function(item, i, arr) {--%>
-<%--                globalScopeItems.add(item.ean)--%>
-<%--&lt;%&ndash;                if('${eans}'.indexOf(item.ean) === -1){&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    alert( i + ": " + item.id + " " + item.name + " " + item.ean);&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    alert(${eans.size()})&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    globalScopeItems.add(iten.ean)&ndash;%&gt;--%>
-<%--&lt;%&ndash;&lt;%&ndash;                    ${glo.add(item.ean)}&ndash;%&gt;&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    alert(${eans.size()})&ndash;%&gt;--%>
-<%--&lt;%&ndash;                    return ${eans}&ndash;%&gt;--%>
-<%--&lt;%&ndash;                }&ndash;%&gt;--%>
-<%--            });--%>
-<%--        };--%>
-<%--        xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить--%>
-<%--            alert('Ошибка соединения');--%>
-<%--        };--%>
-<%--        xhr.send();--%>
-<%--    }--%>
-
         function updateItems() {
+            let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
             xhr.overrideMimeType("application/json");
             xhr.open('GET', 'update', true);
             xhr.onload = function() {
                 let arr = JSON.parse(xhr.response);
                 arr.forEach(function(item, i, arr) {
-
-                    globalScopeItems.push(item.ean);
-
-                    if('${eans}'.indexOf(item.ean) === -1){
+                    if(globalEans.indexOf(item.ean) === -1){
+                        globalEans.push(item.ean)
                         ${eans.add(item.ean)}
-                        // const table = document.getElementById('incomeStringTable');
-                        let index;
-                        // for (index = 1; index < table.rows.length; index++) {
-                            var dataList = document.getElementById("dataList")
-                            var option = document.createElement("option")
-                            option.value = item.ean
-                            dataList.appendChild(option)
-                        // }
+                        let newItem = Object();
+                        newItem.id = item.id;
+                        newItem.ean = item.ean;
+                        newItem.name = item.name;
+                        globalItems.push(newItem);
                      }
+                    let option = document.createElement("option")
+                    option.value = item.ean
+                    dataList.appendChild(option)
                 });
-                // alert(globalScopeItems)
             };
             xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
                 alert('Ошибка соединения');
@@ -221,9 +222,9 @@
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
 
-        <div class="topPanelMiddle">
-            <div><a href="#" onclick="updateItems()">Update</a></div>
-        </div>
+<%--        <div class="topPanelMiddle">--%>
+<%--            <div><a href="#" onclick="updateItems()">Update</a></div>--%>
+<%--        </div>--%>
         <div class="topPanelLast">
             <div><a href="/GS">На главную</a></div>
         </div>
@@ -312,9 +313,9 @@
                                     onchange="handleItem(${index.count})"
                                     onclick="updateItems()">
                             <datalist id="dataList">
-                                <c:forEach var="item" items="${eans}">
-                                    <option value="${item}" ></option>
-                                </c:forEach>
+<%--                                <c:forEach var="item" items="${eans}">--%>
+<%--                                    <option value="${item}" ></option>--%>
+<%--                                </c:forEach>--%>
                             </datalist>
                         </td>
 
