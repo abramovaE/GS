@@ -32,33 +32,73 @@
 
     <script type="text/javascript">
 
+        let globalEans = new Array();
+        let globalItems = new Array();
+
+        $(document).ready(function() {
+            let itemObj;
+            <c:forEach var="ean" items="${eans}">
+            if(globalEans.indexOf(`${ean}`) === -1){
+                globalEans.push(`${ean}`);
+            }
+            </c:forEach>
+            <c:forEach var="item" items="${items}">
+            itemObj = new Object();
+            itemObj.id = ${item.id};
+            itemObj.name = `${item.name}`;
+            itemObj.ean = `${item.ean}`;
+            if(globalItems.indexOf(itemObj) === -1) {
+                globalItems.push(itemObj);
+            }
+            </c:forEach>
+        });
+
+
+
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
-            // if(inputItem.indexOf("::") === -1){
-                if('${eans}'.indexOf(inputItem) === -1){
-                    const answer = window.confirm("Такого товара нет в базе. Создать?");
+            let c = 0;
+            if(globalEans.indexOf(inputItem) === -1){
+                const answer = window.confirm("Такого товара нет в базе. Создать?");
                     if (answer) {
+                        document.activeElement.blur();
+                        c = 1;
+                        document.getElementById('item' + index).value = '';
+                        document.getElementById('itemId' + index).value = '';
+                        document.getElementById('name' + index).value = '';
                         window.open("add_item");
                     }
                 } else{
                         setMiddlePrice(inputItem, index)
+
                         // c = incrementCount(table, inputItem, index)
                 }
             // }
-            const tr = document.getElementById("tr" + (index +1));
-            tr.hidden=false;
+            if(c == 0) {
+                const tr = document.getElementById("tr" + (index + 1));
+                tr.hidden = false;
+            }
         }
 
 
         function setMiddlePrice(ean, index){
-            <c:forEach var="model" items="${items}">
-            if("${model.ean}" == ean){
-                let itemIdCell = document.getElementById('itemId' + index);
-                itemIdCell.value = ${model.id};
-                let itemNameCell = document.getElementById('name' + index);
-                itemNameCell.value = '${model.name}';
-            }
-            </c:forEach>
+            globalItems.forEach(function(item, i, arr){
+                if(item.ean == ean){
+                    let itemIdCell = document.getElementById('itemId' + index);
+                    itemIdCell.value = item.id;
+                    let itemNameCell = document.getElementById('name' + index);
+                    itemNameCell.value = item.name;
+                }
+            });
+
+<%--            <c:forEach var="model" items="${items}">--%>
+<%--            if("${model.ean}" == ean){--%>
+<%--                let itemIdCell = document.getElementById('itemId' + index);--%>
+<%--                itemIdCell.value = ${model.id};--%>
+<%--                let itemNameCell = document.getElementById('name' + index);--%>
+<%--                itemNameCell.value = '${model.name}';--%>
+<%--            }--%>
+<%--            </c:forEach>--%>
         }
 
         function saveIncomeMain() {
@@ -79,22 +119,27 @@
                     if (count.length === 0) {
                         alert("Введите количество");
                         isSubmit = 0;
+                        break;
                     }
                     else if (purPrice.length === 0) {
                         alert("Введите цену");
                         isSubmit = 0;
+                        break;
                     }
                     else if (purPriceAct.length === 0) {
                         alert("Введите фактическую цену");
                         isSubmit = 0;
+                        break;
                     }
                     else if (storeArticle.length === 0) {
                         alert("Введите артикул товара в магазине покупки");
                         isSubmit = 0;
+                        break;
                     }
                     else if (batchNumber.length === 0) {
                         alert("Введите номер партии");
                         isSubmit = 0;
+                        break
                     }
                     let itemString = {};
                     itemString.itemId = itemId;
@@ -141,12 +186,39 @@
                 }
             }
         }
-
         document.getElementById("ppMainSum").innerHTML = String(Math.round(s1 + generalSum*100)/100)
         document.getElementById("ppMainSumAct").innerHTML = String(Math.round(s2 + generalSumAct*100)/100)
-
-
     }
+
+        function updateItems() {
+            let dataList = document.getElementById("dataList")
+            let xhr = new XMLHttpRequest();
+            xhr.overrideMimeType("application/json");
+            xhr.open('GET', 'update', true);
+            xhr.onload = function() {
+                let arr = JSON.parse(xhr.response);
+                arr.forEach(function(item, i, arr) {
+                    if(globalEans.indexOf(item.ean) === -1){
+                        // alert(item.ean)
+                        globalEans.push(item.ean)
+                        ${eans.add(item.ean)}
+                        let newItem = Object();
+                        newItem.id = item.id;
+                        newItem.ean = item.ean;
+                        newItem.name = item.name;
+                        globalItems.push(newItem);
+                        let option = document.createElement("option")
+                        option.value = item.ean
+                        dataList.appendChild(option)
+                    }
+                });
+            };
+            xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
+                alert('Ошибка соединения');
+            };
+            xhr.send();
+        }
+
         function addIncomeString() {
             const id = 'incomeStringTable';
             const table = document.getElementById(id);
@@ -263,14 +335,18 @@
 
                                     <td><input type="text" id="batchNumber${index.count}" required
                                                placeholder="Номер партии" /></td>
-
                                     <td>
-                                        <input autocomplete="off" name="inputItem" list="dataList${index.count}"
-                                                placeholder="Товар" id="item${index.count}" autofocus
-                                                onchange="handleItem(${index.count})">
-                                        <datalist id="dataList${index.count}">
-                                            <c:forEach var="item" items="${items}">
-                                                <option value="${item.ean}" ></option>
+                                        <input autocomplete="off"
+                                               name="inputItem"
+                                               list="dataList"
+                                               placeholder="Товар"
+                                               id="item${index.count}"
+                                               autofocus="true"
+                                               onchange="handleItem(${index.count})"
+                                               onclick="updateItems()">
+                                        <datalist id="dataList">
+                                            <c:forEach var="item" items="${eans}">
+                                                <option value="${item}" ></option>
                                             </c:forEach>
                                         </datalist>
                                     </td>

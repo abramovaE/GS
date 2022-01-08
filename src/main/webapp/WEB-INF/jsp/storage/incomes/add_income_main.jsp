@@ -30,14 +30,18 @@
         $(document).ready(function() {
             let itemObj;
             <c:forEach var="ean" items="${eans}">
-                globalEans.push(${ean});
+                if(globalEans.indexOf(`${ean}`) === -1){
+                    globalEans.push(`${ean}`);
+                }
             </c:forEach>
             <c:forEach var="item" items="${items}">
                 itemObj = new Object();
                 itemObj.id = ${item.id};
-                itemObj.name = "${item.name}";
-                itemObj.ean = "${item.ean}";
-                globalItems.push(itemObj);
+                itemObj.name = `${item.name}`;
+                itemObj.ean = `${item.ean}`;
+                if(globalItems.indexOf(itemObj) === -1) {
+                    globalItems.push(itemObj);
+                }
             </c:forEach>
         });
 
@@ -48,6 +52,8 @@
             if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
                 if (answer) {
+                    document.activeElement.blur();
+                    c = 1;
                     document.getElementById('item' + index).value = '';
                     document.getElementById('itemId' + index).value = '';
                     document.getElementById('name' + index).value = '';
@@ -118,22 +124,31 @@
                 if (count.length === 0) {
                     alert("Введите количество");
                     isSubmit = false;
+                    break
                 }
                 else if (purPrice.length === 0) {
                     alert("Введите цену");
                     isSubmit = false;
+                    break
+
                 }
                 else if (purPriceAct.length === 0) {
                     alert("Введите фактическую цену");
                     isSubmit = false;
+                    break
+
                 }
                 else if (storeArticle.length === 0) {
                     alert("Введите артикул товара в магазине покупки");
                     isSubmit = false;
+                    break
+
                 }
                 else if (batchNumber.length === 0) {
                     alert("Введите номер партии");
                     isSubmit = false;
+                    break
+
                 }
                 itemString.itemId = itemId;
                 itemString.count = count;
@@ -197,6 +212,7 @@
                 let arr = JSON.parse(xhr.response);
                 arr.forEach(function(item, i, arr) {
                     if(globalEans.indexOf(item.ean) === -1){
+                        // alert(item.ean)
                         globalEans.push(item.ean)
                         ${eans.add(item.ean)}
                         let newItem = Object();
@@ -204,10 +220,10 @@
                         newItem.ean = item.ean;
                         newItem.name = item.name;
                         globalItems.push(newItem);
+                        let option = document.createElement("option")
+                        option.value = item.ean
+                        dataList.appendChild(option)
                      }
-                    let option = document.createElement("option")
-                    option.value = item.ean
-                    dataList.appendChild(option)
                 });
             };
             xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
@@ -313,9 +329,9 @@
                                     onchange="handleItem(${index.count})"
                                     onclick="updateItems()">
                             <datalist id="dataList">
-<%--                                <c:forEach var="item" items="${eans}">--%>
-<%--                                    <option value="${item}" ></option>--%>
-<%--                                </c:forEach>--%>
+                                <c:forEach var="item" items="${eans}">
+                                    <option value="${item}" ></option>
+                                </c:forEach>
                             </datalist>
                         </td>
 

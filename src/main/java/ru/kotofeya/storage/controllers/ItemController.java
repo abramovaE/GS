@@ -30,7 +30,7 @@ public class ItemController {
     private EditItemService editItemService;
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    @GetMapping("/add_item")
+    @GetMapping({"/add_item", "/show_income_main/{incomeMainId}/add_item"})
     public String  addItem(Model model) {
         Item item = new Item();
         Item maxIdItem = itemService.findMaxIdItem();
@@ -41,7 +41,7 @@ public class ItemController {
         return "storage/items/add_item";
     }
 
-    @PostMapping("/add_item")
+    @PostMapping({"/add_item", "/show_income_main/{incomeMainId}/add_item"})
     public String addItem(HttpServletRequest req, @ModelAttribute("itemForm") Item item, Model model) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         item.setDate(LocalDateTime.now().format(dateTimeFormatter));
@@ -57,7 +57,7 @@ public class ItemController {
         return "redirect:/close";
     }
 
-    @GetMapping("/update")
+    @GetMapping({"/update", "/show_income_main/{incomeMainId}/update"})
     @ResponseBody
     public String items() {
         System.out.println("updateitems");

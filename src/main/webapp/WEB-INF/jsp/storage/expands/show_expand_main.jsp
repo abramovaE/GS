@@ -107,14 +107,17 @@
                         if (count.length === 0) {
                             alert("Введите количество");
                             isSubmit = 0;
+                            break;
                         }
                         else if (price.length === 0) {
                             alert("Введите цену");
                             isSubmit = 0;
+                            break;
                         }
                         else if (batchNumber.length === 0) {
                             alert("Введите номер партии");
                             isSubmit = 0;
+                            break;
                         }
                         itemString.itemId = itemId;
                         itemString.count = count;
