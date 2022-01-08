@@ -18,6 +18,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/createItem.js"></script>
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
@@ -32,8 +34,8 @@
 
     <script type="text/javascript">
 
-        let globalEans = new Array();
-        let globalItems = new Array();
+        let globalEans = [];
+        let globalItems = [];
 
         $(document).ready(function() {
             let itemObj;
@@ -53,117 +55,22 @@
             </c:forEach>
         });
 
-
-
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
             let c = 0;
             if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
                     if (answer) {
-                        document.activeElement.blur();
                         c = 1;
-                        document.getElementById('item' + index).value = '';
-                        document.getElementById('itemId' + index).value = '';
-                        document.getElementById('name' + index).value = '';
-                        window.open("add_item");
+                        createItem(index)
                     }
                 } else{
-                        setMiddlePrice(inputItem, index)
-
+                        setMiddlePrice(globalItems, inputItem, index)
                         // c = incrementCount(table, inputItem, index)
                 }
-            // }
-            if(c == 0) {
-                const tr = document.getElementById("tr" + (index + 1));
-                tr.hidden = false;
-            }
+            addTr(c, index)
         }
 
-
-        function setMiddlePrice(ean, index){
-            globalItems.forEach(function(item, i, arr){
-                if(item.ean == ean){
-                    let itemIdCell = document.getElementById('itemId' + index);
-                    itemIdCell.value = item.id;
-                    let itemNameCell = document.getElementById('name' + index);
-                    itemNameCell.value = item.name;
-                }
-            });
-
-<%--            <c:forEach var="model" items="${items}">--%>
-<%--            if("${model.ean}" == ean){--%>
-<%--                let itemIdCell = document.getElementById('itemId' + index);--%>
-<%--                itemIdCell.value = ${model.id};--%>
-<%--                let itemNameCell = document.getElementById('name' + index);--%>
-<%--                itemNameCell.value = '${model.name}';--%>
-<%--            }--%>
-<%--            </c:forEach>--%>
-        }
-
-        function saveIncomeMain() {
-        let isSubmit = 1;
-        let incomeStrings = [];
-        const table = document.getElementById('incomeStringTable');
-        for (let index = 1; index < table.rows.length; index++) {
-            let it = document.getElementById("itemId" + index);
-            if(it != null) {
-                let itemId = it.value;
-                if (itemId.length > 0) {
-                    const count = document.getElementById("count" + index).value;
-                    const purPrice = document.getElementById("purPrice" + index).value;
-                    const purPriceAct = document.getElementById("purPriceAct" + index).value;
-                    const storeArticle = document.getElementById("storeArticle" + index).value;
-                    const batchNumber = document.getElementById("batchNumber" + index).value;
-                    // itemId=itemId.split("::")[2]
-                    if (count.length === 0) {
-                        alert("Введите количество");
-                        isSubmit = 0;
-                        break;
-                    }
-                    else if (purPrice.length === 0) {
-                        alert("Введите цену");
-                        isSubmit = 0;
-                        break;
-                    }
-                    else if (purPriceAct.length === 0) {
-                        alert("Введите фактическую цену");
-                        isSubmit = 0;
-                        break;
-                    }
-                    else if (storeArticle.length === 0) {
-                        alert("Введите артикул товара в магазине покупки");
-                        isSubmit = 0;
-                        break;
-                    }
-                    else if (batchNumber.length === 0) {
-                        alert("Введите номер партии");
-                        isSubmit = 0;
-                        break
-                    }
-                    let itemString = {};
-                    itemString.itemId = itemId;
-                    itemString.count = count;
-                    itemString.purPrice = purPrice;
-                    itemString.purPriceAct = purPriceAct;
-                    itemString.storeArticle = storeArticle;
-                    itemString.batchNumber = batchNumber;
-                    incomeStrings.push(itemString);
-                }
-            }
-        }
-        if (isSubmit === 1) {
-            let incomeMain = document.getElementById('incomeMain');
-            const incomeJson = document.createElement('input');
-            incomeJson.name = "incomeJson";
-            incomeJson.value = JSON.stringify(incomeStrings);
-            incomeJson.hidden = true;
-            incomeMain.appendChild(incomeJson);
-            incomeMain.submit();
-        }
-
-        return isSubmit === 1;
-    }
         function handlePrice(s1, s2){
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -197,9 +104,8 @@
             xhr.open('GET', 'update', true);
             xhr.onload = function() {
                 let arr = JSON.parse(xhr.response);
-                arr.forEach(function(item, i, arr) {
+                arr.forEach(function(item) {
                     if(globalEans.indexOf(item.ean) === -1){
-                        // alert(item.ean)
                         globalEans.push(item.ean)
                         ${eans.add(item.ean)}
                         let newItem = Object();
@@ -213,21 +119,13 @@
                     }
                 });
             };
-            xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
+            xhr.onerror = function() {
                 alert('Ошибка соединения');
             };
             xhr.send();
         }
 
-        function addIncomeString() {
-            const id = 'incomeStringTable';
-            const table = document.getElementById(id);
-            let rowIndex = table.rows.length;
-            const tableHeader = document.getElementById('incomeStringTableHeader');
-            tableHeader.hidden = false;
-            const tr = document.getElementById('tr' + rowIndex);
-            tr.closest('tr' + rowIndex)
-        }
+
 </script>
     <div class="topPanel">
         <div class="topPanelFirst">
@@ -242,7 +140,7 @@
     </div>
 
     <h2 class="h2Light">Редактировать приход</h2>
-    <form:form method="POST" modelAttribute="incomeMain" id="incomeMain"
+    <form:form method="POST" modelAttribute="incomeMain" id="incomeMainForm"
                onsubmit="return saveIncomeMain();">
 
     <div class="leftright">
@@ -337,13 +235,13 @@
                                                placeholder="Номер партии" /></td>
                                     <td>
                                         <input autocomplete="off"
-                                               name="inputItem"
-                                               list="dataList"
-                                               placeholder="Товар"
-                                               id="item${index.count}"
                                                autofocus="true"
+                                               id="item${index.count}"
+                                               list="dataList"
+                                               name="inputItem"
                                                onchange="handleItem(${index.count})"
-                                               onclick="updateItems()">
+                                               onclick="updateItems()"
+                                               placeholder="Товар">
                                         <datalist id="dataList">
                                             <c:forEach var="item" items="${eans}">
                                                 <option value="${item}" ></option>

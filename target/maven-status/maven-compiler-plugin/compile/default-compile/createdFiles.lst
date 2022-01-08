@@ -3,6 +3,7 @@ ru/kotofeya/storage/controllers/expands/ExpandJson.class
 ru/kotofeya/config/GSConfig.class
 ru/kotofeya/auth/service/UserService.class
 ru/kotofeya/storage/service/expands/DeletedExpandMainService.class
+ru/kotofeya/storage/controllers/ItemController$1.class
 ru/kotofeya/Application.class
 ru/kotofeya/storage/repo/incomes/EditedIncomeMainRepo.class
 ru/kotofeya/storage/model/expands/ExpandMain.class
@@ -21,6 +22,7 @@ ru/kotofeya/config/WebInitializer.class
 ru/kotofeya/storage/service/incomes/DeletedIncomeStringService.class
 ru/kotofeya/auth/repo/UserRepository.class
 ru/kotofeya/storage/controllers/expands/ExpandMainController$1.class
+ru/kotofeya/storage/controllers/ItemJson.class
 ru/kotofeya/storage/model/incomes/IncomeMain.class
 ru/kotofeya/config/WebSecurityConfig.class
 ru/kotofeya/storage/service/expands/ExpandMainService.class

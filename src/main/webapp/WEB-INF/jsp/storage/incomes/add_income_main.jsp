@@ -17,6 +17,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/createItem.js"></script>
 </head>
 <body  class="bodyClassGreen">
     <sec:authorize access="!isAuthenticated()">
@@ -24,8 +26,8 @@
     </sec:authorize>
 
     <script type="text/javascript">
-        let globalEans = new Array();
-        let globalItems = new Array();
+        let globalEans = [];
+        let globalItems = [];
 
         $(document).ready(function() {
             let itemObj;
@@ -35,7 +37,7 @@
                 }
             </c:forEach>
             <c:forEach var="item" items="${items}">
-                itemObj = new Object();
+                itemObj = {};
                 itemObj.id = ${item.id};
                 itemObj.name = `${item.name}`;
                 itemObj.ean = `${item.ean}`;
@@ -52,41 +54,14 @@
             if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
                 if (answer) {
-                    document.activeElement.blur();
                     c = 1;
-                    document.getElementById('item' + index).value = '';
-                    document.getElementById('itemId' + index).value = '';
-                    document.getElementById('name' + index).value = '';
-                    window.open("add_item");
+                    createItem(index);
                 }
             } else {
-                setMiddlePrice(inputItem, index)
+                setMiddlePrice(globalItems, inputItem, index)
                 c = incrementCount(table, inputItem, index)
             }
-            if(c == 0) {
-                const tr = document.getElementById("tr" + (index + 1));
-                tr.hidden = false;
-            }
-        }
-
-        function setMiddlePrice(ean, index){
-            globalItems.forEach(function(item, i, arr){
-                if(item.ean == ean){
-                    let itemIdCell = document.getElementById('itemId' + index);
-                    itemIdCell.value = item.id;
-                    let itemNameCell = document.getElementById('name' + index);
-                    itemNameCell.value = item.name;
-                }
-            });
-
-<%--            <c:forEach var="model" items="${items}">--%>
-<%--            if("${model.ean}" == ean){--%>
-<%--                let itemIdCell = document.getElementById('itemId' + index);--%>
-<%--                itemIdCell.value = ${model.id};--%>
-<%--                let itemNameCell = document.getElementById('name' + index);--%>
-<%--                itemNameCell.value = '${model.name}';--%>
-<%--            }--%>
-<%--            </c:forEach>--%>
+            addTr(c, index)
         }
 
         function incrementCount(table, inputItem, index){
@@ -106,78 +81,12 @@
             return 0;
         }
 
-        function addIncomeMain() {
-        var isSubmit = true;
-        let incomeStrings = new Array();
-        const table = document.getElementById('incomeStringTable');
-        let index;
-        for (index = 1; index < table.rows.length; index++) {
-            var itemId = document.getElementById("itemId" + index).value;
-            const count = document.getElementById("count" + index).value;
-            const purPrice = document.getElementById("purPrice" + index).value;
-            const purPriceAct = document.getElementById("purPriceAct" + index).value;
-            const storeArticle = document.getElementById("storeArticle" + index).value;
-            const batchNumber = document.getElementById("batchNumber" + index).value;
-            const itemString = new Object();
-            if (itemId.length > 0) {
-                // itemId=itemId.split("::")[2]
-                if (count.length === 0) {
-                    alert("Введите количество");
-                    isSubmit = false;
-                    break
-                }
-                else if (purPrice.length === 0) {
-                    alert("Введите цену");
-                    isSubmit = false;
-                    break
-
-                }
-                else if (purPriceAct.length === 0) {
-                    alert("Введите фактическую цену");
-                    isSubmit = false;
-                    break
-
-                }
-                else if (storeArticle.length === 0) {
-                    alert("Введите артикул товара в магазине покупки");
-                    isSubmit = false;
-                    break
-
-                }
-                else if (batchNumber.length === 0) {
-                    alert("Введите номер партии");
-                    isSubmit = false;
-                    break
-
-                }
-                itemString.itemId = itemId;
-                itemString.count = count;
-                itemString.purPrice = purPrice;
-                itemString.purPriceAct = purPriceAct;
-                itemString.storeArticle = storeArticle;
-                itemString.batchNumber = batchNumber;
-                incomeStrings.push(itemString);
-            }
-        }
-        if (isSubmit) {
-            let incomeMain = document.getElementById('incomeMainForm');
-            const incomeJson = document.createElement('input');
-            incomeJson.name = "incomeJson";
-            incomeJson.value = JSON.stringify(incomeStrings);
-            incomeJson.hidden = true;
-            incomeMain.appendChild(incomeJson);
-            incomeMain.submit();
-        }
-        return isSubmit;
-    }
-
         function handlePrice(){
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
         let index;
         let generalSum = 0;
         let generalSumAct = 0;
-
         for (index = 1; index < table.rows.length; index++) {
             const count = document.getElementById("count" + index).value;
             const purPrice = document.getElementById("purPrice" + index).value;
@@ -193,16 +102,6 @@
         document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
     }
 
-        function addIncomeString() {
-        const id = 'incomeStringTable';
-        const table = document.getElementById(id);
-        let rowIndex = table.rows.length;
-        const tableHeader = document.getElementById('incomeStringTableHeader');
-        tableHeader.hidden = false;
-        const tr = document.getElementById('tr' + rowIndex);
-        tr.closest('tr' + rowIndex)
-    }
-
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -210,9 +109,8 @@
             xhr.open('GET', 'update', true);
             xhr.onload = function() {
                 let arr = JSON.parse(xhr.response);
-                arr.forEach(function(item, i, arr) {
+                arr.forEach(function(item) {
                     if(globalEans.indexOf(item.ean) === -1){
-                        // alert(item.ean)
                         globalEans.push(item.ean)
                         ${eans.add(item.ean)}
                         let newItem = Object();
@@ -226,7 +124,7 @@
                      }
                 });
             };
-            xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
+            xhr.onerror = function() {
                 alert('Ошибка соединения');
             };
             xhr.send();
@@ -237,12 +135,8 @@
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
-
-<%--        <div class="topPanelMiddle">--%>
-<%--            <div><a href="#" onclick="updateItems()">Update</a></div>--%>
-<%--        </div>--%>
         <div class="topPanelLast">
-            <div><a href="/GS">На главную</a></div>
+            <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>
     </div>
 
@@ -251,7 +145,7 @@
         <div class="left">
             <div class="outerDivLogin">
                 <form:form method="POST" modelAttribute="incomeMainForm" id="incomeMainForm"
-                           onsubmit="return addIncomeMain();">
+                           onsubmit="return saveIncomeMain();">
                     <form:hidden path="id"/>
                     <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
                     <form:hidden path="incomeStrings"/>
@@ -316,16 +210,15 @@
                             id="tr${index.count}">
                         <td><input type="text"
                                    id="batchNumber${index.count}"
-                                   required="true"
-                                   placeholder="Номер партии"
-                                   path="batchNumber"/></td>
+                                   required
+                                   placeholder="Номер партии"/></td>
                         <td>
                             <input  autocomplete="off"
                                     name="inputItem"
                                     list="dataList"
                                     placeholder="Товар"
                                     id="item${index.count}"
-                                    autofocus="true"
+                                    autofocus
                                     onchange="handleItem(${index.count})"
                                     onclick="updateItems()">
                             <datalist id="dataList">
@@ -336,36 +229,39 @@
                         </td>
 
                         <td>
-                            <input required="true" id="name${index.count}"
+                            <input required
+                                   id="name${index.count}"
                                    placeholder="Наименование"/>
                         </td>
 
                         <td hidden>
-                            <input required="true" id="itemId${index.count}"/>
+                            <input required
+                                   id="itemId${index.count}"/>
                         </td>
                         <td>
-                            <input type="number" required="true" id="count${index.count}"
+                            <input type="number" required
+                                   id="count${index.count}"
                                    placeholder="Количество" min = "0"
                                    onchange="handlePrice()" onfocus="clearCount()"/>
                         </td>
                         <td><input type="number" placeholder="Цена покупки"
                                    id="purPrice${index.count}"
                                    min = "0" step="0.01"
-                                   required="true"
-                                   onchange="javascript:handlePrice()"/>
+                                   required
+                                   onchange="handlePrice()"/>
                         </td>
-                        <td><input type="number" id="purPriceAct${index.count}" required="true"
+                        <td><input type="number" id="purPriceAct${index.count}" required
                                    placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                   oninput="javascript:handlePrice()"/>
+                                   oninput="handlePrice()"/>
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
-                                   placeholder="Артикул в магазине" required="true"/></td>
+                                   placeholder="Артикул в магазине" required/></td>
 
                         <td id="purPriceSum${index.count}">
-                            <div type="text" id="ppSum${index.count}" class="addIncomeInput">0.00</div>
+                            <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
                         <td id="purPriceActSum${index.count}">
-                            <div type="text" id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
+                            <div id="ppActSum${index.count}" class="addIncomeInput">0.00</div>
                         </td>
                     </tr>
             </c:forEach>
