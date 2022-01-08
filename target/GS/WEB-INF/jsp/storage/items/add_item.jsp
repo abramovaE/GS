@@ -19,19 +19,19 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
-<%--<script type="text/javascript">--%>
-<%--    // function addItem() {--%>
-<%--    //     document.forms['itemForm'].submit();--%>
-<%--    //     // let form = document.getElementById('itemForm');--%>
-<%--    //     // form.submit();--%>
-<%--    //     window.close();--%>
-<%--    }--%>
-<%--</script>--%>
+<script type="text/javascript">
+
+
+</script>
+
 
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
         </div>
+
+
+
         <div class="topPanelLast">
             <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
         </div>

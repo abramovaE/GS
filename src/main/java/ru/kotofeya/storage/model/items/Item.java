@@ -1,5 +1,6 @@
 package ru.kotofeya.storage.model.items;
 
+import com.google.gson.annotations.Expose;
 import ru.kotofeya.storage.model.expands.ExpandString;
 import ru.kotofeya.storage.model.incomes.IncomeString;
 
@@ -36,17 +37,18 @@ public class Item {
     @Column(name = "mp_link_sber")
     private String mpLinkSber;
 
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<IncomeString> incomeStrings;
+
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     private Set<ExpandString> expandStrings;
 
     @Transient
     private int middlePrice;
-
     @Transient
     private EditedItem lastEditedItem;
-
 
     public Item() {}
     public Long getId() {return id;}
@@ -73,27 +75,19 @@ public class Item {
     public void setMpLinkSber(String mpLinkSber) {this.mpLinkSber = mpLinkSber;}
     public int getMiddlePrice() {return middlePrice;}
     public void setMiddlePrice(int middlePrice) {this.middlePrice = middlePrice;}
-
     public Set<IncomeString> getIncomeStrings() {
         return incomeStrings;
     }
-
     public void setIncomeStrings(Set<IncomeString> incomeStrings) {
         this.incomeStrings = incomeStrings;
     }
-
     public Set<ExpandString> getExpandStrings() {
         return expandStrings;
     }
-
     public void setExpandStrings(Set<ExpandString> expandStrings) {
         this.expandStrings = expandStrings;
     }
-
-    public EditedItem getLastEditedItem() {
-        return lastEditedItem;
-    }
-
+    public EditedItem getLastEditedItem() {return lastEditedItem;}
     public void setLastEditedItem(EditedItem lastEditedItem) {
         this.lastEditedItem = lastEditedItem;
     }
@@ -116,15 +110,3 @@ public class Item {
                 '}';
     }
 }
-//
-//купили
-//10 шт по 100р
-//15 шт по 90р
-//20 шт по 80р
-//средняя = 3950/45 = 87,7
-//продали по 87,7 * 45 = 3950 ,
-//        на складе теперь 0
-//
-//купили 10шт по 50р
-//средняя 4450/55 = 80,9р
-//продали по 80,9 * 10шт = 809

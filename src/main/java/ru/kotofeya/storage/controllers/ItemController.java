@@ -1,20 +1,26 @@
 package ru.kotofeya.storage.controllers;
 
+import com.google.gson.*;
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.kotofeya.storage.model.items.EditedItem;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 
+import javax.persistence.Column;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class ItemController {
@@ -36,7 +42,7 @@ public class ItemController {
     }
 
     @PostMapping("/add_item")
-    public String addItem(@ModelAttribute("itemForm") Item item, Model model) {
+    public String addItem(HttpServletRequest req, @ModelAttribute("itemForm") Item item, Model model) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         item.setDate(LocalDateTime.now().format(dateTimeFormatter));
         item.setCount(0);
@@ -47,7 +53,22 @@ public class ItemController {
             item.setArticle("gs" + String.format("%06d", maxItemId));
         }
         itemService.saveItem(item);
+        req.setAttribute("items", itemService.getAllItems());
         return "redirect:/close";
+    }
+
+    @GetMapping("/update")
+    @ResponseBody
+    public String items() {
+        System.out.println("updateitems");
+        List<Item> items = itemService.getAllItems();
+        List<ItemJson> itemJsons = new ArrayList<>();
+        for(Item item: items){
+            itemJsons.add(new ItemJson(item));
+        }
+        Type listType = new TypeToken<List<ItemJson>>() {}.getType();
+//        System.out.println(new GsonBuilder().create().toJson(itemJsons, listType));
+        return new GsonBuilder().create().toJson(itemJsons, listType);
     }
 
     @GetMapping({"/show_item/{itemId}/{editUserName}",
@@ -75,5 +96,42 @@ public class ItemController {
         itemService.saveItem(item);
         model.addAttribute("item", item);
         return "redirect:/close";
+    }
+}
+
+class ItemJson{
+    private Long id;
+    private String name;
+    private String ean;
+
+    public ItemJson() {
+    }
+    public ItemJson(Item item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.ean = item.getEan();
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEan() {
+        return ean;
+    }
+
+    public void setEan(String ean) {
+        this.ean = ean;
     }
 }

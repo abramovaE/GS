@@ -24,6 +24,8 @@
     </sec:authorize>
 
     <script type="text/javascript">
+        let globalScopeItems = new Array();
+
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('incomeStringTable');
@@ -126,7 +128,8 @@
         }
         return isSubmit;
     }
-        function handlePrice(){
+
+    function handlePrice(){
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
         let index;
@@ -157,10 +160,72 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
+
+<%--    function getEans(){--%>
+<%--        let xhr = new XMLHttpRequest();--%>
+<%--        xhr.overrideMimeType("application/json");--%>
+<%--        xhr.open('GET', 'update', true);--%>
+<%--        xhr.onload = function() {--%>
+<%--            let arr = JSON.parse(xhr.response);--%>
+<%--            arr.forEach(function(item, i, arr) {--%>
+<%--                globalScopeItems.add(item.ean)--%>
+<%--&lt;%&ndash;                if('${eans}'.indexOf(item.ean) === -1){&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    alert( i + ": " + item.id + " " + item.name + " " + item.ean);&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    alert(${eans.size()})&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    globalScopeItems.add(iten.ean)&ndash;%&gt;--%>
+<%--&lt;%&ndash;&lt;%&ndash;                    ${glo.add(item.ean)}&ndash;%&gt;&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    alert(${eans.size()})&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    return ${eans}&ndash;%&gt;--%>
+<%--&lt;%&ndash;                }&ndash;%&gt;--%>
+<%--            });--%>
+<%--        };--%>
+<%--        xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить--%>
+<%--            alert('Ошибка соединения');--%>
+<%--        };--%>
+<%--        xhr.send();--%>
+<%--    }--%>
+
+        function updateItems() {
+            let xhr = new XMLHttpRequest();
+            xhr.overrideMimeType("application/json");
+            xhr.open('GET', 'update', true);
+            xhr.onload = function() {
+                let arr = JSON.parse(xhr.response);
+                arr.forEach(function(item, i, arr) {
+
+                    globalScopeItems.push(item.ean);
+
+                    if('${eans}'.indexOf(item.ean) === -1){
+                        ${eans.add(item.ean)}
+                        const table = document.getElementById('incomeStringTable');
+                        let index;
+                        // for (index = 1; index < table.rows.length; index++) {
+                            var dataList = document.getElementById("dataList")
+                            var option = document.createElement("option")
+                            option.value = item.ean
+                            dataList.appendChild(option)
+                        // }
+                     }
+                });
+
+
+
+                alert(globalScopeItems)
+            };
+            xhr.onerror = function() { // происходит, только когда запрос совсем не получилось выполнить
+                alert('Ошибка соединения');
+            };
+            xhr.send();
+        }
+
 </script>
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
+        </div>
+
+        <div class="topPanelMiddle">
+            <div><a href="#" onclick="updateItems()">Update</a></div>
         </div>
         <div class="topPanelLast">
             <div><a href="/GS">На главную</a></div>
@@ -243,14 +308,15 @@
                         <td>
                             <input  autocomplete="off"
                                     name="inputItem"
-                                    list="dataList${index.count}"
+                                    list="dataList"
                                     placeholder="Товар"
                                     id="item${index.count}"
                                     autofocus="true"
-                                    onchange="javascript:handleItem(${index.count})">
-                            <datalist id="dataList${index.count}">
-                                <c:forEach var="item" items="${items}">
-                                    <option value="${item.ean}" ></option>
+                                    onchange="handleItem(${index.count})"
+                                    onclick="updateItems()">
+                            <datalist id="dataList">
+                                <c:forEach var="item" items="${eans}">
+                                    <option value="${item}" ></option>
                                 </c:forEach>
                             </datalist>
                         </td>
@@ -266,7 +332,7 @@
                         <td>
                             <input type="number" required="true" id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="javascript:handlePrice()" onfocus="javascript:clearCount()"/>
+                                   onchange="handlePrice()" onfocus="clearCount()"/>
                         </td>
                         <td><input type="number" placeholder="Цена покупки"
                                    id="purPrice${index.count}"
