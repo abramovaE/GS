@@ -54,23 +54,22 @@
             }
             </c:forEach>
         });
-
         function handleItem(index){
             const inputItem = document.getElementById('item'+index).value;
+            const table = document.getElementById('incomeStringTable');
             let c = 0;
             if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
-                    if (answer) {
-                        c = 1;
-                        createItem(index)
-                    }
-                } else{
-                        setMiddlePrice(globalItems, inputItem, index)
-                        // c = incrementCount(table, inputItem, index)
+                setTimeout(()=>createNewItem(answer, index), 100)
+                if (answer) {
+                    c = 1;
                 }
+            } else{
+                setMiddlePrice(globalItems, inputItem, index)
+                c = incrementCount(table, inputItem, index)
+            }
             addTr(c, index)
         }
-
         function handlePrice(s1, s2){
         const id = 'incomeStringTable';
         const table = document.getElementById(id);
@@ -96,7 +95,6 @@
         document.getElementById("ppMainSum").innerHTML = String(Math.round(s1 + generalSum*100)/100)
         document.getElementById("ppMainSumAct").innerHTML = String(Math.round(s2 + generalSumAct*100)/100)
     }
-
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();

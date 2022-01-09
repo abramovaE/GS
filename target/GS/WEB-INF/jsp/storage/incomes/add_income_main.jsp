@@ -53,9 +53,9 @@
             let c = 0;
             if(globalEans.indexOf(inputItem) === -1){
                 const answer = window.confirm("Такого товара нет в базе. Создать?");
+                setTimeout(()=>createNewItem(answer, index), 100)
                 if (answer) {
                     c = 1;
-                    createItem(index);
                 }
             } else {
                 setMiddlePrice(globalItems, inputItem, index)
@@ -64,22 +64,22 @@
             addTr(c, index)
         }
 
-        function incrementCount(table, inputItem, index){
-            for(let j = 1; j < table.rows.length; j++){
-                let itemId = document.getElementById("item" + j).value;
-                if(itemId === inputItem){
-                    let countCell = document.getElementById("count" + j);
-                    countCell.value = Number(countCell.value) + 1
-                    if(countCell.value > 1) {
-                        document.getElementById('item' + index).value = "";
-                        document.getElementById('itemId' + index).value = '';
-                        document.getElementById('name' + index).value = '';
-                        return 1;
-                    }
-                }
-            }
-            return 0;
-        }
+        // function incrementCount(table, inputItem, index){
+        //     for(let j = 1; j < table.rows.length; j++){
+        //         let itemId = document.getElementById("item" + j).value;
+        //         if(itemId === inputItem){
+        //             let countCell = document.getElementById("count" + j);
+        //             countCell.value = Number(countCell.value) + 1
+        //             if(countCell.value > 1) {
+        //                 document.getElementById('item' + index).value = "";
+        //                 document.getElementById('itemId' + index).value = '';
+        //                 document.getElementById('name' + index).value = '';
+        //                 return 1;
+        //             }
+        //         }
+        //     }
+        //     return 0;
+        // }
 
         function handlePrice(){
         const id = 'incomeStringTable';

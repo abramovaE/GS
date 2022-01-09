@@ -1,3 +1,9 @@
+function createNewItem(answer, index){
+    if (answer) {
+        createItem(index);
+    }
+}
+
 function createItem(index){
     document.activeElement.blur();
     document.getElementById('item' + index).value = '';
@@ -80,6 +86,26 @@ function saveIncomeMain() {
         incomeMain.submit();
     }
     return isSubmit === 1;
+}
+
+function incrementCount(table, inputItem, index){
+    for(let j = 1; j < table.rows.length; j++) {
+        let item = document.getElementById("item" + j)
+        if (item != null) {
+            let itemId = item.value;
+            if (itemId === inputItem) {
+                let countCell = document.getElementById("count" + j);
+                countCell.value = Number(countCell.value) + 1
+                if (countCell.value > 1) {
+                    document.getElementById('item' + index).value = "";
+                    document.getElementById('itemId' + index).value = '';
+                    document.getElementById('name' + index).value = '';
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
 }
 
 function addIncomeString() {
