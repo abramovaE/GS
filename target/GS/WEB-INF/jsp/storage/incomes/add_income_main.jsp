@@ -24,11 +24,9 @@
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-
     <script type="text/javascript">
         let globalEans = [];
         let globalItems = [];
-
         $(document).ready(function() {
             let itemObj;
             <c:forEach var="ean" items="${eans}">
@@ -46,62 +44,26 @@
                 }
             </c:forEach>
         });
-
-        function handleItem(index){
-            const inputItem = document.getElementById('item'+index).value;
-            const table = document.getElementById('incomeStringTable');
-            let c = 0;
-            if(globalEans.indexOf(inputItem) === -1){
-                const answer = window.confirm("Такого товара нет в базе. Создать?");
-                setTimeout(()=>createNewItem(answer, index), 100)
-                if (answer) {
-                    c = 1;
-                }
-            } else {
-                setMiddlePrice(globalItems, inputItem, index)
-                c = incrementCount(table, inputItem, index)
-            }
-            addTr(c, index)
-        }
-
-        // function incrementCount(table, inputItem, index){
-        //     for(let j = 1; j < table.rows.length; j++){
-        //         let itemId = document.getElementById("item" + j).value;
-        //         if(itemId === inputItem){
-        //             let countCell = document.getElementById("count" + j);
-        //             countCell.value = Number(countCell.value) + 1
-        //             if(countCell.value > 1) {
-        //                 document.getElementById('item' + index).value = "";
-        //                 document.getElementById('itemId' + index).value = '';
-        //                 document.getElementById('name' + index).value = '';
-        //                 return 1;
-        //             }
-        //         }
-        //     }
-        //     return 0;
-        // }
-
-        function handlePrice(){
-        const id = 'incomeStringTable';
-        const table = document.getElementById(id);
-        let index;
-        let generalSum = 0;
-        let generalSumAct = 0;
-        for (index = 1; index < table.rows.length; index++) {
-            const count = document.getElementById("count" + index).value;
-            const purPrice = document.getElementById("purPrice" + index).value;
-            const purPriceAct = document.getElementById("purPriceAct" + index).value;
-            let ppSum = Math.round(count * purPrice * 100)/100
-            let ppActSum = Math.round(count * purPriceAct * 100)/100
-            document.getElementById('ppSum'+index).innerHTML = ppSum
-            document.getElementById('ppActSum'+index).innerHTML = ppActSum
-            generalSum = generalSum + ppSum
-            generalSumAct = generalSumAct + ppActSum
-        }
-        document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
-        document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
-    }
-
+    //     function handlePrice(){
+    //     const id = 'incomeStringTable';
+    //     const table = document.getElementById(id);
+    //     let index;
+    //     let generalSum = 0;
+    //     let generalSumAct = 0;
+    //     for (index = 1; index < table.rows.length; index++) {
+    //         const count = document.getElementById("count" + index).value;
+    //         const purPrice = document.getElementById("purPrice" + index).value;
+    //         const purPriceAct = document.getElementById("purPriceAct" + index).value;
+    //         let ppSum = Math.round(count * purPrice * 100)/100
+    //         let ppActSum = Math.round(count * purPriceAct * 100)/100
+    //         document.getElementById('ppSum'+index).innerHTML = ppSum
+    //         document.getElementById('ppActSum'+index).innerHTML = ppActSum
+    //         generalSum = generalSum + ppSum
+    //         generalSumAct = generalSumAct + ppActSum
+    //     }
+    //     document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
+    //     document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
+    // }
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -129,8 +91,7 @@
             };
             xhr.send();
         }
-
-</script>
+    </script>
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
@@ -219,7 +180,7 @@
                                     placeholder="Товар"
                                     id="item${index.count}"
                                     autofocus
-                                    onchange="handleItem(${index.count})"
+                                    onchange="handleItem(globalEans, globalItems, ${index.count})"
                                     onclick="updateItems()">
                             <datalist id="dataList">
                                 <c:forEach var="item" items="${eans}">
@@ -242,17 +203,17 @@
                             <input type="number" required
                                    id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="handlePrice()" onfocus="clearCount()"/>
+                                   onchange="handlePrice(0, 0)" onfocus="clearCount()"/>
                         </td>
                         <td><input type="number" placeholder="Цена покупки"
                                    id="purPrice${index.count}"
                                    min = "0" step="0.01"
                                    required
-                                   onchange="handlePrice()"/>
+                                   onchange="handlePrice(0, 0)"/>
                         </td>
                         <td><input type="number" id="purPriceAct${index.count}" required
                                    placeholder="Цена покупки окончательная" min = "0" step="0.01"
-                                   oninput="handlePrice()"/>
+                                   oninput="handlePrice(0, 0)"/>
                         </td>
                         <td><input type="text" id="storeArticle${index.count}"
                                    placeholder="Артикул в магазине" required/></td>

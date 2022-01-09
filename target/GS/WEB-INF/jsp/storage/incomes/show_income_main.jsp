@@ -20,7 +20,6 @@
             src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/createItem.js"></script>
-
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/resources/hideShowEditPanel.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
@@ -31,12 +30,9 @@
     <sec:authorize access="!isAuthenticated()">
         <% response.sendRedirect("/"); %>
     </sec:authorize>
-
     <script type="text/javascript">
-
         let globalEans = [];
         let globalItems = [];
-
         $(document).ready(function() {
             let itemObj;
             <c:forEach var="ean" items="${eans}">
@@ -54,47 +50,32 @@
             }
             </c:forEach>
         });
-        function handleItem(index){
-            const inputItem = document.getElementById('item'+index).value;
-            const table = document.getElementById('incomeStringTable');
-            let c = 0;
-            if(globalEans.indexOf(inputItem) === -1){
-                const answer = window.confirm("Такого товара нет в базе. Создать?");
-                setTimeout(()=>createNewItem(answer, index), 100)
-                if (answer) {
-                    c = 1;
-                }
-            } else{
-                setMiddlePrice(globalItems, inputItem, index)
-                c = incrementCount(table, inputItem, index)
-            }
-            addTr(c, index)
-        }
-        function handlePrice(s1, s2){
-        const id = 'incomeStringTable';
-        const table = document.getElementById(id);
-        let index;
-        let generalSum = 0;
-        let generalSumAct = 0;
-        for (index = 1; index < table.rows.length; index++) {
-            const c = document.getElementById("count" + index);
-            if(c != null){
-                const count = document.getElementById("count" + index).value;
-                if (count.length > 0) {
-                    const purPrice = document.getElementById("purPrice" + index).value;
-                    const purPriceAct = document.getElementById("purPriceAct" + index).value;
-                    let ppSum = Math.round(count * purPrice * 100) / 100
-                    let ppActSum = Math.round(count * purPriceAct * 100) / 100
-                    document.getElementById('ppSum' + index).innerHTML = String(ppSum)
-                    document.getElementById('ppActSum' + index).innerHTML = String(ppActSum)
-                    generalSum = generalSum + ppSum
-                    generalSumAct = generalSumAct + ppActSum
-                }
-            }
-        }
-        document.getElementById("ppMainSum").innerHTML = String(Math.round(s1 + generalSum*100)/100)
-        document.getElementById("ppMainSumAct").innerHTML = String(Math.round(s2 + generalSumAct*100)/100)
-    }
+
+    //     function handlePrice(s1, s2){
+    //     const id = 'incomeStringTable';
+    //     const table = document.getElementById(id);
+    //     let index;
+    //     let generalSum = 0;
+    //     let generalSumAct = 0;
+    //     for (index = 1; index < table.rows.length; index++) {
+    //         const c = document.getElementById("count" + index);
+    //         if(c != null){
+    //             const count = document.getElementById("count" + index).value;
+    //             if (count.length > 0) {
+    //                 const purPrice = document.getElementById("purPrice" + index).value;
+    //                 const purPriceAct = document.getElementById("purPriceAct" + index).value;
+    //                 let ppSum = Math.round(count * purPrice * 100) / 100
+    //                 let ppActSum = Math.round(count * purPriceAct * 100) / 100
+    //                 document.getElementById('ppSum' + index).innerHTML = String(ppSum)
+    //                 document.getElementById('ppActSum' + index).innerHTML = String(ppActSum)
+    //                 generalSum = generalSum + ppSum
+    //                 generalSumAct = generalSumAct + ppActSum
+    //             }
+    //         }
+    //     }
+    //     document.getElementById("ppMainSum").innerHTML = String(Math.round(s1 + generalSum*100)/100)
+    //     document.getElementById("ppMainSumAct").innerHTML = String(Math.round(s2 + generalSumAct*100)/100)
+    // }
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -122,9 +103,7 @@
             };
             xhr.send();
         }
-
-
-</script>
+    </script>
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
@@ -237,7 +216,7 @@
                                                id="item${index.count}"
                                                list="dataList"
                                                name="inputItem"
-                                               onchange="handleItem(${index.count})"
+                                               onchange="handleItem(globalEans, globalItems, ${index.count})"
                                                onclick="updateItems()"
                                                placeholder="Товар">
                                         <datalist id="dataList">
