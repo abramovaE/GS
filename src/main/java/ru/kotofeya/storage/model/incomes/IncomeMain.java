@@ -18,7 +18,6 @@ public class IncomeMain {
     private String store;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "incomeMain")
     private Set<IncomeString> incomeStrings;
-
     @Transient
     private int sum;
     @Transient

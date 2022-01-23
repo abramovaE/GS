@@ -25,10 +25,6 @@
         if(`${eans}`.indexOf(ean) == -1){
             incomeMain.submit();
         }
-        // else {
-        //     isSubmit = 0;
-        //     alert("Товар с таким штрих-кодом уже есть в базе")
-        // }
         return isSubmit === 1;
     }
 </script>
@@ -61,20 +57,6 @@
                     path="name"
                     placeholder="Наименование"
                     required="true"
-                    class="inputClassLight"/>
-        </div>
-        <div class="innerDivLogin">
-            <form:input
-                    type="text"
-                    path="yandexArt"
-                    placeholder="Артикул на Яндексе"
-                    class="inputClassLight"/>
-        </div>
-        <div class="innerDivLogin">
-            <form:input
-                    type="text"
-                    path="sberArt"
-                    placeholder="Артикул на Сбермаркете"
                     class="inputClassLight"/>
         </div>
         <div class="innerDivLogin">

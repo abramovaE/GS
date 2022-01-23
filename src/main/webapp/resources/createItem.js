@@ -43,7 +43,6 @@ function saveIncomeMain() {
                 const purPrice = document.getElementById("purPrice" + index).value;
                 const purPriceAct = document.getElementById("purPriceAct" + index).value;
                 const storeArticle = document.getElementById("storeArticle" + index).value;
-                const batchNumber = document.getElementById("batchNumber" + index).value;
                 if (count.length === 0) {
                     alert("Введите количество");
                     isSubmit = 0;
@@ -60,10 +59,6 @@ function saveIncomeMain() {
                     alert("Введите артикул товара в магазине покупки");
                     isSubmit = 0;
                     break;
-                } else if (batchNumber.length === 0) {
-                    alert("Введите номер партии");
-                    isSubmit = 0;
-                    break;
                 }
                 const itemString = {};
                 itemString.itemId = itemId;
@@ -71,7 +66,6 @@ function saveIncomeMain() {
                 itemString.purPrice = purPrice;
                 itemString.purPriceAct = purPriceAct;
                 itemString.storeArticle = storeArticle;
-                itemString.batchNumber = batchNumber;
                 incomeStrings.push(itemString);
             }
         }

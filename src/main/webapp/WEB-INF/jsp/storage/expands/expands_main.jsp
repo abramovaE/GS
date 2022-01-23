@@ -37,6 +37,7 @@
     <h2 class="h2Light">Расходы</h2>
     <table class="todayIncomeStrings">
       <tr>
+        <th>Номер</th>
         <th>Дата</th>
         <th>Создал</th>
         <th>Контрагент</th>
@@ -46,6 +47,7 @@
         <tr onmouseover="showEditPanel(${expandMain.id})"
             onmouseout="hideEditPanel(${expandMain.id})"
             onclick="location.href='show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}'">
+          <td>${expandMain.id}</td>
           <td>${expandMain.date}</td>
           <td>${expandMain.userName}</td>
           <td>${expandMain.store}</td>

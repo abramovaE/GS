@@ -41,10 +41,6 @@ public class EditedIncomeString {
     private String createStoreArticle;
     @Column(name = "edit_store_article")
     private String editStoreArticle;
-    @Column(name = "create_batch_number")
-    private String createBatchNumber;
-    @Column(name = "edit_batch_number")
-    private String editBatchNumber;
     @Column(name = "create_income_main")
     private Long createIncomeMainId;
     @Column(name = "edit_income_main")
@@ -69,8 +65,6 @@ public class EditedIncomeString {
         this.setEditPurchasePriceAct(incomeString.getPurchasePriceAct());
         this.setCreateStoreArticle(incomeStringFromDb.getStoreArticle());
         this.setEditStoreArticle(incomeString.getStoreArticle());
-        this.setCreateBatchNumber(incomeStringFromDb.getBatchNumber());
-        this.setEditBatchNumber(incomeString.getBatchNumber());
         this.setCreateIncomeMainId(incomeStringFromDb.getIncomeMain().getId());
         this.setEditIncomeMainId(incomeString.getIncomeMain().getId());
     }
@@ -108,10 +102,6 @@ public class EditedIncomeString {
     public void setCreateStoreArticle(String createStoreArticle) {this.createStoreArticle = createStoreArticle;}
     public String getEditStoreArticle() {return editStoreArticle;}
     public void setEditStoreArticle(String editStoreArticle) {this.editStoreArticle = editStoreArticle;}
-    public String getCreateBatchNumber() {return createBatchNumber;}
-    public void setCreateBatchNumber(String createBatchNumber) {this.createBatchNumber = createBatchNumber;}
-    public String getEditBatchNumber() {return editBatchNumber;}
-    public void setEditBatchNumber(String editBatchNumber) {this.editBatchNumber = editBatchNumber;}
     public Long getCreateIncomeMainId() {return createIncomeMainId;}
     public void setCreateIncomeMainId(Long createIncomeMainId) {this.createIncomeMainId = createIncomeMainId;}
     public Long getEditIncomeMainId() {return editIncomeMainId;}
@@ -135,10 +125,6 @@ public class EditedIncomeString {
                 ", editPurchasePriceAct=" + editPurchasePriceAct +
                 ", createStoreArticle='" + createStoreArticle + '\'' +
                 ", editStoreArticle='" + editStoreArticle + '\'' +
-//                ", createStore='" + createStore + '\'' +
-//                ", editStore='" + editStore + '\'' +
-                ", createBatchNumber=" + createBatchNumber +
-                ", editBatchNumber=" + editBatchNumber +
                 ", createIncomeMainId=" + createIncomeMainId +
                 ", editIncomeMainId=" + editIncomeMainId +
                 '}';

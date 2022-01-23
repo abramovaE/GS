@@ -57,18 +57,13 @@
     <table class="addIncome">
         <th><a href="<c:url value="/items_main/sortBy/article/${count}"/>">Артикул внутренний</a></th>
         <th><a href="<c:url value="/items_main/sortBy/name/${count}"/>">Наименование</a></th>
-        <th><a href="<c:url value="/items_main/sortBy/artYandex/${count}"/>">Артикул на Яндексе</a></th>
-        <th><a href="<c:url value="/items_main/sortBy/artSber/${count}"/>">Артикул на Сбермаркете</a></th>
         <th><a href="<c:url value="/items_main/sortBy/linkYandex/${count}"/>">Ссылка на Яндексе</a></th>
         <th><a href="<c:url value="/items_main/sortBy/linkSber/${count}"/>">Ссылка на Сбермаркете</a></th>
-
         <th><a href="<c:url value="/items_main/sortBy/ean/${count}"/>">Штрих-код</a></th>
         <th><a href="<c:url value="/items_main/sortBy/username/${count}"/>">Создал</a></th>
         <th><a href="<c:url value="/items_main/sortBy/date/${count}"/>">Дата добавления</a></th>
-
         <th><a href="<c:url value="/items_main/sortBy/editUserName/${count}"/>">Редактировал</a></th>
         <th><a href="<c:url value="/items_main/sortBy/editDate/${count}"/>">Дата редактирования</a></th>
-
         <th><a href="<c:url value="/items_main/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <c:forEach items="${items}" var="item">
             <tr onclick=openItem(${item.id})>
@@ -76,14 +71,11 @@
             <%--            <tr onclick="window.open('show_item/${item.id}/${pageContext.request.userPrincipal.name}')">--%>
                 <td>${item.article}</td>
                 <td>${item.name}</td>
-                <td>${item.yandexArt}</td>
-                <td>${item.sberArt}</td>
                 <td>${item.mpLinkYandex}</td>
                 <td>${item.mpLinkSber}</td>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
                 <td>${item.date}</td>
-
                 <td>${item.lastEditedItem.editUserName}</td>
                 <td>${item.lastEditedItem.editDate}</td>
 

@@ -44,39 +44,27 @@
 
 
 <div class="innerDivTr">
-    <h2  class="h2Light">Остатки</h2>
+    <h2  class="h2Light">Остатки на сумму: ${sum / 100}</h2>
+
     <table class="addIncome">
         <th><a href="<c:url value="/allItems/sortBy/article/${count}"/>">Артикул внутренний</a></th>
         <th><a href="<c:url value="/allItems/sortBy/name/${count}"/>">Наименование</a></th>
-<%--        <th><a href="<c:url value="/allItems/sortBy/artYandex/${count}"/>">Артикул на Яндексе</a></th>--%>
-<%--        <th><a href="<c:url value="/allItems/sortBy/artSber/${count}"/>">Артикул на Сбермаркете</a></th>--%>
         <th><a href="<c:url value="/allItems/sortBy/ean/${count}"/>">Штрих-код</a></th>
         <th><a href="<c:url value="/allItems/sortBy/username/${count}"/>">Создал</a></th>
-
-
-
         <th><a href="<c:url value="/allItems/sortBy/date/${count}"/>">Дата добавления</a></th>
         <th><a href="<c:url value="/allItems/sortBy/count/${count}"/>">Актуальное количество</a></th>
         <th><a href="<c:url value="/allItems/sortBy/middlePrice/${count}"/>">Средняя стоимость</a></th>
         <th><a href="<c:url value="/allItems/sortBy/sum/${count}"/>">Сумма</a></th>
-
         <c:forEach items="${items}" var="item">
-
             <tr onclick="openItem(${item.id})">
             <td>${item.article}</td>
                 <td>${item.name}</td>
-<%--                <td>${item.yandexArt}</td>--%>
-<%--                <td>${item.sberArt}</td>--%>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
-
-
-
                 <td>${item.date}</td>
                 <td>${item.count}</td>
                 <td>${item.middlePrice/100}</td>
                 <td>${item.middlePrice * item.count / 100}</td>
-
             </tr>
         </c:forEach>
     </table>

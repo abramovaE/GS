@@ -164,7 +164,6 @@ public class IncomeMainController {
                 incomeString.setPurchasePrice((int) (i.getPurPrice() * 100));
                 incomeString.setPurchasePriceAct((int) (i.getPurPriceAct() * 100));
                 incomeString.setStoreArticle(i.getStoreArticle());
-                incomeString.setBatchNumber(i.getBatchNumber());
                 incomeString.setIncomeMain(incomeMain);
                 incomeStrings.add(incomeString);
             }

@@ -39,13 +39,14 @@ public class StorageController {
         List<Item> items = getItems(model)
                 .stream().filter(it->(it.getCount() != null && it.getCount() > 0))
                 .collect(Collectors.toList());
-
-        setMiddlePrice(items);
+        int sum = setMiddlePrice(items);
         model.addAttribute("items", items);
+        model.addAttribute("sum", sum);
         return "storage/items/all_items";
     }
 
-    private void setMiddlePrice(List<Item> items){
+    private int setMiddlePrice(List<Item> items){
+        int sum = 0;
         for(Item item: items){
             List<IncomeString> incomes = incomeStringService.getAllItemIncomes(item);
             List<ExpandString> expands = expandStringService.getAllItemExpands(item);
@@ -62,7 +63,9 @@ public class StorageController {
             else {
                 item.setMiddlePrice(0);
             }
+            sum = sum + item.getMiddlePrice() * item.getCount();
         }
+        return sum;
     }
 
     private int getCount(Model model){
@@ -131,24 +134,16 @@ public class StorageController {
                 item.setLastEditedItem(editedItem);
             }
         }
-//        List<EditedItem> editedItems = editItemService.findAll();
-//        for(Item item: allItems){
-//            item.setLastEditedItem(editedItems.stream().filter(it ->
-//                    it.getItemId().equals(item.getId())).collect(Collectors.toList()).get(0));
-//        }
-
         setMiddlePrice(allItems);
         sortItems(allItems, sortParam, c);
         model.addAttribute("items", allItems);
         count++;
         model.addAttribute("count", count);
-//        model.addAttribute("redirectTo", "storage/items/items_main");
         return getAllItems(model);
     }
 
     private void sortItems(List<Item> allItems, String sortParam, int c){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-
         Collections.sort(allItems, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
@@ -159,12 +154,6 @@ public class StorageController {
                     case "name":
                         return (c == 0) ? compareItems(o1.getName(), o2.getName()):
                                 compareItems(o2.getName(), o1.getName());
-                    case "artYandex":
-                        return (c == 0) ? compareItems(o1.getYandexArt(), o2.getYandexArt()):
-                                compareItems(o2.getYandexArt(), o1.getYandexArt());
-                    case "artSber":
-                        return (c == 0) ? compareItems(o1.getSberArt(), o2.getSberArt()):
-                                compareItems(o2.getSberArt(), o1.getSberArt());
                     case "linkYandex":
                         return (c == 0) ? compareItems(o1.getMpLinkYandex(), o2.getMpLinkYandex()):
                                 compareItems(o2.getMpLinkYandex(), o1.getMpLinkYandex());

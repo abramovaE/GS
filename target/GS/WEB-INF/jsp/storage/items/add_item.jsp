@@ -67,20 +67,6 @@
         </div>
         <div class="innerDivLogin">
             <form:input
-                    type="text"
-                    path="yandexArt"
-                    placeholder="Артикул на Яндексе"
-                    class="inputClassLight"/>
-        </div>
-        <div class="innerDivLogin">
-            <form:input
-                    type="text"
-                    path="sberArt"
-                    placeholder="Артикул на Сбермаркете"
-                    class="inputClassLight"/>
-        </div>
-        <div class="innerDivLogin">
-            <form:input
                     id = "ean"
                     type="text"
                     path="ean"

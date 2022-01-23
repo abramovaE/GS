@@ -81,12 +81,12 @@
                         autofocus="true" class="inputClassLight"/>
         </div>
 
-        <div class="innerDivLogin">
-            <form:label path="batchNumber">Номер партии</form:label>
-            <form:input type="text" path="batchNumber" placeholder="Номер партии"
-                        required="true"
-                        autofocus="true" class="inputClassLight"/>
-        </div>
+<%--        <div class="innerDivLogin">--%>
+<%--            <form:label path="batchNumber">Номер партии</form:label>--%>
+<%--            <form:input type="text" path="batchNumber" placeholder="Номер партии"--%>
+<%--                        required="true"--%>
+<%--                        autofocus="true" class="inputClassLight"/>--%>
+<%--        </div>--%>
         <div class="innerDivLogin">
             <div>Сумма покупки, руб.</div>
             <div id="ppSum">${incomeStringForm.count*incomeStringForm.purchasePrice/100}</div>

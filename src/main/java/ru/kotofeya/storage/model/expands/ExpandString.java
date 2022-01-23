@@ -23,8 +23,6 @@ public class ExpandString {
     private int salePrice;
     @Transient
     private double salePriceDouble;
-    @Column(name = "batch_number")
-    private int batchNumber;
     @ManyToOne
     private ExpandMain expandMain;
 
@@ -43,10 +41,6 @@ public class ExpandString {
     public void setSalePrice(int salePrice) {this.salePrice = salePrice;}
     public double getSalePriceDouble() {return salePriceDouble;}
     public void setSalePriceDouble(double salePriceDouble) {this.salePriceDouble = salePriceDouble;}
-    public int getBatchNumber() {return batchNumber;}
-    public void setBatchNumber(int batchNumber) {
-        this.batchNumber = batchNumber;
-    }
     public ExpandMain getExpandMain() {return expandMain;}
     public void setExpandMain(ExpandMain expandMain) {this.expandMain = expandMain;}
 }

@@ -30,14 +30,6 @@ public class EditedItem {
     private String createName;
     @Column(name = "edit_name")
     private String editName;
-    @Column(name = "create_yandex_article")
-    private String createYandexArt;
-    @Column(name = "edit_yandex_article")
-    private String editYandexArt;
-    @Column(name = "create_sber_article")
-    private String createSberArt;
-    @Column(name = "edit_sber_article")
-    private String editSberArt;
     @Column(name = "create_ean")
     private String createEan;
     @Column(name = "edit_ean")
@@ -63,10 +55,6 @@ public class EditedItem {
         setEditArticle(newItem.getArticle());
         setCreateName(oldItem.getName());
         setEditName(newItem.getName());
-        setCreateYandexArt(oldItem.getYandexArt());
-        setEditYandexArt(newItem.getYandexArt());
-        setCreateSberArt(oldItem.getSberArt());
-        setEditSberArt(newItem.getSberArt());
         setCreateEan(oldItem.getEan());
         setEditEan(newItem.getEan());
         setCreateMpLinkYandex(oldItem.getMpLinkYandex());
@@ -96,14 +84,6 @@ public class EditedItem {
     public void setCreateName(String createName) {this.createName = createName;}
     public String getEditName() {return editName;}
     public void setEditName(String editName) {this.editName = editName;}
-    public String getCreateYandexArt() {return createYandexArt;}
-    public void setCreateYandexArt(String createYandexArt) {this.createYandexArt = createYandexArt;}
-    public String getEditYandexArt() {return editYandexArt;}
-    public void setEditYandexArt(String editYandexArt) {this.editYandexArt = editYandexArt;}
-    public String getCreateSberArt() {return createSberArt;}
-    public void setCreateSberArt(String createSberArt) {this.createSberArt = createSberArt;}
-    public String getEditSberArt() {return editSberArt;}
-    public void setEditSberArt(String editSberArt) {this.editSberArt = editSberArt;}
     public String getCreateEan() {return createEan;}
     public void setCreateEan(String createEan) {this.createEan = createEan;}
     public String getEditEan() {return editEan;}

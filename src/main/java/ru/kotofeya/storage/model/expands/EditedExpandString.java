@@ -33,10 +33,6 @@ public class EditedExpandString {
     private int createSalePrice;
     @Column(name = "edit_sale_price")
     private int editSalePrice;
-    @Column(name = "create_batch_number")
-    private int createBatchNumber;
-    @Column(name = "edit_batch_number")
-    private int editBatchNumber;
     @Column(name = "create_expand_main")
     private Long createExpandMainId;
     @Column(name = "edit_expand_main")
@@ -57,8 +53,6 @@ public class EditedExpandString {
         this.editCount = expandString.getCount();
         this.createSalePrice = expandStringFromDb.getSalePrice();
         this.editSalePrice = expandString.getSalePrice();
-        this.createBatchNumber = expandStringFromDb.getBatchNumber();
-        this.editBatchNumber = expandString.getBatchNumber();
         this.createExpandMainId = expandStringFromDb.getExpandMain().getId();
         this.editExpandMainId = expandString.getExpandMain().getId();
     }
@@ -89,10 +83,6 @@ public class EditedExpandString {
     public void setCreateSalePrice(int createSalePrice) {this.createSalePrice = createSalePrice;}
     public int getEditSalePrice() {return editSalePrice;}
     public void setEditSalePrice(int editSalePrice) {this.editSalePrice = editSalePrice;}
-    public int getCreateBatchNumber() {return createBatchNumber;}
-    public void setCreateBatchNumber(int createBatchNumber) {this.createBatchNumber = createBatchNumber;}
-    public int getEditBatchNumber() {return editBatchNumber;}
-    public void setEditBatchNumber(int editBatchNumber) {this.editBatchNumber = editBatchNumber;}
     public Long getCreateExpandMainId() {return createExpandMainId;}
     public void setCreateExpandMainId(Long createExpandMainId) {this.createExpandMainId = createExpandMainId;}
     public Long getEditExpandMainId() {return editExpandMainId;}

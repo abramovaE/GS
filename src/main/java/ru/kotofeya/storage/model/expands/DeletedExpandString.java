@@ -25,8 +25,6 @@ public class DeletedExpandString {
     private int count;
     @Column(name = "sale_price")
     private int salePrice;
-    @Column(name = "batch_number")
-    private int batchNumber;
     @Column(name = "expand_main_id")
     private long expandMainId;
 
@@ -40,7 +38,6 @@ public class DeletedExpandString {
         this.itemName = expandString.getItem().getName();
         this.count = expandString.getCount();
         this.salePrice = expandString.getSalePrice();
-        this.batchNumber = expandString.getBatchNumber();
         this.expandMainId = expandString.getExpandMain().getId();
     }
     public Long getId() {
@@ -92,12 +89,6 @@ public class DeletedExpandString {
     }
     public void setSalePrice(int salePrice) {
         this.salePrice = salePrice;
-    }
-    public int getBatchNumber() {
-        return batchNumber;
-    }
-    public void setBatchNumber(int batchNumber) {
-        this.batchNumber = batchNumber;
     }
     public long getExpandMainId() {return expandMainId;}
     public void setExpandMainId(long expandMainId) {this.expandMainId = expandMainId;}

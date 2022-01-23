@@ -24,9 +24,12 @@
     </sec:authorize>
 
     <script type="text/javascript">
-
         $(document).ready(function() {
-            handleItem(index);
+            // if(index != null){
+            //     handleItem(index);
+            // }
+            let date = document.getElementById("datepicker");
+            date.value = '${date}'
         });
 
         function handleItem(index){
@@ -88,7 +91,6 @@
             let itemId = document.getElementById("itemId" + index).value;
             const count = document.getElementById("count" + index).value;
             const price = document.getElementById("price" + index).value;
-            const batchNumber = document.getElementById("batchNumber" + index).value;
             const expandString = {};
             if (itemId.length > 0) {
                 // itemId=itemId.split("::")[2]
@@ -102,15 +104,9 @@
                     isSubmit = false;
                     break;
                 }
-                else if (batchNumber.length === 0) {
-                    alert("Введите номер партии");
-                    isSubmit = false;
-                    break;
-                }
                 expandString.itemId = itemId;
                 expandString.count = count;
                 expandString.price = price;
-                expandString.batchNumber = batchNumber;
                 expandStrings.push(expandString);
             }
         }
@@ -201,7 +197,6 @@
     <div class="innerDivTr">
         <table class="addIncome" id="expandStringTable">
             <tr id="expandStringTableHeader">
-                <th>Номер партии</th>
                 <th>Штрих-код</th>
                 <th>Товар</th>
                 <th hidden>Id</th>
@@ -214,12 +209,7 @@
                                 hidden
                             </c:if>
                         id="tr${index.count}">
-                        <td>
-                            <input type="text"
-                                   id="batchNumber${index.count}"
-                                   required
-                                   placeholder="Номер партии"/>
-                        </td>
+
                         <td>
                             <input autocomplete="off"
                                    autofocus

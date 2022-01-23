@@ -155,7 +155,7 @@
                         onmouseover="showEditPanel(${ind.count})"
                         onmouseout="hideEditPanel(${ind.count})"
                         onclick="location.href='show_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}'">
-                        <td>${incomeString.batchNumber}</td>
+                        <td>${incomeMain.id}</td>
                         <td>${incomeString.item.ean}</td>
                         <td>${incomeString.item.name}</td>
                         <td hidden>Id</td>
@@ -181,8 +181,8 @@
 
                                     class="showIncome">
 
-                                    <td><input type="text" id="batchNumber${index.count}" required
-                                               placeholder="Номер партии" /></td>
+                                    <td><input type="text" id="batchNumber${index.count}"
+                                               readonly value="${incomeMain.id}"/></td>
                                     <td>
                                         <input autocomplete="off"
                                                autofocus

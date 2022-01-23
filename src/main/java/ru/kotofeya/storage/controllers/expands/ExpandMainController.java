@@ -44,7 +44,6 @@ public class ExpandMainController {
     @Autowired
     private IncomeStringService incomeStringService;
 
-
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @GetMapping("/expands_main")
@@ -194,7 +193,6 @@ public class ExpandMainController {
             expandString.setItem(itemService.getById(i.getItemId()));
             expandString.setCount(i.getCount());
             expandString.setSalePrice((int) (i.getPrice() * 100));
-            expandString.setBatchNumber(i.getBatchNumber());
             expandString.setExpandMain(expandMain);
             expandStrings.add(expandString);
         }

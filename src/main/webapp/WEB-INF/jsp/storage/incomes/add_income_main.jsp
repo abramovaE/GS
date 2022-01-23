@@ -27,6 +27,7 @@
     <script type="text/javascript">
         let globalEans = [];
         let globalItems = [];
+
         $(document).ready(function() {
             let itemObj;
             <c:forEach var="ean" items="${eans}">
@@ -43,7 +44,10 @@
                     globalItems.push(itemObj);
                 }
             </c:forEach>
+            let date = document.getElementById("datepicker");
+            date.value = '${date}'
         });
+
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -128,7 +132,6 @@
     <div class="innerDivTr">
         <table class="addIncome" id="incomeStringTable">
             <tr id="incomeStringTableHeader">
-                <th>Номер партии</th>
                 <th>Штрих-код</th>
 
                 <th>Товар</th>
@@ -149,10 +152,7 @@
                                 hidden
                             </c:if>
                             id="tr${index.count}">
-                        <td><input type="text"
-                                   id="batchNumber${index.count}"
-                                   required
-                                   placeholder="Номер партии"/></td>
+
                         <td>
                             <input  autocomplete="off"
                                     name="inputItem"
