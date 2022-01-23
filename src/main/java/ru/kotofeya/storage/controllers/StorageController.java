@@ -45,11 +45,6 @@ public class StorageController {
         return "storage/items/all_items";
     }
 
-//    @GetMapping("/close")
-//    public String  close() {
-//        return "close";
-//    }
-
     private void setMiddlePrice(List<Item> items){
         for(Item item: items){
             List<IncomeString> incomes = incomeStringService.getAllItemIncomes(item);

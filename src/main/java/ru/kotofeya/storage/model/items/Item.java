@@ -1,9 +1,7 @@
 package ru.kotofeya.storage.model.items;
 
-import com.google.gson.annotations.Expose;
 import ru.kotofeya.storage.model.expands.ExpandString;
 import ru.kotofeya.storage.model.incomes.IncomeString;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,7 +12,6 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @Column(name = "article")
     private String article;
     @Column(name = "name")

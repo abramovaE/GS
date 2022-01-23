@@ -44,26 +44,6 @@
                 }
             </c:forEach>
         });
-    //     function handlePrice(){
-    //     const id = 'incomeStringTable';
-    //     const table = document.getElementById(id);
-    //     let index;
-    //     let generalSum = 0;
-    //     let generalSumAct = 0;
-    //     for (index = 1; index < table.rows.length; index++) {
-    //         const count = document.getElementById("count" + index).value;
-    //         const purPrice = document.getElementById("purPrice" + index).value;
-    //         const purPriceAct = document.getElementById("purPriceAct" + index).value;
-    //         let ppSum = Math.round(count * purPrice * 100)/100
-    //         let ppActSum = Math.round(count * purPriceAct * 100)/100
-    //         document.getElementById('ppSum'+index).innerHTML = ppSum
-    //         document.getElementById('ppActSum'+index).innerHTML = ppActSum
-    //         generalSum = generalSum + ppSum
-    //         generalSumAct = generalSumAct + ppActSum
-    //     }
-    //     document.getElementById("ppMainSum").innerHTML = Math.round(generalSum*100)/100
-    //     document.getElementById("ppMainSumAct").innerHTML = Math.round(generalSumAct*100)/100
-    // }
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -203,7 +183,7 @@
                             <input type="number" required
                                    id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="handlePrice(0, 0)" onfocus="clearCount()"/>
+                                   onchange="handlePrice(0, 0)"/>
                         </td>
                         <td><input type="number" placeholder="Цена покупки"
                                    id="purPrice${index.count}"

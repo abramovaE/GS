@@ -50,32 +50,6 @@
             }
             </c:forEach>
         });
-
-    //     function handlePrice(s1, s2){
-    //     const id = 'incomeStringTable';
-    //     const table = document.getElementById(id);
-    //     let index;
-    //     let generalSum = 0;
-    //     let generalSumAct = 0;
-    //     for (index = 1; index < table.rows.length; index++) {
-    //         const c = document.getElementById("count" + index);
-    //         if(c != null){
-    //             const count = document.getElementById("count" + index).value;
-    //             if (count.length > 0) {
-    //                 const purPrice = document.getElementById("purPrice" + index).value;
-    //                 const purPriceAct = document.getElementById("purPriceAct" + index).value;
-    //                 let ppSum = Math.round(count * purPrice * 100) / 100
-    //                 let ppActSum = Math.round(count * purPriceAct * 100) / 100
-    //                 document.getElementById('ppSum' + index).innerHTML = String(ppSum)
-    //                 document.getElementById('ppActSum' + index).innerHTML = String(ppActSum)
-    //                 generalSum = generalSum + ppSum
-    //                 generalSumAct = generalSumAct + ppActSum
-    //             }
-    //         }
-    //     }
-    //     document.getElementById("ppMainSum").innerHTML = String(Math.round(s1 + generalSum*100)/100)
-    //     document.getElementById("ppMainSumAct").innerHTML = String(Math.round(s2 + generalSumAct*100)/100)
-    // }
         function updateItems() {
             let dataList = document.getElementById("dataList")
             let xhr = new XMLHttpRequest();
@@ -119,7 +93,6 @@
     <h2 class="h2Light">Редактировать приход</h2>
     <form:form method="POST" modelAttribute="incomeMain" id="incomeMainForm"
                onsubmit="return saveIncomeMain();">
-
     <div class="leftright">
         <div class="left">
             <div class="outerDivLogin">
@@ -212,7 +185,7 @@
                                                placeholder="Номер партии" /></td>
                                     <td>
                                         <input autocomplete="off"
-                                               autofocus="true"
+                                               autofocus
                                                id="item${index.count}"
                                                list="dataList"
                                                name="inputItem"

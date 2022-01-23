@@ -20,8 +20,17 @@
     <% response.sendRedirect("/"); %>
 </sec:authorize>
 <script type="text/javascript">
-
-
+    function saveItem() {
+        let isSubmit = 1;
+        const ean = document.getElementById('ean').value;
+        if(`${eans}`.indexOf(ean) == -1){
+            incomeMain.submit();
+        } else {
+            isSubmit = 0;
+            alert("Товар с таким штрих-кодом уже есть в базе")
+        }
+        return isSubmit === 1;
+    }
 </script>
 
 
@@ -37,7 +46,7 @@
         </div>
     </div>
     <div class="outerDivLogin">
-    <form:form method="POST" modelAttribute="itemForm">
+    <form:form method="POST" modelAttribute="itemForm" onsubmit="return saveItem();">
         <h2 class="h2Light">Добавить товар</h2>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
         <div class="innerDivLogin">
@@ -72,6 +81,7 @@
         </div>
         <div class="innerDivLogin">
             <form:input
+                    id = "ean"
                     type="text"
                     path="ean"
                     placeholder="Штрих-код"

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: abramov
+Build-Jdk: 14.0.2
+Implementation-Title: GS
+Implementation-Version: 2.0
+Implementation-Vendor-Id: ru.kotofeya
+Main-Class: ru.kotofeya.Application
+

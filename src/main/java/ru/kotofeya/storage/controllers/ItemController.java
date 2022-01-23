@@ -1,29 +1,28 @@
 package ru.kotofeya.storage.controllers;
 
 import com.google.gson.*;
-import com.google.gson.annotations.Expose;
+
 import com.google.gson.reflect.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import ru.kotofeya.storage.model.items.EditedItem;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.EditItemService;
 import ru.kotofeya.storage.service.ItemService;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ItemController {
+    public static final String PREFIX= "b";
     @Autowired
     private ItemService itemService;
     @Autowired
@@ -36,8 +35,10 @@ public class ItemController {
         Item maxIdItem = itemService.findMaxIdItem();
         long maxItemId = maxIdItem == null? 0 : maxIdItem.getId();
         maxItemId++;
-        item.setArticle("gs" + String.format("%06d", maxItemId));
+        item.setArticle(PREFIX + String.format("%06d", maxItemId));
         model.addAttribute("itemForm", item);
+        List<Item> allItems = itemService.getAllItems();
+        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         return "storage/items/add_item";
     }
 
@@ -50,7 +51,7 @@ public class ItemController {
             Item maxIdItem = itemService.findMaxIdItem();
             long maxItemId = maxIdItem == null ? 0 : maxIdItem.getId();
             maxItemId++;
-            item.setArticle("gs" + String.format("%06d", maxItemId));
+            item.setArticle(PREFIX + String.format("%06d", maxItemId));
         }
         itemService.saveItem(item);
         req.setAttribute("items", itemService.getAllItems());
@@ -79,6 +80,8 @@ public class ItemController {
                                  @PathVariable("editUserName") String editUserName) {
         Item item = itemService.getById(itemId);
         model.addAttribute("item", item);
+        List<Item> allItems = itemService.getAllItems();
+        model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         return "storage/items/show_item";
     }
 
@@ -135,3 +138,4 @@ class ItemJson{
         this.ean = ean;
     }
 }
+

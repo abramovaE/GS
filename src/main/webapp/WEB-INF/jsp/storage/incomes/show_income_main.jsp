@@ -185,7 +185,7 @@
                                                placeholder="Номер партии" /></td>
                                     <td>
                                         <input autocomplete="off"
-                                               autofocus="true"
+                                               autofocus
                                                id="item${index.count}"
                                                list="dataList"
                                                name="inputItem"

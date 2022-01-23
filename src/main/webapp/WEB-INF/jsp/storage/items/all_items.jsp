@@ -12,6 +12,21 @@
         <%@include file="/resources/all_items.css" %>
         <%@include file="/resources/index_style.css" %>
     </style>
+    <script type="text/javascript">
+        let isUpdate = false;
+
+        window.onfocus = function mouseMove(){
+            if(!isUpdate) {
+                isUpdate = true
+                window.location.reload();
+            }
+        }
+        function openItem(itemId){
+            isUpdate = false;
+            window.open('show_item/' + itemId + '/${pageContext.request.userPrincipal.name}')
+        }
+
+    </script>
 </head>
 
 <body  class="bodyClassGreen">
@@ -46,15 +61,14 @@
         <th><a href="<c:url value="/allItems/sortBy/sum/${count}"/>">Сумма</a></th>
 
         <c:forEach items="${items}" var="item">
-            <tr onclick="window.open('show_item/${item.id}/${pageContext.request.userPrincipal.name}')">
+
+            <tr onclick="openItem(${item.id})">
             <td>${item.article}</td>
                 <td>${item.name}</td>
 <%--                <td>${item.yandexArt}</td>--%>
 <%--                <td>${item.sberArt}</td>--%>
                 <td>${item.ean}</td>
                 <td>${item.userName}</td>
-
-
 
 
 

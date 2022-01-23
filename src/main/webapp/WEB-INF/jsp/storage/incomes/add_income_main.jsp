@@ -183,7 +183,7 @@
                             <input type="number" required
                                    id="count${index.count}"
                                    placeholder="Количество" min = "0"
-                                   onchange="handlePrice(0, 0)" onfocus="clearCount()"/>
+                                   onchange="handlePrice(0, 0)"/>
                         </td>
                         <td><input type="number" placeholder="Цена покупки"
                                    id="purPrice${index.count}"

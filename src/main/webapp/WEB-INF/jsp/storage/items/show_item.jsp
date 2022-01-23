@@ -11,7 +11,6 @@
     <style>
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/index_style.css" %>
-
     </style>
 </head>
 
@@ -19,6 +18,20 @@
 <sec:authorize access="!isAuthenticated()">
     <% response.sendRedirect("/"); %>
 </sec:authorize>
+<script type="text/javascript">
+    function saveItem() {
+        let isSubmit = 1;
+        const ean = document.getElementById('ean').value;
+        if(`${eans}`.indexOf(ean) == -1){
+            incomeMain.submit();
+        }
+        // else {
+        //     isSubmit = 0;
+        //     alert("Товар с таким штрих-кодом уже есть в базе")
+        // }
+        return isSubmit === 1;
+    }
+</script>
 <div class="topPanel">
     <div class="topPanelFirst">
         <div class="username">${pageContext.request.userPrincipal.name}</div>
@@ -28,7 +41,7 @@
     </div>
 </div>
 <div class="outerDivLogin">
-    <form:form method="POST" modelAttribute="item">
+    <form:form method="POST" modelAttribute="item" onsubmit="return saveItem();">
         <h2 class="h2Light">Редактировать товар</h2>
         <form:hidden path="id"/>
         <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
@@ -66,6 +79,7 @@
         </div>
         <div class="innerDivLogin">
             <form:input
+                    readonly="true"
                     type="text"
                     path="ean"
                     placeholder="Штрих-код"

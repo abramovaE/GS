@@ -21,6 +21,7 @@ public class ItemService {
 
     @Transactional
     public void saveItem(Item item){
+        System.out.println("saveItem: " + item);
         itemRepo.save(item);
     }
 
