@@ -25,6 +25,8 @@ public class DeletedExpandMain {
     private String store;
     @Column(name = "expandStringIds")
     private String expandStringIds;
+    @Column(name = "note")
+    private String note;
 
     public DeletedExpandMain() {}
     public DeletedExpandMain(ExpandMain expandMain, String deleteDate, String deleteUserName) {
@@ -37,6 +39,7 @@ public class DeletedExpandMain {
         List<Long> expandSrtingIds = new ArrayList<>();
         expandMain.getExpandStrings().stream().forEach(it->expandSrtingIds.add(it.getId()));
         this.expandStringIds = expandSrtingIds.toString();
+        this.note = expandMain.getNote();
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -54,4 +57,12 @@ public class DeletedExpandMain {
     public void setStore(String store) {this.store = store;}
     public String getExpandStringIds() {return expandStringIds;}
     public void setExpandStringIds(String expandStringIds) {this.expandStringIds = expandStringIds;}
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

@@ -25,6 +25,8 @@ public class DeletedIncomeMain {
         private String store;
         @Column(name = "incomeStringIds")
         private String incomeStringIds;
+        @Column(name = "note")
+        private String note;
 
     public DeletedIncomeMain() {}
     public DeletedIncomeMain(IncomeMain incomeMain, String deleteDate, String deleteUserName) {
@@ -37,6 +39,7 @@ public class DeletedIncomeMain {
         List<Long> incomeSrtingIds = new ArrayList<>();
         incomeMain.getIncomeStrings().stream().forEach(it->incomeSrtingIds.add(it.getId()));
         this.incomeStringIds = incomeSrtingIds.toString();
+        this.note = incomeMain.getNote();
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -54,4 +57,12 @@ public class DeletedIncomeMain {
     public void setStore(String store) {this.store = store;}
     public String getIncomeStringIds() {return incomeStringIds;}
     public void setIncomeStringIds(String incomeStringIds) {this.incomeStringIds = incomeStringIds;}
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

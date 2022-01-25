@@ -20,6 +20,8 @@ public class ExpandMain {
     private Set<ExpandString> expandStrings;
     @Transient
     private int sum;
+    @Column(name = "note")
+    private String note;
 
     public ExpandMain() {}
     public Long getId() {return id;}
@@ -36,7 +38,8 @@ public class ExpandMain {
     }
     public int getSum() {return sum;}
     public void setSum(int sum) {this.sum = sum;}
-
+    public String getNote() {return note;}
+    public void setNote(String note) {this.note = note;}
     @Override
     public String toString() {
         return "ExpandMain{" +

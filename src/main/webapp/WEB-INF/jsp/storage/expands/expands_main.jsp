@@ -42,6 +42,7 @@
         <th>Создал</th>
         <th>Контрагент</th>
         <th>Сумма продажи, руб.</th>
+        <th>Примечание</th>
       </tr>
       <c:forEach items="${expandsMain}" var="expandMain">
         <tr onmouseover="showEditPanel(${expandMain.id})"
@@ -52,9 +53,17 @@
           <td>${expandMain.userName}</td>
           <td>${expandMain.store}</td>
           <td>${expandMain.sum/100}</td>
-          <td id="deleteTd${expandMain.id}">
+          <td>${expandMain.note}</td>
+
+
+
+          <td<sec:authorize access="hasAuthority('ADMIN')">
+            id="deleteTd${expandMain.id}"
+          </sec:authorize>>
+            <sec:authorize access="hasAuthority('ADMIN')">
             <a id="delete${expandMain.id}" hidden
                href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+            </sec:authorize>
           </td>
         </tr>
       </c:forEach>

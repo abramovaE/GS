@@ -33,27 +33,43 @@
 <div class="outerDivTr">
   <div class="innerDivTr">
     <h2 class="h2Light">Приходы</h2>
+
     <table class="todayIncomeStrings">
       <tr>
+        <th>Номер</th>
         <th>Дата</th>
         <th>Добавил</th>
         <th>Магазин</th>
         <th>Сумма покупки, руб.</th>
         <th>Сумма покупки окончательная, руб.</th>
+        <th>Примечание</th>
       </tr>
       <c:forEach items="${incomesMain}" var="incomeMain">
         <tr onmouseover="showEditPanel(${incomeMain.id})"
             onmouseout="hideEditPanel(${incomeMain.id})"
             onclick="location.href='show_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}'">
+          <td>${incomeMain.id}</td>
           <td>${incomeMain.date}</td>
           <td>${incomeMain.userName}</td>
           <td>${incomeMain.store}</td>
           <td>${incomeMain.sum/100}</td>
           <td>${incomeMain.sumAct/100}</td>
-          <td id="deleteTd${incomeMain.id}">
-            <a id="delete${incomeMain.id}" hidden
-               href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
-          </td>
+          <td>${incomeMain.note}</td>
+
+
+
+            <td<sec:authorize access="hasAuthority('ADMIN')">
+                    id="deleteTd${incomeMain.id}"
+                    </sec:authorize>>
+              <sec:authorize access="hasAuthority('ADMIN')">
+<%--              <a id="addNote${incomeMain.id}" hidden--%>
+<%--                 href="add_note_income_main/${incomeMain.id}">Примечание</a>--%>
+              <a id="delete${incomeMain.id}" hidden
+                 href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+              </sec:authorize>
+            </td>
+
+
         </tr>
       </c:forEach>
     </table>
@@ -61,3 +77,16 @@
 </div>
 </body>
 </html>
+
+
+<%--<sec:authorize access="hasAuthority('ADMIN')">--%>
+<%--  <h2 class="h2Light">Приходы</h2>--%>
+<%--</sec:authorize>--%>
+<%--          <sec:authorize access="hasRole('ADMIN')">--%>
+<%--            <td id="deleteTd${incomeMain.id}">--%>
+<%--              <a id="delete${incomeMain.id}" hidden--%>
+<%--                 href="delete_income_main/${incomeMain.id}/${pageContext.request.userPrincipal.name}">--%>
+<%--                Удалить--%>
+<%--              </a>--%>
+<%--            </td>--%>
+<%--          </sec:authorize>--%>

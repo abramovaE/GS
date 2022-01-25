@@ -55,13 +55,17 @@
                     <div>Остатки</div>
                 </a></div>
             </div>
-<%--            <div class="storageMainPanel">--%>
-<%--                <div class="squareImgDiv">--%>
-<%--                    <a href="items_main">--%>
-<%--                        <div>Товары</div>--%>
-<%--                    </a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
+        </div>
+
+
+        <div class="indexPanel">
+            <div class="label">Баланс</div>
+            <div class="balancePanel">
+                <div class="balancePanelDiv"><a href="add_money">
+                    <div></div>
+                    <div>Внести деньги</div>
+                </a></div>
+            </div>
         </div>
     </sec:authorize>
 

@@ -48,6 +48,7 @@ public class IncomeMainController {
         model.addAttribute("date", LocalDateTime.now().format(dateTimeFormatter));
         model.addAttribute("incomeJson", new String());
         model.addAttribute("incomeString", new IncomeString());
+
         return "storage/incomes/add_income_main";
     }
 
@@ -94,6 +95,7 @@ public class IncomeMainController {
         incomeMainFromDb.setDate(incomeMain.getDate());
         incomeMainFromDb.setStore(incomeMain.getStore());
         incomeMainFromDb.setUserName(incomeMain.getUserName());
+        incomeMainFromDb.setNote(incomeMain.getNote());
         incomeMainService.saveIncomeMain(incomeMainFromDb);
         editedIncomeMainService.saveEditedIncomeMain(editedIncomeMain);
         return "redirect:/incomes_main";
@@ -131,8 +133,6 @@ public class IncomeMainController {
         }
         return "redirect:/incomes_main";
     }
-
-
 
 
     private IncomeMain setSumsForJsp(IncomeMain incomeMain){

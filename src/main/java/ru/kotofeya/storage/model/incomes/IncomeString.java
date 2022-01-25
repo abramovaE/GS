@@ -32,6 +32,8 @@ public class IncomeString {
     private double purchasePriceActDouble;
     @ManyToOne(fetch = FetchType.EAGER)
     private IncomeMain incomeMain;
+    @Column(name = "note")
+    private String note;
 
     public IncomeString() {}
     public Long getId() {return id;}
@@ -68,6 +70,9 @@ public class IncomeString {
     }
     public IncomeMain getIncomeMain() {return incomeMain;}
     public void setIncomeMain(IncomeMain incomeMain) {this.incomeMain = incomeMain;}
+
+    public String getNote() {return note;}
+    public void setNote(String note) {this.note = note;}
 
     @Override
     public String toString() {

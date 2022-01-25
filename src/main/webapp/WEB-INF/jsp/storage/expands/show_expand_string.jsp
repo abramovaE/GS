@@ -59,6 +59,7 @@
                         onchange="handlePrice()"
                         placeholder="Цена покупки, руб." required="true" class="inputClassLight"/>
         </div>
+
 <%--        <div class="innerDivLogin">--%>
 <%--            <form:label path="batchNumber">Номер партии</form:label>--%>
 <%--            <form:input type="text" path="Number" placeholder="Номер партии"--%>
@@ -69,6 +70,15 @@
             <div>Сумма продажи, руб.</div>
             <div id="ppSum">${expandStringForm.count*expandStringForm.salePrice/100}</div>
         </div>
+
+        <div class="innerDivLogin">
+            <form:label path="note">Примечание</form:label>
+            <form:input type="text" path="note"
+                        placeholder="Примечание"
+                        autofocus="true"
+                        class="inputClassLight"/>
+        </div>
+
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Сохранить</button>
         </div>

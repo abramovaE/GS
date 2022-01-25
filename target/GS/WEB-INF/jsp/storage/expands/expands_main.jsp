@@ -37,22 +37,33 @@
     <h2 class="h2Light">Расходы</h2>
     <table class="todayIncomeStrings">
       <tr>
+        <th>Номер</th>
         <th>Дата</th>
         <th>Создал</th>
         <th>Контрагент</th>
         <th>Сумма продажи, руб.</th>
+        <th>Примечание</th>
       </tr>
       <c:forEach items="${expandsMain}" var="expandMain">
         <tr onmouseover="showEditPanel(${expandMain.id})"
             onmouseout="hideEditPanel(${expandMain.id})"
             onclick="location.href='show_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}'">
+          <td>${expandMain.id}</td>
           <td>${expandMain.date}</td>
           <td>${expandMain.userName}</td>
           <td>${expandMain.store}</td>
           <td>${expandMain.sum/100}</td>
-          <td id="deleteTd${expandMain.id}">
+          <td>${expandMain.note}</td>
+
+
+
+          <td<sec:authorize access="hasAuthority('ADMIN')">
+            id="deleteTd${expandMain.id}"
+          </sec:authorize>>
+            <sec:authorize access="hasAuthority('ADMIN')">
             <a id="delete${expandMain.id}" hidden
                href="delete_expand_main/${expandMain.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+            </sec:authorize>
           </td>
         </tr>
       </c:forEach>

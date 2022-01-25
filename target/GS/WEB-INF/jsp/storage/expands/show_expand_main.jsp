@@ -101,7 +101,6 @@
                     if (itemId.length > 0) {
                         const count = document.getElementById("count" + index).value;
                         const price = document.getElementById("price" + index).value;
-                        const batchNumber = document.getElementById("batchNumber" + index).value;
                         let itemString = {};
                         // itemId=itemId.split("::")[2]
                         if (count.length === 0) {
@@ -114,15 +113,9 @@
                             isSubmit = 0;
                             break;
                         }
-                        else if (batchNumber.length === 0) {
-                            alert("Введите номер партии");
-                            isSubmit = 0;
-                            break;
-                        }
                         itemString.itemId = itemId;
                         itemString.count = count;
                         itemString.price = price;
-                        itemString.batchNumber = batchNumber;
                         expandStrings.push(itemString);
                     }
                     else {
@@ -143,6 +136,8 @@
             }
             return isSubmit === 1;
         }
+
+
         function handlePrice(sum){
             const id = 'expandStringTable';
             const table = document.getElementById(id);
@@ -204,12 +199,20 @@
                                 id="datepicker"
                                 type="text"
                                 path="date"
-                                placeholder="Дата" class="inputClassLight"/>
+                                placeholder="Дата"
+                                class="inputClassLight"/>
                     </div>
                 <div class="innerDivLogin">
                     <form:input type="text" path="store"
                                 placeholder="Контрагент"
                                 id="expandMainStore" class="inputClassLight"/>
+                </div>
+
+                <div class="innerDivLogin">
+                    <form:input type="text" path="note"
+                                placeholder="Примечание"
+                                id="expandMainNote"
+                                class="inputClassLight"/>
                 </div>
                     <div class="innerDivLogin">
                         <button type="submit" class="inputClassLight" id="submit">Сохранить</button>
@@ -235,8 +238,8 @@
                 <th hidden>Id</th>
                 <th>Количество</th>
                 <th>Цена продажи, руб.</th>
-
                 <th>Сумма продажи, руб.</th>
+                <th>Примечание</th>
             </tr>
             <c:forEach items="${expandMain.expandStrings}"
                        var="expandString" varStatus="ind">
@@ -244,15 +247,21 @@
                         onmouseover="showEditPanel(${ind.count})"
                         onmouseout="hideEditPanel(${ind.count})"
                         onclick="location.href='show_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}'">
-                        <td>${expandString.batchNumber}</td>
+                        <td>${expandString.expandMain.id}</td>
                         <td>${expandString.item.ean}</td>
                         <td>${expandString.item.name}</td>
                         <td>${expandString.count}</td>
                         <td>${expandString.salePrice/100}</td>
                         <td>${expandString.count * expandString.salePrice/100}</td>
-                        <td class="edit" id="deleteTd${ind.count}"  >
-                            <a id="delete${ind.count}" hidden
+                        <td>${expandString.note}</td>
+
+                        <td<sec:authorize access="hasAuthority('ADMIN')">
+                                class="edit" id="deleteTd${ind.count}"
+                        </sec:authorize>>
+                            <sec:authorize access="hasAuthority('ADMIN')">
+                                <a id="delete${ind.count}" hidden
                                href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                            </sec:authorize>
                         </td>
                     </tr>
                     </c:forEach>
@@ -265,7 +274,7 @@
                                         </c:if>
                                     class="showIncome">
                                     <td><input type="text" id="batchNumber${index.count}" required
-                                               placeholder="Номер партии"/></td>
+                                               placeholder="Номер партии" value="${expandMain.id}"/></td>
                                     <td>
                                         <input autocomplete="off" autofocus
                                                name="inputItem" list="dataList${index.count}"
@@ -301,37 +310,6 @@
                                         <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>
                                     </td>
                                 </tr>
-<%--                            </c:if>--%>
-<%--                            <c:if test="${index.count==1}">--%>
-<%--                                <tr id="tr${index.count}" class="showIncome">--%>
-<%--                                    <td>--%>
-<%--                                        <input  autocomplete="off" name="inputItem" list="dataList${index.count}"--%>
-<%--                                                placeholder="Товар" id="item${index.count}" autofocus--%>
-<%--                                                onchange="handleItem(${index.count})">--%>
-<%--                                        <datalist id="dataList${index.count}">--%>
-<%--                                            <c:forEach var="item" items="${items}">--%>
-<%--                                                <option value="${item.name}::${item.count}::${item.id}::${item.ean}" ></option>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </datalist>--%>
-<%--                                    </td>--%>
-<%--                                    <td>--%>
-<%--                                        <input type="number" required id="count${index.count}"--%>
-<%--                                               placeholder="Количество" min = "0"--%>
-<%--                                               onchange="handlePrice(${expandMain.sum})"/>--%>
-<%--                                    </td>--%>
-<%--                                    <td><input type="number" placeholder="Цена продажи"--%>
-<%--                                               id="price${index.count}"--%>
-<%--                                               min = "0" step="0.01"--%>
-<%--                                               required--%>
-<%--                                               onchange="handlePrice(${expandMain.sum})"/>--%>
-<%--                                    </td>--%>
-<%--                                    <td><input type="text" id="batchNumber${index.count}" required--%>
-<%--                                               placeholder="Номер партии"/></td>--%>
-<%--                                    <td id="priceSum${index.count}">--%>
-<%--                                        <div id="ppSum${index.count}" class="addIncomeInput">0.00</div>--%>
-<%--                                    </td>--%>
-<%--                                </tr>--%>
-<%--                            </c:if>--%>
                         </c:forEach>
         </table>
     </div>

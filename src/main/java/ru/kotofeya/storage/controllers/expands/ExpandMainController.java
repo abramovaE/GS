@@ -143,6 +143,7 @@ public class ExpandMainController {
         expandMainFromDb.setDate(expandMain.getDate());
         expandMainFromDb.setStore(expandMain.getStore());
         expandMainFromDb.setUserName(expandMain.getUserName());
+        expandMainFromDb.setNote(expandMain.getNote());
         expandMainService.saveExpandMain(expandMainFromDb);
         editedExpandMainService.saveEditedExpandMain(editedExpandMain);
         return "redirect:/expands_main";

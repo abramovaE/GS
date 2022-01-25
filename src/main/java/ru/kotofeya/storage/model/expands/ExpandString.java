@@ -25,6 +25,8 @@ public class ExpandString {
     private double salePriceDouble;
     @ManyToOne
     private ExpandMain expandMain;
+    @Column(name = "note")
+    private String note;
 
     public ExpandString() {}
     public Long getId() {return id;}
@@ -43,4 +45,6 @@ public class ExpandString {
     public void setSalePriceDouble(double salePriceDouble) {this.salePriceDouble = salePriceDouble;}
     public ExpandMain getExpandMain() {return expandMain;}
     public void setExpandMain(ExpandMain expandMain) {this.expandMain = expandMain;}
+    public String getNote() {return note;}
+    public void setNote(String note) {this.note = note;}
 }

@@ -117,6 +117,12 @@
                                     id="incomeMainStore" class="inputClassLight"/>
                     </div>
                     <div class="innerDivLogin">
+                        <form:input type="text" path="note"
+                                    placeholder="Примечание"
+                                    id="incomeMainNote"
+                                    class="inputClassLight"/>
+                    </div>
+                    <div class="innerDivLogin">
                         <button type="submit" class="inputClassLight" id="submit">Сохранить</button>
                     </div>
             </div>
@@ -148,6 +154,7 @@
                 <th>Артикул в магазине</th>
                 <th>Сумма покупки, руб.</th>
                 <th>Сумма покупки окончательная, руб.</th>
+                <th>Примечание</th>
             </tr>
             <c:forEach items="${incomeMain.incomeStrings}"
                        var="incomeString" varStatus="ind">
@@ -165,9 +172,18 @@
                         <td>${incomeString.storeArticle}</td>
                         <td>${incomeString.count * incomeString.purchasePrice/100}</td>
                         <td>${incomeString.count * incomeString.purchasePriceAct/100}</td>
-                        <td class="edit" id="deleteTd${ind.count}">
+                        <td>${incomeString.note}</td>
+
+
+
+                        <td <sec:authorize access="hasAuthority('ADMIN')">
+                            class="edit"
+                            id="deleteTd${ind.count}"
+                        </sec:authorize>>
+                            <sec:authorize access="hasAuthority('ADMIN')">
                             <a id="delete${ind.count}" hidden
                                href="delete_income_string/${incomeString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                            </sec:authorize>
                         </td>
                     </tr>
             </c:forEach>

@@ -30,6 +30,8 @@ public class DeletedIncomeString {
     private String storeArticle;
     @Column(name = "income_main_id")
     private long incomeMainId;
+    @Column(name = "note")
+    private String note;
 
     public DeletedIncomeString() {}
 
@@ -45,6 +47,7 @@ public class DeletedIncomeString {
         this.purchasePriceAct = incomeString.getPurchasePriceAct();
         this.storeArticle = incomeString.getStoreArticle();
         this.incomeMainId = incomeString.getIncomeMain().getId();
+        this.note = incomeString.getNote();
     }
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}
@@ -76,6 +79,14 @@ public class DeletedIncomeString {
     }
     public long getIncomeMainId() {return incomeMainId;}
     public void setIncomeMainId(long incomeMainId) {this.incomeMainId = incomeMainId;}
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     @Override
     public String toString() {

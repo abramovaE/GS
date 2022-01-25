@@ -22,6 +22,8 @@ public class IncomeMain {
     private int sum;
     @Transient
     private int sumAct;
+    @Column(name = "note")
+    private String note;
 
     public IncomeMain() {}
     public Long getId() {return id;}
@@ -41,6 +43,9 @@ public class IncomeMain {
     public void setSum(int sum) {this.sum = sum;}
     public int getSumAct() {return sumAct;}
     public void setSumAct(int sumAct) {this.sumAct = sumAct;}
+
+    public String getNote() {return note;}
+    public void setNote(String note) {this.note = note;}
 
     @Override
     public String toString() {

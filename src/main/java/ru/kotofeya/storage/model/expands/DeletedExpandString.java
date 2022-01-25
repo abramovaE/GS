@@ -27,6 +27,8 @@ public class DeletedExpandString {
     private int salePrice;
     @Column(name = "expand_main_id")
     private long expandMainId;
+    @Column(name = "note")
+    private String note;
 
     public DeletedExpandString() {}
     public DeletedExpandString(ExpandString expandString, String deleteDate, String deleteUserName) {
@@ -39,6 +41,7 @@ public class DeletedExpandString {
         this.count = expandString.getCount();
         this.salePrice = expandString.getSalePrice();
         this.expandMainId = expandString.getExpandMain().getId();
+        this.note = expandString.getNote();
     }
     public Long getId() {
         return id;
@@ -92,4 +95,12 @@ public class DeletedExpandString {
     }
     public long getExpandMainId() {return expandMainId;}
     public void setExpandMainId(long expandMainId) {this.expandMainId = expandMainId;}
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

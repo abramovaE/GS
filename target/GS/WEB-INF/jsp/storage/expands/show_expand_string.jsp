@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<h2 class="h2Light">Изменить приход</h2>
+<h2 class="h2Light">Изменить расход</h2>
 <div class="outerDivLogin">
     <form:form method="POST" modelAttribute="expandStringForm">
 
@@ -59,16 +59,26 @@
                         onchange="handlePrice()"
                         placeholder="Цена покупки, руб." required="true" class="inputClassLight"/>
         </div>
-        <div class="innerDivLogin">
-            <form:label path="batchNumber">Номер партии</form:label>
-            <form:input type="text" path="batchNumber" placeholder="Номер партии"
-                        required="true"
-                        autofocus="true" class="inputClassLight"/>
-        </div>
+
+<%--        <div class="innerDivLogin">--%>
+<%--            <form:label path="batchNumber">Номер партии</form:label>--%>
+<%--            <form:input type="text" path="Number" placeholder="Номер партии"--%>
+<%--                        required="true"--%>
+<%--                        autofocus="true" class="inputClassLight"/>--%>
+<%--        </div>--%>
         <div class="innerDivLogin">
             <div>Сумма продажи, руб.</div>
             <div id="ppSum">${expandStringForm.count*expandStringForm.salePrice/100}</div>
         </div>
+
+        <div class="innerDivLogin">
+            <form:label path="note">Примечание</form:label>
+            <form:input type="text" path="note"
+                        placeholder="Примечание"
+                        autofocus="true"
+                        class="inputClassLight"/>
+        </div>
+
         <div class="innerDivLogin">
             <button type="submit" class="inputClassLight">Сохранить</button>
         </div>

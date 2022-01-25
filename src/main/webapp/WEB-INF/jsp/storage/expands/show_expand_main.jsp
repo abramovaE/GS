@@ -136,6 +136,8 @@
             }
             return isSubmit === 1;
         }
+
+
         function handlePrice(sum){
             const id = 'expandStringTable';
             const table = document.getElementById(id);
@@ -205,6 +207,13 @@
                                 placeholder="Контрагент"
                                 id="expandMainStore" class="inputClassLight"/>
                 </div>
+
+                <div class="innerDivLogin">
+                    <form:input type="text" path="note"
+                                placeholder="Примечание"
+                                id="expandMainNote"
+                                class="inputClassLight"/>
+                </div>
                     <div class="innerDivLogin">
                         <button type="submit" class="inputClassLight" id="submit">Сохранить</button>
                     </div>
@@ -229,8 +238,8 @@
                 <th hidden>Id</th>
                 <th>Количество</th>
                 <th>Цена продажи, руб.</th>
-
                 <th>Сумма продажи, руб.</th>
+                <th>Примечание</th>
             </tr>
             <c:forEach items="${expandMain.expandStrings}"
                        var="expandString" varStatus="ind">
@@ -244,9 +253,15 @@
                         <td>${expandString.count}</td>
                         <td>${expandString.salePrice/100}</td>
                         <td>${expandString.count * expandString.salePrice/100}</td>
-                        <td class="edit" id="deleteTd${ind.count}"  >
-                            <a id="delete${ind.count}" hidden
+                        <td>${expandString.note}</td>
+
+                        <td<sec:authorize access="hasAuthority('ADMIN')">
+                                class="edit" id="deleteTd${ind.count}"
+                        </sec:authorize>>
+                            <sec:authorize access="hasAuthority('ADMIN')">
+                                <a id="delete${ind.count}" hidden
                                href="delete_expand_string/${expandString.id}/${pageContext.request.userPrincipal.name}">Удалить</a>
+                            </sec:authorize>
                         </td>
                     </tr>
                     </c:forEach>
