@@ -57,17 +57,22 @@
             </div>
         </div>
 
-
+    <sec:authorize access="hasAuthority('ADMIN')">
         <div class="indexPanel">
             <div class="label">Баланс</div>
-            <div class="balancePanel">
-                <div class="balancePanelDiv"><a href="add_money">
+            <div class="storageMainPanel">
+                <div class="squareImgDiv"><a href="add_money">
                     <div></div>
                     <div>Внести деньги</div>
+                </a></div>
+                <div class="squareImgDiv"><a href="all_money">
+                    <div></div>
+                    <div>Посмотреть все поступления</div>
                 </a></div>
             </div>
         </div>
     </sec:authorize>
+</sec:authorize>
 
 
 <%--    <h4><a href="/news">Новости (только пользователь)</a></h4>--%>

@@ -12,7 +12,8 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/index_style.css" %>
     </style>
-
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/resources/datePicker.js"></script>
 </head>
 
 <body class="bodyClassGreen">
@@ -46,54 +47,30 @@
     </div>
 </div>
 <div class="outerDivLogin">
-<%--    <form:form method="POST" modelAttribute="itemForm" onsubmit="return saveItem();">--%>
-<%--        <h2 class="h2Light">Добавить товар</h2>--%>
-<%--        <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:input--%>
-<%--                    readonly="true"--%>
-<%--                    type="text"--%>
-<%--                    path="article"--%>
-<%--                    placeholder="Артикул внутренний"--%>
-<%--                    class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:input--%>
-<%--                    type="text"--%>
-<%--                    path="name"--%>
-<%--                    placeholder="Наименование"--%>
-<%--                    required="true"--%>
-<%--                    class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:input--%>
-<%--                    id = "ean"--%>
-<%--                    type="text"--%>
-<%--                    path="ean"--%>
-<%--                    placeholder="Штрих-код"--%>
-<%--                    autofocus="true"--%>
-<%--                    class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:input--%>
-<%--                    type="text"--%>
-<%--                    path="mpLinkYandex"--%>
-<%--                    placeholder="Ссылка на карточку товара (Яндекс)"--%>
-<%--                    autofocus="true"--%>
-<%--                    class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <form:input--%>
-<%--                    type="text"--%>
-<%--                    path="mpLinkSber"--%>
-<%--                    placeholder="Ссылка на карточку товара (Сбермаркет)"--%>
-<%--                    autofocus="true"--%>
-<%--                    class="inputClassLight"/>--%>
-<%--        </div>--%>
-<%--        <div class="innerDivLogin">--%>
-<%--            <button type="submit" class="inputClassLight" >Добавить</button>--%>
-<%--        </div>--%>
-<%--    </form:form>--%>
+    <form:form method="POST" modelAttribute="money">
+        <h2 class="h2Light">Добавить поступление</h2>
+        <form:hidden path="userName" value="${pageContext.request.userPrincipal.name}"/>
+        <div class="innerDivLogin">
+            <form:input
+                    id="datepicker"
+                    type="text"
+                    path="date"
+                    class="inputClassLight"/>
+        </div>
+        <div class="innerDivLogin">
+            <form:input
+                    type="number"
+                    path="doubleSum"
+                    placeholder="Сумма"
+                    required="true"
+                    min="0"
+                    step="0.01"
+                    class="inputClassLight"/>
+        </div>
+        <div class="innerDivLogin">
+            <button type="submit" class="inputClassLight" >Добавить</button>
+        </div>
+    </form:form>
 </div>
 </body>
 </html>

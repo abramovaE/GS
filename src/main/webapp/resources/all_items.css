@@ -22,6 +22,7 @@
     font-size: 12pt;
     font-family: Helvetica;
     box-sizing: border-box;
+    color: white;
 }
 
 .addIncome th a{

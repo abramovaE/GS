@@ -1,0 +1,4 @@
+.todayIncomeStrings tr td:last-of-type{
+    width: 100px;
+    background-color: white;
+}
