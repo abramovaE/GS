@@ -30,8 +30,10 @@
         <% response.sendRedirect("/"); %>
     </sec:authorize>
     <script type="text/javascript">
+
         $(document).ready(function() {
             handleItem(index);
+
         });
 
         function handleItem(index){

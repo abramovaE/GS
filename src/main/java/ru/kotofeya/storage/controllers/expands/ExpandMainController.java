@@ -85,11 +85,9 @@ public class ExpandMainController {
             for(ExpandString expandString: expands){
                 cost = cost - expandString.getSalePrice() * expandString.getCount();
             }
-
             if(item.getCount() != null && item.getCount() > 0) {
                 item.setMiddlePrice(cost / item.getCount());
-            }
-            else {
+            } else {
                 item.setMiddlePrice(0);
             }
         }
@@ -115,7 +113,6 @@ public class ExpandMainController {
         List<Item> allItems = itemService.getAllItems().stream()
                 .filter(it->(it.getCount() != null && it.getCount() > 0))
                 .collect(Collectors.toList());
-//        List<Item> allItems = itemService.getAllItems();
         ExpandMain expandMain = expandMainService.findById(expandId);
         expandMain = setSumsForJsp(expandMain);
         setMiddlePrice(allItems);
@@ -124,7 +121,6 @@ public class ExpandMainController {
         model.addAttribute("eans", allItems.stream().map(it->it.getEan()).collect(Collectors.toSet()));
         return "storage/expands/show_expand_main";
     }
-
 
     @PostMapping("/show_expand_main/{expandId}/{editUserName}")
     public String showExpandMain(Model model,
@@ -149,7 +145,6 @@ public class ExpandMainController {
         return "redirect:/expands_main";
     }
 
-
     @GetMapping("/delete_expand_main/{expandMainId}/{deleteUserName}")
     public String deleteExpand(@PathVariable ("expandMainId") Long expandMainId,
                                @PathVariable ("deleteUserName") String deleteUserName,
@@ -173,10 +168,37 @@ public class ExpandMainController {
         return "redirect:/expands_main";
     }
 
+    @GetMapping("/ship_everything/{userName}")
+    public String  shipEverything(Model model, @PathVariable("userName") String userName) {
+        List<Item> allItems = itemService.getAllItems().stream()
+                .filter(it->(it.getCount() != null && it.getCount() > 0))
+                .collect(Collectors.toList());
+        if(allItems == null || allItems.isEmpty()){
+            return "redirect:/";
+        }
+        String date = LocalDateTime.now().format(dateTimeFormatter);
+        setMiddlePrice(allItems);
+        ExpandMain expandMain = new ExpandMain();
+        model.addAttribute("items", allItems);
+        model.addAttribute("eans", allItems.stream()
+                .map(it->it.getEan()).collect(Collectors.toSet()));
+        model.addAttribute("expandMainForm", expandMain);
+        model.addAttribute("date", date);
+        model.addAttribute("expandString", new ExpandString());
+        return "storage/expands/ship_everything";
+    }
 
-
-
-
+    @PostMapping("/ship_everything/{userName}")
+    public String  shipEverything(Model model, @PathVariable("userName") String userName,
+                                  @ModelAttribute ("expandMainForm") ExpandMain expandMain,
+                                  @ModelAttribute ("expandJson") String expandJson) {
+        expandMainService.saveExpandMain(expandMain);
+        Set<ExpandString> expandStrings = createExpandStringsFromJson(expandJson, expandMain.getId());
+        expandStrings.stream().forEach(it->expandStringService.saveExpand(it));
+        expandMain.setExpandStrings(expandStrings);
+        expandMainService.saveExpandMain(expandMain);
+        return "redirect:/expands_main";
+    }
 
 
 

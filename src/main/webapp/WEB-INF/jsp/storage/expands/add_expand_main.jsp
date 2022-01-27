@@ -33,6 +33,8 @@
         });
 
         function handleItem(index){
+            // alert("handle item")
+
             let inputItem = document.getElementById('item'+index).value;
             const table = document.getElementById('expandStringTable');
             let c = 0;
@@ -144,10 +146,40 @@
         const tr = document.getElementById('tr' + rowIndex);
         tr.closest('tr' + rowIndex)
     }
+
+    <%--    function shipEverything(){--%>
+    <%--        let index;--%>
+    <%--        const id = 'expandStringTable';--%>
+    <%--        const table = document.getElementById(id);--%>
+    <%--        let rowIndex = table.rows.length;--%>
+
+    <%--        for (index = 0; index < `${items.size()}`; index++) {--%>
+    <%--            let i1 = index + 1--%>
+    <%--            let tr = document.getElementById('tr' + i1)--%>
+    <%--            tr.hidden = false;--%>
+    <%--            let inputItem = document.getElementById('item' + i1)--%>
+    <%--            let inputItemId = document.getElementById('itemId' + i1)--%>
+    <%--            inputItem.value = `${items.get(index).ean}`--%>
+    <%--            inputItemId.value = `${items.get(index).id}`--%>
+    <%--            const trNext = document.getElementById("tr" + (i1 + 1));--%>
+    <%--            trNext.hidden = false;--%>
+    <%--    }--%>
+    <%--}--%>
+
+
     </script>
     <div class="topPanel">
         <div class="topPanelFirst">
             <div class="username">${pageContext.request.userPrincipal.name}</div>
+        </div>
+        <div class="topPanelCentral">
+<%--            <div>--%>
+<%--                <a href="" onclick="shipEverything()">--%>
+<%--                    Отгрузить все--%>
+<%--                </a>--%>
+<%--            </div>--%>
+
+            <div><a href="ship_everything/${pageContext.request.userPrincipal.name}">Отгрузить все</a></div>
         </div>
         <div class="topPanelLast">
             <div><a href="${pageContext.request.contextPath}/">На главную</a></div>
@@ -205,7 +237,8 @@
                 <th>Сумма продажи, руб.</th>
             </tr>
             <c:forEach var="rowIndex" begin="1" end="100" step="1" varStatus="index">
-                    <tr <c:if test="${index.count>1}">
+                    <tr
+                            <c:if test="${index.count > 1}">
                                 hidden
                             </c:if>
                         id="tr${index.count}">
@@ -231,8 +264,7 @@
                                    placeholder="Наименование"/>
                         </td>
                         <td hidden>
-                            <input
-                                   id="itemId${index.count}"/>
+                            <input id="itemId${index.count}"/>
                         </td>
                         <td>
                             <input type="number"
