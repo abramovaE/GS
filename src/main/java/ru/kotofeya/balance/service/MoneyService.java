@@ -26,4 +26,6 @@ public class MoneyService {
     public List<Money> findAllMoney(){
         return moneyRepo.findAll();
     }
+
+
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.kotofeya.balance.model.Money;
+import ru.kotofeya.balance.service.MoneyService;
 import ru.kotofeya.storage.model.incomes.*;
 import ru.kotofeya.storage.model.items.Item;
 import ru.kotofeya.storage.service.*;
@@ -36,6 +38,8 @@ public class IncomeMainController {
     private EditedIncomeMainService editedIncomeMainService;
     @Autowired
     private DeletedIncomeMainService deletedIncomeMainService;
+    @Autowired
+    private MoneyService moneyService;
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
@@ -107,7 +111,11 @@ public class IncomeMainController {
         for(IncomeMain incomeMain: incomesMain){
             setSumsForJsp(incomeMain);
         }
+        List<Money> allMoney = moneyService.findAllMoney();
+        int allMoneySum = allMoney.stream().mapToInt(it->it.getSum()).sum();
+        int allIncomeActSum = incomesMain.stream().mapToInt(it->it.getSumAct()).sum();
         model.addAttribute("incomesMain", incomesMain);
+        model.addAttribute("availableMoney", allMoneySum - allIncomeActSum);
         return "storage/incomes/incomes_main";
     }
 

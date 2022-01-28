@@ -32,7 +32,8 @@
 
 <div class="outerDivTr">
   <div class="innerDivTr">
-    <h2 class="h2Light">Приходы</h2>
+<%--    <h2 class="h2Light">Приходы</h2>--%>
+    <h2 class="h2Light">Доступно средств: ${availableMoney/100} р.</h2>
 
     <table class="todayIncomeStrings">
       <tr>

@@ -8,15 +8,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.kotofeya.balance.model.Money;
 import ru.kotofeya.balance.service.MoneyService;
+import ru.kotofeya.storage.model.incomes.IncomeMain;
+import ru.kotofeya.storage.model.incomes.IncomeString;
+import ru.kotofeya.storage.service.incomes.IncomeMainService;
+import ru.kotofeya.storage.service.incomes.IncomeStringService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class BalanceController {
 
     @Autowired
     private MoneyService moneyService;
+    @Autowired
+    IncomeMainService incomeMainService;
+    @Autowired
+    IncomeStringService incomeStringService;
+
 
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
@@ -39,7 +49,32 @@ public class BalanceController {
 
     @GetMapping("/all_money")
     public String allMoney(Model model) {
-        model.addAttribute("allMoney", moneyService.findAllMoney());
+        List<Money> allMoney = moneyService.findAllMoney();
+        List<IncomeMain> incomesMain = incomeMainService.getAllIncomesMain();
+        for(IncomeMain incomeMain: incomesMain){
+            setSumsForJsp(incomeMain);
+        }
+        int allMoneySum = allMoney.stream().mapToInt(it->it.getSum()).sum();
+        int allIncomeActSum = incomesMain.stream().mapToInt(it->it.getSumAct()).sum();
+
+        model.addAttribute("allMoneySum", allMoneySum);
+        model.addAttribute("allMoney", allMoney);
+//        model.addAttribute("incomesMain", incomesMain);
+        model.addAttribute("availableMoney", allMoneySum - allIncomeActSum);
+
         return "balance/all_money";
+    }
+
+    private IncomeMain setSumsForJsp(IncomeMain incomeMain){
+        int sum = 0;
+        int sumAct = 0;
+        List<IncomeString> incomeStrings = incomeStringService.findByIncomeMain(incomeMain);
+        for(IncomeString incomeString: incomeStrings){
+            sum += incomeString.getCount() * incomeString.getPurchasePrice();
+            sumAct += incomeString.getCount() * incomeString.getPurchasePriceAct();
+        }
+        incomeMain.setSum(sum);
+        incomeMain.setSumAct(sumAct);
+        return incomeMain;
     }
 }

@@ -11,7 +11,7 @@
         <%@include file="/resources/style.css" %>
         <%@include file="/resources/add_income_style.css" %>
         <%@include file="/resources/index_style.css" %>
-<%@include file="/resources/balance.css" %>
+        <%@include file="/resources/balance.css" %>
     </style>
 </head>
 <body  class="bodyClassGreen">
@@ -28,7 +28,9 @@
 </div>
 <div class="outerDivTr">
     <div class="innerDivTr">
-        <h2  class="h2Light">Все пополнения</h2>
+        <h2 class="h2Light">Внесено средств: ${allMoneySum/100} р.</h2>
+        <h2 class="h2Light">Доступно средств: ${availableMoney/100} р.</h2>
+
         <table class="todayIncomeStrings">
             <th>Дата внесения</th>
             <th>Пользователь</th>

@@ -59,42 +59,6 @@
     background-color: #8fc7a0;
 }
 
-.balancePanel{
-    width: 100%;
-    margin: auto;
-    margin-bottom: 10px;
-    display: inline-flex;
-}
-
-.balancePanelDiv{
-    border: none;
-    font-size: 12pt;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: flex;
-    height: 150px;
-    color: white;
-    background-color: mediumseagreen;
-    padding: 5px 15px;
-    width: 100%;
-    border-bottom-left-radius: 500px;
-    border-top-left-radius: 500px;
-    margin-right: 20px;
-    margin-left: 20px;
-    border-bottom-right-radius: 500px;
-    border-top-right-radius: 500px;
-}
-
-.balancePanelDiv a{
-    width: 100%;
-    color: white;
-    margin: auto;
-}
-
-.balancePanelDiv a div{
-    width: 100%;
-    margin: auto;
-}
 
 
 .label{
@@ -144,7 +108,6 @@
 
 .username{
     background-color: white;
-    border-radius: 17px;
     padding: 10px;
     font-family: Helvetica;
     font-size: 18pt;
